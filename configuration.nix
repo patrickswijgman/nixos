@@ -53,7 +53,7 @@
       "networkmanager"
       "wheel"
     ];
-    packages = with pkgs; [ ];
+    packages = [ ];
     shell = pkgs.fish;
   };
 

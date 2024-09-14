@@ -5,13 +5,30 @@
     enable = true;
     settings = {
       theme = "autumn_night";
-
+      cursorline = true;
+      line-number = "relative";
+      bufferline = "multiple";
+      popup-border = "all";
+      shell = [
+        "fish"
+        "-c"
+      ];
       editor.cursor-shape = {
         normal = "block";
         insert = "bar";
         select = "underline";
       };
-
+      editor.file-picker = {
+        hidden = false;
+      };
+      editor.lsp = {
+        display-messages = true;
+      };
+      editor.softwrap = {
+        enable = true;
+        max-wrap = 25;
+        max-indent-retain = 0;
+      };
       keys.normal = {
         "C-h" = "jump_view_left";
         "C-j" = "jump_view_down";
@@ -48,8 +65,24 @@
           "keep_primary_selection"
         ];
       };
+      keys.insert = {
+        "esc" = [
+          "collapse_selection"
+          "normal_mode"
+        ];
+      };
+      keys.select = {
+        "C-d" = [
+          "search_selection"
+          "extend_search_next"
+        ];
+        "esc" = [
+          "collapse_selection"
+          "keep_primary_selection"
+          "normal_mode"
+        ];
+      };
     };
-
     languages.language = [
       {
         name = "nix";
