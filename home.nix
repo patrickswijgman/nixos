@@ -22,6 +22,7 @@
   home.packages = with pkgs; [
     nil
     nixfmt-rfc-style
+    fira-code
     font-awesome
   ];
 
