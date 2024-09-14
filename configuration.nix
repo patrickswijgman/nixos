@@ -89,6 +89,22 @@
     };
   };
 
+  fonts = {
+    # Causes some "basic" fonts to be installed for reasonable Unicode coverage
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      fira-code
+      font-awesome
+    ];
+    fontconfig = {
+      defaultFonts = {
+        serif = [ "DejaVu Serif" ];
+        sansSerif = [ "DejaVu Sans" ];
+        monospace = [ "Fira Code" ];
+      };
+    };
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
