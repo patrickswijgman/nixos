@@ -52,6 +52,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "video"
     ];
     packages = [ ];
     shell = pkgs.fish;
@@ -75,6 +76,17 @@
   virtualisation.docker.rootless = {
     enable = true;
     setSocketVariable = true;
+  };
+
+  # Add desktop portals for Wayland.
+  xdg = {
+    portal = {
+      enable = true;
+      configPackages = with pkgs; [
+        xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
+      ];
+    };
   };
 
   # Allow unfree packages
@@ -105,6 +117,12 @@
 
   # Enable bluetooth.
   hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  hardware.bluetooth.settings = {
+    General = {
+      Enable = "Source,Sink,Media,Socket";
+    };
+  };
 
   # List services that you want to enable:
   services.openssh.enable = true;

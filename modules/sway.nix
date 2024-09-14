@@ -18,6 +18,10 @@
           command = "kanshi";
           always = true;
         }
+        {
+          # This ensures all user units started after the command (not those already running) set the variables
+          command = "systemctl --user import-environment";
+        }
       ];
       keybindings = lib.mkOptionDefault {
         "${modifier}+Ctrl+l" = "exec swaylock";
