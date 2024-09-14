@@ -68,4 +68,10 @@
     brightnessctl
     sway-contrib.grimshot
   ];
+
+  home.sessionVariables = {
+    XDG_SESSION_TYPE = "wayland";
+    XDG_CURRENT_DESKTOP = "sway";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+  };
 }

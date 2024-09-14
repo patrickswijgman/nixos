@@ -9,7 +9,6 @@
         cursorline = true;
         line-number = "relative";
         bufferline = "multiple";
-        popup-border = "all";
         shell = [
           "fish"
           "-c"
@@ -38,13 +37,6 @@
         "C-l" = "jump_view_right";
         "C-a" = "select_all";
         "C-r" = "redo";
-        "C-d" = [
-          "extend_to_line_bounds"
-          "yank"
-          "paste_after"
-          "collapse_selection"
-        ];
-        "C-u" = "no_op";
         "A-h" = "goto_previous_buffer";
         "A-l" = "goto_next_buffer";
         "A-q" = ":buffer-close";
@@ -90,8 +82,53 @@
         auto-format = true;
         formatter.command = "nixfmt";
       }
+      {
+        name = "typescript";
+        language-servers = [
+          "typescript-language-server"
+          "vscode-eslint-language-server"
+        ];
+        formatter = {
+          command = "npx";
+          args = [
+            "prettier"
+            "--parser"
+            "typescript"
+          ];
+        };
+        auto-format = true;
+      }
+      {
+        name = "tsx";
+        language-servers = [
+          "typescript-language-server"
+          "vscode-eslint-language-server"
+          "tailwindcss-language-server"
+        ];
+        formatter = {
+          command = "npx";
+          args = [
+            "prettier"
+            "--parser"
+            "typescript"
+          ];
+        };
+        auto-format = true;
+      }
     ];
+    languages.language-server.typescript-language-server = {
+      config.preferences.importModuleSpecifierPreference = "non-relative";
+      config.preferences.importModuleSpecifierEnding = "js";
+    };
   };
+
+  home.packages = with pkgs; [
+    nil
+    nixfmt-rfc-style
+    typescript-language-server
+    vscode-langservers-extracted
+    tailwindcss-language-server
+  ];
 
   home.sessionVariables = {
     EDITOR = "hx";

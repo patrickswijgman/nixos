@@ -70,6 +70,13 @@
   # Enable fish on system level as well to disable the shell warning.
   programs.fish.enable = true;
 
+  # Enable Docker.
+  virtualisation.docker.enable = true;
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -91,7 +98,7 @@
 
   # Enable the gnome-keyring secrets vault.
   # Will be exposed through DBus to programs willing to store secrets.
-  # services.gnome.gnome-keyring.enable = true;
+  services.gnome.gnome-keyring.enable = true;
 
   # Enable OpenGL for hardware accelaration.
   hardware.graphics.enable = true;
