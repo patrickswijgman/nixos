@@ -45,7 +45,6 @@
           "collapse_selection"
         ];
         "C-u" = "no_op";
-        "A-r" = ":config-reload";
         "A-h" = "goto_previous_buffer";
         "A-l" = "goto_next_buffer";
         "A-q" = ":buffer-close";
