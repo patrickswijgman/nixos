@@ -86,6 +86,9 @@
   # Grant more (within certain boundaries) privileges to programs.
   security.polkit.enable = true;
 
+  # Fix for swaylock to be able to detect a correct password.
+  security.pam.services.swaylock = { };
+
   # Enable the gnome-keyring secrets vault.
   # Will be exposed through DBus to programs willing to store secrets.
   # services.gnome.gnome-keyring.enable = true;
