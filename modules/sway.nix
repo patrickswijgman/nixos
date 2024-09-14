@@ -66,6 +66,7 @@
   };
 
   home.packages = with pkgs; [
+    xdg-utils
     wl-clipboard
     pamixer
     playerctl
