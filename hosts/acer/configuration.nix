@@ -13,4 +13,10 @@
   ];
 
   networking.hostName = "patrick-acer";
+
+  # Enable the stock NixOS power management tool which allows for managing hibernate and suspend states.
+  powerManagement.enable = true;
+
+  # A common tool used to save power on laptops.
+  services.tlp.enable = true;
 }
