@@ -8,5 +8,9 @@
   imports = [
     ./hardware-configuration.nix
     ../../configuration.nix
+    ../../modules/nixos/bluetooth.nix
+    ../../modules/nixos/docker.nix
   ];
+
+  networking.hostName = "patrick-acer";
 }

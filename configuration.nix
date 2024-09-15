@@ -17,8 +17,6 @@
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
-  networking.hostName = "patrick-acer";
-
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -54,7 +52,6 @@
       "wheel"
       "video"
     ];
-    packages = [ ];
     shell = pkgs.fish;
   };
 
@@ -71,13 +68,6 @@
   # Enable fish on system level as well to disable the shell warning.
   programs.fish.enable = true;
 
-  # Enable Docker.
-  virtualisation.docker.enable = true;
-  virtualisation.docker.rootless = {
-    enable = true;
-    setSocketVariable = true;
-  };
-
   # Add desktop portals for Wayland.
   xdg = {
     portal = {
@@ -91,12 +81,13 @@
 
   fonts = {
     # Causes some "basic" fonts to be installed for reasonable Unicode coverage
-    enableDefaultPackages = true;
     packages = with pkgs; [
+      dejavu_fonts
       fira-code
       font-awesome
     ];
     fontconfig = {
+      enable = true;
       defaultFonts = {
         serif = [ "DejaVu Serif" ];
         sansSerif = [ "DejaVu Sans" ];
@@ -130,15 +121,6 @@
 
   # Enable OpenGL for hardware accelaration.
   hardware.graphics.enable = true;
-
-  # Enable bluetooth.
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-  hardware.bluetooth.settings = {
-    General = {
-      Enable = "Source,Sink,Media,Socket";
-    };
-  };
 
   # List services that you want to enable:
   services.openssh.enable = true;

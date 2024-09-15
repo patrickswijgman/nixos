@@ -6,7 +6,6 @@
 }:
 
 {
-  # https://home-manager-options.extranix.com/?query=wayland.windowManager.sway&release=master
   wayland.windowManager.sway = {
     enable = true;
     config = rec {
@@ -47,7 +46,6 @@
     };
   };
 
-  # https://home-manager-options.extranix.com/?query=swaylock&release=master
   programs.swaylock = {
     enable = true;
     settings = {
@@ -55,12 +53,10 @@
     };
   };
 
-  # https://home-manager-options.extranix.com/?query=kanshi&release=master
   services.kanshi = {
     enable = true;
   };
 
-  # https://home-manager-options.extranix.com/?query=mako&release=master
   services.mako = {
     enable = true;
   };
