@@ -89,9 +89,8 @@
           "vscode-eslint-language-server"
         ];
         formatter = {
-          command = "npx";
+          command = "prettierd";
           args = [
-            "prettier"
             "--parser"
             "typescript"
           ];
@@ -106,9 +105,8 @@
           "tailwindcss-language-server"
         ];
         formatter = {
-          command = "npx";
+          command = "prettierd";
           args = [
-            "prettier"
             "--parser"
             "typescript"
           ];
@@ -128,6 +126,7 @@
     typescript-language-server
     vscode-langservers-extracted
     tailwindcss-language-server
+    prettierd
   ];
 
   home.sessionVariables = {
