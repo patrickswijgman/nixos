@@ -27,14 +27,14 @@
         "${modifier}+Print" = "exec grimshot copy active";
         "${modifier}+Shift+s" = "exec grimshot copy area";
         "${modifier}+Tab" = "workspace back_and_forth";
-        "XF86AudioMute" = "pamixer -t";
-        "XF86AudioRaiseVolume" = "pamixer -i 5";
-        "XF86AudioLowerVolume" = "pamixer -d 5";
-        "XF86AudioPlay" = "playerctl play-pause";
-        "XF86AudioNext" = "playerctl next";
-        "XF86AudioPrev" = "playerctl previous";
-        "XF86MonBrightnessDown" = "brightnessctl set 10%-";
-        "XF86MonBrightnessUp" = "brightnessctl set 10%+";
+        "XF86AudioMute" = "exec pamixer -t";
+        "XF86AudioRaiseVolume" = "exec pamixer -i 5";
+        "XF86AudioLowerVolume" = "exec pamixer -d 5";
+        "XF86AudioPlay" = "exec playerctl play-pause";
+        "XF86AudioNext" = "exec playerctl next";
+        "XF86AudioPrev" = "exec playerctl previous";
+        "XF86MonBrightnessDown" = "exec brightnessctl set 10%-";
+        "XF86MonBrightnessUp" = "exec brightnessctl set 10%+";
       };
       input = {
         "type:pointer" = {
@@ -62,7 +62,6 @@
   };
 
   home.packages = with pkgs; [
-    libinput
     xdg-utils
     wl-clipboard
     pamixer
