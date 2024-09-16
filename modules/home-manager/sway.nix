@@ -13,10 +13,7 @@
       terminal = "alacritty";
       startup = [
         { command = "mako"; }
-        {
-          command = "kanshi";
-          always = true;
-        }
+        { command = "kanshi"; }
         {
           # This ensures all user units started after the command (not those already running) set the variables
           command = "systemctl --user import-environment";
