@@ -8,6 +8,7 @@
     ./gdu.nix
     ./git.nix
     ./helix.nix
+    ./htop.nix
     ./lf.nix
     ./sway.nix
   ];
