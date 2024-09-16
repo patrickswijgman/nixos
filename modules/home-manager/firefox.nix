@@ -8,6 +8,7 @@
       "en-US"
       "nl"
     ];
+    # Check https://mozilla.github.io/policy-templates for policies.
     policies = {
       RequestedLocales = [
         "en-US"
@@ -22,9 +23,17 @@
       FirefoxSuggest.WebSuggestions = false;
       FirefoxSuggest.SponsoredSuggestions = false;
       TranslateEnabled = false;
+      # Check about:config for options.
       Preferences = {
         "browser.aboutConfig.showWarning" = false;
         "browser.ctrlTab.sortByRecentlyUsed" = true;
+      };
+      # Check https://mozilla.github.io/policy-templates/#extensionsettings for options.
+      ExtensionSettings = {
+        "nl-NL@dictionaries.addons.mozilla.org" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/3776797/woordenboek_nederlands-4.20.19.xpi";
+          installation_mode = "normal_installed";
+        };
       };
     };
   };
