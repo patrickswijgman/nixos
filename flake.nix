@@ -19,5 +19,12 @@
         };
         modules = [ ./hosts/acer/configuration.nix ];
       };
+
+      nixosConfigurations."work" = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+        };
+        modules = [ ./hosts/work/configuration.nix ];
+      };
     };
 }
