@@ -2,16 +2,11 @@
 
 {
   imports = [
-    ./alacritty.nix
-    ./firefox.nix
-    ./fish.nix
-    ./fzf.nix
-    ./gdu.nix
+    ./browser.nix
+    ./editor.nix
     ./git.nix
-    ./helix.nix
-    ./htop.nix
-    ./lf.nix
-    ./ripgrep.nix
-    ./sway.nix
+    ./shell.nix
+    ./term.nix
+    ./wm.nix
   ];
 }
