@@ -9,6 +9,10 @@
     enable = true;
   };
 
+  programs.lazygit = {
+    enable = true;
+  };
+
   programs.ripgrep = {
     enable = true;
   };
