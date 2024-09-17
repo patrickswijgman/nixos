@@ -13,12 +13,14 @@
   ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # Full disk encryption.
+  boot.initrd.luks.devices."luks-d7d0b5ae-7750-4367-bd0f-fe4c4aea239f".device = "/dev/disk/by-uuid/d7d0b5ae-7750-4367-bd0f-fe4c4aea239f";
 
   # Hostname.
-  networking.hostName = "patrick-acer";
+  networking.hostName = "patrick-swijgman-work";
 
   # Enable the stock NixOS power management tool which allows for managing hibernate and suspend states.
   powerManagement.enable = true;
