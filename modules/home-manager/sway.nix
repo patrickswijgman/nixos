@@ -5,6 +5,8 @@
   ...
 }:
 
+with lib;
+
 {
   wayland.windowManager.sway = {
     enable = true;
@@ -19,7 +21,7 @@
           command = "systemctl --user import-environment";
         }
       ];
-      keybindings = lib.mkOptionDefault {
+      keybindings = mkOptionDefault {
         "${modifier}+Ctrl+l" = "exec swaylock";
         "${modifier}+Print" = "exec grimshot copy active";
         "${modifier}+Shift+s" = "exec grimshot copy area";
