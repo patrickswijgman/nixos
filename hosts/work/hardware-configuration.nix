@@ -10,37 +10,50 @@
 }:
 
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"
-    "ahci"
-    "ehci_pci"
+    "thunderbolt"
+    "nvme"
     "usb_storage"
     "sd_mod"
     "sr_mod"
-    "sdhci_pci"
     "rtsx_pci_sdmmc"
   ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/0b82a6e1-03fd-4df1-9dbe-7662058a6452";
+    device = "/dev/disk/by-uuid/606721b6-2b67-4e13-af34-ecec555621e9";
     fsType = "ext4";
   };
 
-  swapDevices = [ { device = "/dev/disk/by-uuid/34e7a35d-8a5d-417f-8463-e22a55d97b53"; } ];
+  boot.initrd.luks.devices."luks-4a86b317-e507-49d2-9111-80b8fb6c8ca2".device = "/dev/disk/by-uuid/4a86b317-e507-49d2-9111-80b8fb6c8ca2";
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/81A6-FDA7";
+    fsType = "vfat";
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
+  };
+
+  swapDevices = [
+    { device = "/dev/disk/by-uuid/a848549a-507b-4144-9bb4-919c9c833108"; }
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp1s0f1.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp2s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
