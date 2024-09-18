@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -10,6 +15,7 @@
     ../../configuration.nix
     ../../modules/nixos/bluetooth.nix
     ../../modules/nixos/docker.nix
+    inputs.home-manager.nixosModules.default
   ];
 
   # Bootloader.
@@ -21,6 +27,16 @@
 
   # Hostname.
   networking.hostName = "patrick-swijgman-work";
+
+  # Enable home manager.
+  home-manager = {
+    extraSpecialArgs = {
+      inherit inputs;
+    };
+    users = {
+      "patrick" = import ./home.nix;
+    };
+  };
 
   # Enable the stock NixOS power management tool which allows for managing hibernate and suspend states.
   powerManagement.enable = true;

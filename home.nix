@@ -3,10 +3,6 @@
 {
   imports = [ ./modules/home-manager ];
 
-  # Set git config values.
-  git.name = "Patrick";
-  git.email = "petrik09@live.nl";
-
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "patrick";

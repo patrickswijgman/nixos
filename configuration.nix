@@ -2,16 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}:
+{ config, pkgs, ... }:
 
 {
-  imports = [ inputs.home-manager.nixosModules.default ];
-
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -48,16 +41,6 @@
       "video"
     ];
     shell = pkgs.fish;
-  };
-
-  # Enable home manager.
-  home-manager = {
-    extraSpecialArgs = {
-      inherit inputs;
-    };
-    users = {
-      "patrick" = import ./home.nix;
-    };
   };
 
   # Enable fish on system level as well to disable the shell warning.
