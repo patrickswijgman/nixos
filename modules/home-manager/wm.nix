@@ -16,6 +16,10 @@ with lib;
       startup = [
         { command = "mako"; }
         {
+          command = "systemctl --user restart kanshi";
+          always = true;
+        }
+        {
           # This ensures all user units started after the command (not those already running) set the variables
           command = "systemctl --user import-environment";
         }
@@ -37,7 +41,7 @@ with lib;
       input = {
         "type:pointer" = {
           accel_profile = "flat";
-          pointer_accel = "-0.25";
+          pointer_accel = "-0.5";
           scroll_factor = "1";
         };
       };

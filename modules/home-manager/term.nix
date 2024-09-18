@@ -3,6 +3,15 @@
 {
   programs.alacritty = {
     enable = true;
+    settings = {
+      keyboard.bindings = [
+        {
+          key = "Return";
+          mods = "Control|Shift";
+          action = "SpawnNewInstance";
+        }
+      ];
+    };
   };
 
   programs.lf = {
