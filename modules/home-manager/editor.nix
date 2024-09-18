@@ -4,7 +4,7 @@
   programs.helix = {
     enable = true;
     settings = {
-      theme = "autumn_night";
+      theme = "everforest_dark";
       editor = {
         cursorline = true;
         line-number = "relative";

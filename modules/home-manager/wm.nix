@@ -15,7 +15,6 @@ with lib;
       terminal = "alacritty";
       startup = [
         { command = "mako"; }
-        { command = "kanshi"; }
         {
           # This ensures all user units started after the command (not those already running) set the variables
           command = "systemctl --user import-environment";
@@ -56,8 +55,16 @@ with lib;
     enable = true;
     settings = [
       {
-        output.criteria = "Dell Inc. DELL U2720Q 87RFX83";
-        output.scale = 1.5;
+        profile.outputs = [
+          {
+            criteria = "eDP-1";
+            status = "disable";
+          }
+          {
+            criteria = "Dell Inc. DELL U2720Q 87RFX83";
+            scale = 1.5;
+          }
+        ];
       }
     ];
   };
