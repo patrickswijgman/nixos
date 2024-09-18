@@ -54,6 +54,12 @@ with lib;
 
   services.kanshi = {
     enable = true;
+    settings = [
+      {
+        output.criteria = "Dell Inc. DELL U2720Q 87RFX83";
+        output.scale = 1.5;
+      }
+    ];
   };
 
   services.mako = {

@@ -25,6 +25,7 @@
       TranslateEnabled = false;
       # Check about:config for options.
       Preferences = {
+        "app.normandy.first_run" = false;
         "browser.aboutConfig.showWarning" = false;
         "browser.ctrlTab.sortByRecentlyUsed" = true;
       };
