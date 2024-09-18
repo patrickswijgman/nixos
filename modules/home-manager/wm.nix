@@ -14,7 +14,13 @@ with lib;
       modifier = "Mod4";
       terminal = "alacritty";
       startup = [
-        { command = "mako"; }
+        {
+          command = "mako";
+        }
+        {
+          command = "makoctl reload";
+          always = true;
+        }
         {
           command = "systemctl --user restart kanshi";
           always = true;
@@ -75,6 +81,8 @@ with lib;
 
   services.mako = {
     enable = true;
+    anchor = "top-center";
+    margin = "20";
   };
 
   home.packages = with pkgs; [
