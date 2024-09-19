@@ -62,7 +62,7 @@
     packages = with pkgs; [
       dejavu_fonts
       fira-code
-      font-awesome
+      font-awesome_4
     ];
     fontconfig = {
       enable = true;
@@ -95,6 +95,9 @@
 
   # Enable OpenGL for hardware accelaration.
   hardware.graphics.enable = true;
+
+  # Whether to enable automatic HiDPI mode.
+  services.displayManager.sddm.enableHidpi = true;
 
   # Whether to enable the OpenSSH secure shell daemon, which allows secure remote logins.
   services.openssh.enable = true;

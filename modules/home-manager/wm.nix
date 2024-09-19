@@ -10,6 +10,7 @@ with lib;
 {
   wayland.windowManager.sway = {
     enable = true;
+    wrapperFeatures.gtk = true;
     config = rec {
       modifier = "Mod4";
       terminal = "alacritty";
@@ -51,6 +52,37 @@ with lib;
           scroll_factor = "1";
         };
       };
+      bars = [
+        { statusCommand = "i3status-rs ~/.config/i3status-rust/config-default.toml"; }
+      ];
+    };
+  };
+
+  programs.i3status-rust = {
+    enable = true;
+    bars = {
+      default = {
+        theme = "native";
+        icons = "awesome4";
+        # https://docs.rs/i3status-rs/latest/i3status_rs/blocks/index.html#modules
+        blocks = [
+          { block = "disk_space"; }
+          { block = "memory"; }
+          { block = "cpu"; }
+          { block = "music"; }
+          {
+            block = "sound";
+            format = " $icon {$volume.eng(w:2)|} $output_description ";
+          }
+          {
+            block = "net";
+            format = " $icon {$signal_strength $ssid|Wired connection} ";
+          }
+          { block = "backlight"; }
+          { block = "battery"; }
+          { block = "time"; }
+        ];
+      };
     };
   };
 
@@ -68,11 +100,30 @@ with lib;
         profile.outputs = [
           {
             criteria = "eDP-1";
+            status = "enable";
+          }
+        ];
+      }
+      {
+        profile.outputs = [
+          {
+            criteria = "eDP-1";
             status = "disable";
           }
           {
             criteria = "Dell Inc. DELL U2720Q 87RFX83";
             scale = 1.5;
+          }
+        ];
+      }
+      {
+        profile.outputs = [
+          {
+            criteria = "eDP-1";
+            status = "disable";
+          }
+          {
+            criteria = "Iiyama North America PL2760Q 1154192101586";
           }
         ];
       }
@@ -82,7 +133,14 @@ with lib;
   services.mako = {
     enable = true;
     anchor = "top-center";
-    margin = "20";
+    margin = "24";
+  };
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    name = "Vanilla-DMZ";
+    package = pkgs.vanilla-dmz;
+    size = 48;
   };
 
   home.packages = with pkgs; [
