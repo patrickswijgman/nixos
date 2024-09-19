@@ -28,6 +28,7 @@
 
   programs.fzf = {
     enable = true;
+    enableFishIntegration = true;
   };
 
   programs.htop = {
@@ -35,6 +36,7 @@
   };
 
   home.packages = with pkgs; [
+    unzip
     gdu
   ];
 }
