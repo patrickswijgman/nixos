@@ -9,6 +9,7 @@
         cursorline = true;
         line-number = "relative";
         bufferline = "multiple";
+        popup-border = "all";
         shell = [
           "fish"
           "-c"
@@ -88,30 +89,32 @@
           "typescript-language-server"
           "vscode-eslint-language-server"
         ];
+        auto-format = true;
         formatter = {
-          command = "prettierd";
+          command = "npx";
           args = [
+            "prettier"
             "--parser"
             "typescript"
           ];
         };
-        auto-format = true;
       }
       {
         name = "tsx";
         language-servers = [
           "typescript-language-server"
           "vscode-eslint-language-server"
-          "tailwindcss-language-server"
+          "tailwindcss-ls"
         ];
+        auto-format = true;
         formatter = {
-          command = "prettierd";
+          command = "npx";
           args = [
+            "prettier"
             "--parser"
             "typescript"
           ];
         };
-        auto-format = true;
       }
     ];
     languages.language-server.typescript-language-server = {
@@ -126,7 +129,6 @@
     typescript-language-server
     vscode-langservers-extracted
     tailwindcss-language-server
-    prettierd
   ];
 
   home.sessionVariables = {
