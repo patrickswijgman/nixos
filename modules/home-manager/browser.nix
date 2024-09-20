@@ -15,14 +15,21 @@
         "nl"
       ];
       SearchEngines.Default = "DuckDuckGo";
+      SearchEngines.PreventInstalls = true;
       DisablePocket = true;
       DisplayBookmarksToolbar = "never";
       DisplayMenuBar = "default-off";
+      DisableProfileImport = true;
+      DisableSetDesktopBackground = true;
       FirefoxHome.TopSites = false;
       FirefoxHome.SponsoredTopSites = false;
       FirefoxSuggest.WebSuggestions = false;
       FirefoxSuggest.SponsoredSuggestions = false;
       TranslateEnabled = false;
+      ManagedBookmarks = [ ];
+      NoDefaultBookmarks = true;
+      DownloadDirectory = "~/Downloads";
+      PromptForDownloadLocation = false;
       # Check about:config for options.
       Preferences = {
         "app.normandy.first_run" = false;
