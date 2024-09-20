@@ -76,7 +76,7 @@ with lib;
           }
           {
             block = "net";
-            format = " $icon {$signal_strength $ssid|Wired connection} ";
+            format = " $icon{ $signal_strength $ssid | $ip }";
           }
           { block = "backlight"; }
           { block = "battery"; }
@@ -133,14 +133,13 @@ with lib;
   services.mako = {
     enable = true;
     anchor = "top-center";
-    margin = "24";
+    margin = "32";
   };
 
   home.pointerCursor = {
     gtk.enable = true;
     name = "Vanilla-DMZ";
     package = pkgs.vanilla-dmz;
-    size = 48;
   };
 
   home.packages = with pkgs; [

@@ -3,6 +3,7 @@
 {
   imports = [
     ./browser.nix
+    ./dev.nix
     ./editor.nix
     ./git.nix
     ./shell.nix

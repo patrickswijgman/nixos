@@ -123,14 +123,6 @@
     };
   };
 
-  home.packages = with pkgs; [
-    nil
-    nixfmt-rfc-style
-    typescript-language-server
-    vscode-langservers-extracted
-    tailwindcss-language-server
-  ];
-
   home.sessionVariables = {
     EDITOR = "hx";
   };
