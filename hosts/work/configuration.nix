@@ -30,6 +30,8 @@
 
   # Enable home manager.
   home-manager = {
+    # Use global nixpkgs config to allow unfree packages.
+    useGlobalPkgs = true;
     extraSpecialArgs = {
       inherit inputs;
     };
