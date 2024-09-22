@@ -30,6 +30,10 @@ with lib;
           # This ensures all user units started after the command (not those already running) set the variables
           command = "systemctl --user import-environment";
         }
+        {
+          # https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
+          command = "gsettings set org.gnome.desktop.interface cursor-size 24";
+        }
       ];
       keybindings = mkOptionDefault {
         "${modifier}+Ctrl+l" = "exec swaylock";
@@ -138,12 +142,14 @@ with lib;
 
   home.pointerCursor = {
     gtk.enable = true;
+    x11.enable = true;
     name = "Vanilla-DMZ";
     package = pkgs.vanilla-dmz;
     size = 24;
   };
 
   home.packages = with pkgs; [
+    glib
     xdg-utils
     wl-clipboard
     pamixer

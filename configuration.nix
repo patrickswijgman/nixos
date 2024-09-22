@@ -47,6 +47,9 @@
   # Enable fish on system level as well to disable the shell warning.
   programs.fish.enable = true;
 
+  # Enable dconf for GNOME settings.
+  programs.dconf.enable = true;
+
   # Add desktop portals for Wayland.
   xdg = {
     portal = {
@@ -96,9 +99,6 @@
 
   # Enable OpenGL for hardware accelaration.
   hardware.graphics.enable = true;
-
-  # Whether to enable automatic HiDPI mode.
-  services.displayManager.sddm.enableHidpi = true;
 
   # Whether to enable the OpenSSH secure shell daemon, which allows secure remote logins.
   services.openssh.enable = true;
