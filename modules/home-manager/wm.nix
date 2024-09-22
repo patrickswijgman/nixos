@@ -72,7 +72,7 @@ with lib;
           { block = "music"; }
           {
             block = "sound";
-            format = " $icon {$volume.eng(w:2)|} $output_description ";
+            format = " $icon{ $volume.eng(w:2)|} $output_description ";
           }
           {
             block = "net";
@@ -140,6 +140,7 @@ with lib;
     gtk.enable = true;
     name = "Vanilla-DMZ";
     package = pkgs.vanilla-dmz;
+    size = 24;
   };
 
   home.packages = with pkgs; [
