@@ -5,6 +5,7 @@
     enable = true;
     settings = {
       theme = "everforest_dark";
+
       editor = {
         cursorline = true;
         line-number = "relative";
@@ -31,6 +32,7 @@
           max-indent-retain = 0;
         };
       };
+
       keys.normal = {
         "C-h" = "jump_view_left";
         "C-j" = "jump_view_down";
@@ -59,12 +61,14 @@
           "keep_primary_selection"
         ];
       };
+
       keys.insert = {
         "esc" = [
           "collapse_selection"
           "normal_mode"
         ];
       };
+
       keys.select = {
         "C-d" = [
           "search_selection"
@@ -77,12 +81,14 @@
         ];
       };
     };
+
     languages.language = [
       {
         name = "nix";
         auto-format = true;
         formatter.command = "nixfmt";
       }
+
       {
         name = "typescript";
         language-servers = [
@@ -99,6 +105,7 @@
           ];
         };
       }
+
       {
         name = "tsx";
         language-servers = [
@@ -116,7 +123,108 @@
           ];
         };
       }
+
+      {
+        name = "javascript";
+        language-servers = [
+          "typescript-language-server"
+          "vscode-eslint-language-server"
+        ];
+        auto-format = true;
+        formatter = {
+          command = "npx";
+          args = [
+            "prettier"
+            "--parser"
+            "typescript"
+          ];
+        };
+      }
+
+      {
+        name = "jsx";
+        language-servers = [
+          "typescript-language-server"
+          "vscode-eslint-language-server"
+          "tailwindcss-ls"
+        ];
+        auto-format = true;
+        formatter = {
+          command = "npx";
+          args = [
+            "prettier"
+            "--parser"
+            "typescript"
+          ];
+        };
+      }
+
+      {
+        name = "html";
+        auto-format = true;
+        formatter = {
+          command = "npx";
+          args = [
+            "prettier"
+            "--parser"
+            "html"
+          ];
+        };
+      }
+
+      {
+        name = "css";
+        auto-format = true;
+        formatter = {
+          command = "npx";
+          args = [
+            "prettier"
+            "--parser"
+            "css"
+          ];
+        };
+      }
+
+      {
+        name = "json";
+        auto-format = true;
+        formatter = {
+          command = "npx";
+          args = [
+            "prettier"
+            "--parser"
+            "json"
+          ];
+        };
+      }
+
+      {
+        name = "yaml";
+        auto-format = true;
+        formatter = {
+          command = "npx";
+          args = [
+            "prettier"
+            "--parser"
+            "yaml"
+          ];
+        };
+      }
+
+      {
+        name = "markdown";
+        auto-format = true;
+        formatter = {
+          command = "npx";
+          args = [
+            "prettier"
+            "--parser"
+            "markdown"
+          ];
+        };
+      }
     ];
+
     languages.language-server.typescript-language-server = {
       config.preferences.importModuleSpecifierPreference = "non-relative";
       config.preferences.importModuleSpecifierEnding = "js";
