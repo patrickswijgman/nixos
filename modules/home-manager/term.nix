@@ -16,6 +16,9 @@
 
   programs.lf = {
     enable = true;
+    settings = {
+      hidden = true;
+    };
   };
 
   programs.lazygit = {
