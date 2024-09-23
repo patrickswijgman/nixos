@@ -35,6 +35,7 @@
         "app.normandy.first_run" = false;
         "browser.aboutConfig.showWarning" = false;
         "browser.ctrlTab.sortByRecentlyUsed" = true;
+        "devtools.theme" = "dark";
       };
       # Check https://mozilla.github.io/policy-templates/#extensionsettings for options.
       ExtensionSettings = {

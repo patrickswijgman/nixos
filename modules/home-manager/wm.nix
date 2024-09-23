@@ -137,7 +137,7 @@ with lib;
   services.mako = {
     enable = true;
     anchor = "top-center";
-    margin = "32";
+    margin = "30,20,10";
   };
 
   home.pointerCursor = {

@@ -19,6 +19,9 @@
     settings = {
       hidden = true;
     };
+    keybindings = {
+      "D" = "trash";
+    };
   };
 
   programs.lazygit = {
