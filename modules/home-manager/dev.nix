@@ -1,5 +1,10 @@
 { config, pkgs, ... }:
 
+let
+  vscode-langservers-extracted_4-8-0 = pkgs.vscode-langservers-extracted.overrideAttrs (oldAttrs: {
+    version = "4.8.0";
+  });
+in
 {
   programs.go = {
     enable = true;
@@ -16,8 +21,8 @@
     nodejs_20
 
     typescript-language-server
-    vscode-langservers-extracted
     tailwindcss-language-server
+    vscode-langservers-extracted_4-8-0
 
     marksman
     yaml-language-server
