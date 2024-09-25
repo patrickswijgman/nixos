@@ -47,7 +47,12 @@
     };
   };
 
+  programs.chromium = {
+    enable = true;
+  };
+
   home.sessionVariables = {
+    BROWSER = "firefox-esr";
     MOZ_ENABLE_WAYLAND = 1;
   };
 }
