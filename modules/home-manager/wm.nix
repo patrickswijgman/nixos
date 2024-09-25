@@ -34,12 +34,17 @@ with lib;
           # https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
           command = "gsettings set org.gnome.desktop.interface cursor-size 24";
         }
+        {
+          command = "xdg-settings set default-web-browser firefox-esr.desktop";
+        }
       ];
       keybindings = mkOptionDefault {
         "${modifier}+Ctrl+l" = "exec swaylock";
         "${modifier}+Print" = "exec grimshot copy active";
         "${modifier}+Shift+s" = "exec grimshot copy area";
         "${modifier}+Tab" = "workspace back_and_forth";
+        "${modifier}+s" = "splitv";
+        "${modifier}+v" = "splith";
         "XF86AudioMute" = "exec pamixer -t";
         "XF86AudioRaiseVolume" = "exec pamixer -i 5";
         "XF86AudioLowerVolume" = "exec pamixer -d 5";
@@ -52,7 +57,7 @@ with lib;
       input = {
         "type:pointer" = {
           accel_profile = "flat";
-          pointer_accel = "-0.5";
+          pointer_accel = "-0.4";
           scroll_factor = "1";
         };
       };
