@@ -1,9 +1,12 @@
 { config, pkgs, ... }:
 
 let
-  vscode-langservers-extracted_4-8-0 = pkgs.vscode-langservers-extracted.overrideAttrs (oldAttrs: {
-    version = "4.8.0";
-  });
+  # Use vscode-langservers-extracted pinned at 4.8.0 for Helix.
+  # https://github.com/hrsh7th/vscode-langservers-extracted/commit/859ca87fd778a862ee2c9f4c03017775208d033a#comments
+  oldPkgs = import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/e89cf1c932006531f454de7d652163a9a5c86668.tar.gz";
+    sha256 = "09cbqscrvsd6p0q8rswwxy7pz1p1qbcc8cdkr6p6q8sx0la9r12c";
+  }) { inherit (pkgs) system; };
 in
 {
   programs.go = {
@@ -22,10 +25,12 @@ in
 
     typescript-language-server
     tailwindcss-language-server
-    vscode-langservers-extracted_4-8-0
+    (oldPkgs.vscode-langservers-extracted)
 
     marksman
     yaml-language-server
+
+    typos-lsp
 
     docker-compose-language-service
     dockerfile-language-server-nodejs
