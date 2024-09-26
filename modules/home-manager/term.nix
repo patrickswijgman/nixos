@@ -19,9 +19,6 @@
     settings = {
       hidden = true;
     };
-    keybindings = {
-      "D" = "trash";
-    };
   };
 
   programs.lazygit = {
@@ -43,6 +40,7 @@
 
   home.packages = with pkgs; [
     unzip
+    tree
     gdu
   ];
 }

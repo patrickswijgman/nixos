@@ -82,6 +82,10 @@
       };
     };
 
+    languages.language-server.typos = {
+      command = "typos-lsp";
+    };
+
     languages.language = [
       {
         name = "nix";
@@ -94,6 +98,7 @@
         language-servers = [
           "typescript-language-server"
           "vscode-eslint-language-server"
+          "typos"
         ];
         auto-format = true;
         formatter = {
@@ -112,6 +117,7 @@
           "typescript-language-server"
           "vscode-eslint-language-server"
           "tailwindcss-ls"
+          "typos"
         ];
         auto-format = true;
         formatter = {
@@ -129,6 +135,7 @@
         language-servers = [
           "typescript-language-server"
           "vscode-eslint-language-server"
+          "typos"
         ];
         auto-format = true;
         formatter = {
@@ -147,6 +154,7 @@
           "typescript-language-server"
           "vscode-eslint-language-server"
           "tailwindcss-ls"
+          "typos"
         ];
         auto-format = true;
         formatter = {
@@ -213,6 +221,10 @@
 
       {
         name = "markdown";
+        language-servers = [
+          "marksman"
+          "typos"
+        ];
         auto-format = true;
         formatter = {
           command = "npx";
