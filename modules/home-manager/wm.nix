@@ -43,7 +43,7 @@ with lib;
         "${modifier}+Print" = "exec grimshot copy active";
         "${modifier}+Shift+s" = "exec grimshot copy area";
         "${modifier}+Tab" = "workspace back_and_forth";
-        "${modifier}+d" = "exec rofi -show run";
+        "${modifier}+d" = "exec bemenu-run";
         "${modifier}+s" = "splitv";
         "${modifier}+v" = "splith";
         "XF86AudioMute" = "exec pamixer -t";
@@ -68,10 +68,19 @@ with lib;
     };
   };
 
-  programs.rofi = {
+  # programs.rofi = {
+  #   enable = true;
+  #   package = pkgs.rofi-wayland;
+  #   terminal = "alacritty";
+  # };
+
+  programs.bemenu = {
     enable = true;
-    package = pkgs.rofi-wayland;
-    terminal = "alacritty";
+    settings = {
+      prompt = ">";
+      list = 20;
+      single-instance = true;
+    };
   };
 
   programs.i3status-rust = {

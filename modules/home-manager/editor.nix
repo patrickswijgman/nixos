@@ -82,6 +82,11 @@
       };
     };
 
+    languages.language-server.typescript-language-server = {
+      config.preferences.importModuleSpecifierPreference = "non-relative";
+      config.preferences.importModuleSpecifierEnding = "js";
+    };
+
     languages.language-server.typos = {
       command = "typos-lsp";
     };
@@ -237,10 +242,6 @@
       }
     ];
 
-    languages.language-server.typescript-language-server = {
-      config.preferences.importModuleSpecifierPreference = "non-relative";
-      config.preferences.importModuleSpecifierEnding = "js";
-    };
   };
 
   home.sessionVariables = {
