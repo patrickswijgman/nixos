@@ -43,6 +43,7 @@ with lib;
         "${modifier}+Print" = "exec grimshot copy active";
         "${modifier}+Shift+s" = "exec grimshot copy area";
         "${modifier}+Tab" = "workspace back_and_forth";
+        "${modifier}+d" = "exec rofi -show run";
         "${modifier}+s" = "splitv";
         "${modifier}+v" = "splith";
         "XF86AudioMute" = "exec pamixer -t";
@@ -67,6 +68,12 @@ with lib;
     };
   };
 
+  programs.rofi = {
+    enable = true;
+    package = pkgs.rofi-wayland;
+    terminal = "alacritty";
+  };
+
   programs.i3status-rust = {
     enable = true;
     bars = {
@@ -82,6 +89,10 @@ with lib;
           {
             block = "sound";
             format = " $icon{ $volume.eng(w:2)|} $output_description ";
+          }
+          {
+            block = "bluetooth";
+            mac = "D8:AA:59:84:77:CD"; # JBL LIVE PRO+ TWS
           }
           {
             block = "net";
@@ -157,6 +168,7 @@ with lib;
     glib
     xdg-utils
     wl-clipboard
+    dmenu
     pamixer
     playerctl
     brightnessctl

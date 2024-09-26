@@ -14,27 +14,33 @@ in
   };
 
   home.packages = with pkgs; [
+    # Nix
     nil
     nixfmt-rfc-style
 
+    # Go
     gopls
     golangci-lint
     golangci-lint-langserver
 
+    # Web
     nodejs_20
-
     typescript-language-server
     tailwindcss-language-server
     (oldPkgs.vscode-langservers-extracted)
 
+    # Text and config files
     marksman
     yaml-language-server
 
-    typos-lsp
-
+    # Docker
     docker-compose-language-service
     dockerfile-language-server-nodejs
 
+    # General
+    typos-lsp
+
+    # Other
     aseprite
   ];
 }
