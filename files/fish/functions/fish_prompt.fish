@@ -85,4 +85,10 @@ if set -l repo_type (_repo_type)
     end
 end
 
-echo -n -s $arrow ' '$cwd $repo_info $normal ' '
+set -l nix_shell_info (
+  if test -n "$IN_NIX_SHELL"
+    echo -n "$yellow<nix-shell>"
+  end
+)
+
+echo -n -s $arrow $nix_shell_info ' '$cwd $repo_info $normal ' '
