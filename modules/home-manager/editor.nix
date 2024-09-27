@@ -82,13 +82,17 @@
       };
     };
 
-    languages.language-server.typescript-language-server = {
-      config.preferences.importModuleSpecifierPreference = "non-relative";
-      config.preferences.importModuleSpecifierEnding = "js";
+    languages.language-server.scls = {
+      command = "simple-completion-language-server";
     };
 
     languages.language-server.typos = {
       command = "typos-lsp";
+    };
+
+    languages.language-server.typescript-language-server = {
+      config.preferences.importModuleSpecifierPreference = "non-relative";
+      config.preferences.importModuleSpecifierEnding = "js";
     };
 
     languages.language = [
@@ -229,6 +233,7 @@
         language-servers = [
           "marksman"
           "typos"
+          "scls"
         ];
         auto-format = true;
         formatter = {

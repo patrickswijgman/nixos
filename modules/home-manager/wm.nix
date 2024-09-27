@@ -68,18 +68,10 @@ with lib;
     };
   };
 
-  # programs.rofi = {
-  #   enable = true;
-  #   package = pkgs.rofi-wayland;
-  #   terminal = "alacritty";
-  # };
-
   programs.bemenu = {
     enable = true;
     settings = {
       prompt = ">";
-      list = 20;
-      single-instance = true;
     };
   };
 

@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # Use vscode-langservers-extracted pinned at 4.8.0 for Helix.
+    # https://github.com/hrsh7th/vscode-langservers-extracted/commit/859ca87fd778a862ee2c9f4c03017775208d033a#comments
+    oldPkgs.url = "github:nixos/nixpkgs?rev=e89cf1c932006531f454de7d652163a9a5c86668";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -11,20 +15,22 @@
   };
 
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    { self, ... }@inputs:
     {
-      nixosConfigurations."acer" = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
+      nixosConfigurations = {
+        "acer" = inputs.nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [ ./hosts/acer/configuration.nix ];
         };
-        modules = [ ./hosts/acer/configuration.nix ];
-      };
 
-      nixosConfigurations."work" = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
+        "work" = inputs.nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [ ./hosts/work/configuration.nix ];
         };
-        modules = [ ./hosts/work/configuration.nix ];
       };
     };
 }
