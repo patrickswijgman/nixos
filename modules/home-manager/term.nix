@@ -34,6 +34,10 @@
     enableFishIntegration = true;
   };
 
+  programs.bat = {
+    enable = true;
+  };
+
   programs.htop = {
     enable = true;
   };
