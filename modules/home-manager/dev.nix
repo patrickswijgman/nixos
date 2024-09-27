@@ -40,14 +40,12 @@ in
     # Text and config files
     marksman
     yaml-language-server
+    typos-lsp
     (customPkgs.simple-completion-language-server)
 
     # Docker
     docker-compose-language-service
     dockerfile-language-server-nodejs
-
-    # General
-    typos-lsp
 
     # Other
     aseprite
