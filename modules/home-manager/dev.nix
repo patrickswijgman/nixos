@@ -27,6 +27,10 @@ in
     golangci-lint
     golangci-lint-langserver
 
+    # Rust
+    rustc
+    cargo
+
     # Web
     nodejs_20
     typescript-language-server
