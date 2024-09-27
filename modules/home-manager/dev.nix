@@ -10,7 +10,7 @@ with lib;
 
 let
   oldPkgs = import (inputs.oldPkgs) { inherit (pkgs) system; };
-  customPkgs = pkgs.callPackage ./custom.nix { };
+  customPkgs = pkgs.callPackage ./custom.nix { }; # convenience function to pass along default inputs (pkgs, libs)
 in
 {
   programs.go = {

@@ -18,7 +18,7 @@ with lib;
       sha256 = "sha256-4wceSbjDvzr2dcaYq5I/KRBTFgvolvnF8sECpKe/UYE=";
     };
 
-    cargoHash = "sha256-bdhHcp6rzrh5O5+r1rwj0WT696iqEW+i/I7dq2PGuFw="; # Replace with correct hash after build
+    cargoHash = "sha256-bdhHcp6rzrh5O5+r1rwj0WT696iqEW+i/I7dq2PGuFw=";
 
     nativeBuildInputs = [ pkgs.pkg-config ];
 
