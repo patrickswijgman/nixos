@@ -40,12 +40,12 @@ with lib;
       ];
       keybindings = mkOptionDefault {
         "${modifier}+Ctrl+l" = "exec swaylock";
-        "${modifier}+Print" = "exec grimshot copy active";
         "${modifier}+Shift+s" = "exec grimshot copy area";
         "${modifier}+Tab" = "workspace back_and_forth";
         "${modifier}+d" = "exec bemenu-run";
         "${modifier}+s" = "splitv";
         "${modifier}+v" = "splith";
+        "Print" = "exec grimshot copy active";
         "XF86AudioMute" = "exec pamixer -t";
         "XF86AudioRaiseVolume" = "exec pamixer -i 5";
         "XF86AudioLowerVolume" = "exec pamixer -d 5";
@@ -169,7 +169,6 @@ with lib;
     glib
     xdg-utils
     wl-clipboard
-    dmenu
     pamixer
     playerctl
     brightnessctl

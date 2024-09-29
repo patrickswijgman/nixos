@@ -19,7 +19,20 @@
     settings = {
       hidden = true;
     };
+    previewer.source = pkgs.writeShellScript "pv.sh" ''
+      #!/bin/sh
+      case "$1" in
+          *.tar*) tar tf "$1";;
+          *.zip) unzip -l "$1";;
+          *) bat --style=full --color=always "$1";;
+      esac
+    '';
   };
+
+  # programs.broot = {
+  #   enable = true;
+  #   enableFishIntegration = true;
+  # };
 
   programs.lazygit = {
     enable = true;

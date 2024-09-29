@@ -38,7 +38,6 @@
         "C-j" = "jump_view_down";
         "C-k" = "jump_view_up";
         "C-l" = "jump_view_right";
-        "C-a" = "select_all";
         "C-r" = "redo";
         "A-h" = "goto_previous_buffer";
         "A-l" = "goto_next_buffer";
