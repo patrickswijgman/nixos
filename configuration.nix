@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   # Enable networking
@@ -49,6 +54,15 @@
 
   # Enable dconf for GNOME settings.
   programs.dconf.enable = true;
+
+  # Enable home manager.
+  home-manager = {
+    # Use global nixpkgs config to allow unfree packages.
+    useGlobalPkgs = true;
+    extraSpecialArgs = {
+      inherit inputs;
+    };
+  };
 
   # Add desktop portals for Wayland.
   xdg = {

@@ -27,16 +27,7 @@
   networking.hostName = "patrick-acer";
 
   # Enable home manager.
-  home-manager = {
-    # Use global nixpkgs config to allow unfree packages.
-    useGlobalPkgs = true;
-    extraSpecialArgs = {
-      inherit inputs;
-    };
-    users = {
-      "patrick" = import ./home.nix;
-    };
-  };
+  home-manager.users.patrick = import ./home.nix;
 
   # Enable the stock NixOS power management tool which allows for managing hibernate and suspend states.
   powerManagement.enable = true;
