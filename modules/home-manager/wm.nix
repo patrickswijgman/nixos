@@ -34,9 +34,6 @@ with lib;
           # https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
           command = "gsettings set org.gnome.desktop.interface cursor-size 24";
         }
-        {
-          command = "xdg-settings set default-web-browser firefox-esr.desktop";
-        }
       ];
       keybindings = mkOptionDefault {
         "${modifier}+Ctrl+l" = "exec swaylock";
