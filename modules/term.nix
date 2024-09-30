@@ -58,6 +58,7 @@
       unzip
       tree
       gdu
+      openvpn
     ];
   };
 }
