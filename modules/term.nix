@@ -30,11 +30,6 @@
       '';
     };
 
-    # programs.broot = {
-    #   enable = true;
-    #   enableFishIntegration = true;
-    # };
-
     programs.lazygit = {
       enable = true;
     };
