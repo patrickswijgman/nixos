@@ -31,20 +31,12 @@ with lib;
             # This ensures all user units started after the command (not those already running) set the variables
             command = "systemctl --user import-environment";
           }
-          # {
-          #   # https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
-          #   command = "gsettings set org.gnome.desktop.interface cursor-theme Vanilla-DMZ";
-          # }
-          # {
-          #   # https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
-          #   command = "gsettings set org.gnome.desktop.interface cursor-size 24";
-          # }
         ];
         keybindings = mkOptionDefault {
           "${modifier}+Ctrl+l" = "exec swaylock";
           "${modifier}+Shift+s" = "exec grimshot copy area";
           "${modifier}+Tab" = "workspace back_and_forth";
-          "${modifier}+d" = "exec bemenu-run";
+          "${modifier}+d" = "exec rofi -show run";
           "${modifier}+s" = "splitv";
           "${modifier}+v" = "splith";
           "Print" = "exec grimshot copy active";
@@ -70,11 +62,9 @@ with lib;
       };
     };
 
-    programs.bemenu = {
+    programs.rofi = {
       enable = true;
-      settings = {
-        prompt = ">";
-      };
+      package = pkgs.rofi-wayland;
     };
 
     programs.i3status-rust = {
@@ -161,14 +151,6 @@ with lib;
       margin = "30,20,10";
     };
 
-    # home.pointerCursor = {
-    #   gtk.enable = true;
-    #   x11.enable = true;
-    #   name = "Vanilla-DMZ";
-    #   package = pkgs.vanilla-dmz;
-    #   size = 24;
-    # };
-
     home.pointerCursor = {
       name = "Adwaita";
       package = pkgs.adwaita-icon-theme;
@@ -183,7 +165,6 @@ with lib;
     };
 
     home.packages = with pkgs; [
-      # glib
       xdg-utils
       wl-clipboard
       pamixer
