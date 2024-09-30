@@ -25,7 +25,7 @@
         case "$1" in
             *.tar*) tar -tf "$1";;
             *.zip) unzip -l "$1";;
-            *) bat --style=full --color=always "$1";;
+            *) bat "$1";;
         esac
       '';
     };
@@ -50,6 +50,9 @@
 
     programs.bat = {
       enable = true;
+      config = {
+        color = "always";
+      };
     };
 
     programs.htop = {
