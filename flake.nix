@@ -6,7 +6,7 @@
 
     # Use vscode-langservers-extracted pinned at 4.8.0 for Helix.
     # https://github.com/hrsh7th/vscode-langservers-extracted/commit/859ca87fd778a862ee2c9f4c03017775208d033a#comments
-    oldPkgs.url = "github:nixos/nixpkgs?rev=e89cf1c932006531f454de7d652163a9a5c86668";
+    oldNixpkgs.url = "github:nixos/nixpkgs?rev=e89cf1c932006531f454de7d652163a9a5c86668";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -18,18 +18,24 @@
     { self, ... }@inputs:
     {
       nixosConfigurations = {
-        "acer" = inputs.nixpkgs.lib.nixosSystem {
+        acer = inputs.nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
           };
-          modules = [ ./hosts/acer/configuration.nix ];
+          modules = [
+            ./configuration.nix
+            ./hosts/acer/configuration.nix
+          ];
         };
 
-        "work" = inputs.nixpkgs.lib.nixosSystem {
+        work = inputs.nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
           };
-          modules = [ ./hosts/work/configuration.nix ];
+          modules = [
+            ./configuration.nix
+            ./hosts/work/configuration.nix
+          ];
         };
       };
     };

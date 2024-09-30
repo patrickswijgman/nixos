@@ -10,13 +10,7 @@
 }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-    ../../configuration.nix
-    ../../modules/nixos/bluetooth.nix
-    ../../modules/nixos/docker.nix
-    inputs.home-manager.nixosModules.default
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -28,12 +22,12 @@
   # Hostname.
   networking.hostName = "patrick-swijgman-work";
 
-  # Enable home manager.
-  home-manager.users.patrick = import ./home.nix;
-
-  # Enable the stock NixOS power management tool which allows for managing hibernate and suspend states.
-  powerManagement.enable = true;
-
-  # A common tool used to save power on laptops.
-  services.tlp.enable = true;
+  # Options for home manager modules.
+  home-manager.users.patrick = {
+    # Git.
+    programs.git = {
+      userName = "Patrick";
+      userEmail = "patrick.swijgman@wearespindle.com";
+    };
+  };
 }

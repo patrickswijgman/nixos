@@ -10,6 +10,11 @@
 }:
 
 {
+  imports = [
+    inputs.home-manager.nixosModules.default
+    ./modules
+  ];
+
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -62,6 +67,23 @@
     extraSpecialArgs = {
       inherit inputs;
     };
+    users.patrick = {
+      # Home Manager needs a bit of information about you and the paths it should manage.
+      home.username = "patrick";
+      home.homeDirectory = "/home/patrick";
+
+      # Let Home Manager install and manage itself.
+      programs.home-manager.enable = true;
+
+      # This value determines the Home Manager release that your configuration is
+      # compatible with. This helps avoid breakage when a new Home Manager release
+      # introduces backwards incompatible changes.
+      #
+      # You should not change this value, even if you update Home Manager. If you do
+      # want to update the value, then make sure to first check the Home Manager
+      # release notes.
+      home.stateVersion = "24.05"; # Please read the comment before changing.
+    };
   };
 
   # Add desktop portals for Wayland.
@@ -105,21 +127,14 @@
     "flakes"
   ];
 
-  # Grant more (within certain boundaries) privileges to programs.
-  security.polkit.enable = true;
+  # Enable the stock NixOS power management tool which allows for managing hibernate and suspend states.
+  powerManagement.enable = true;
 
-  # Fix for swaylock to be able to detect a correct password.
-  security.pam.services.swaylock = { };
-
-  # Enable OpenGL for hardware accelaration.
-  hardware.graphics.enable = true;
+  # A common tool used to save power on laptops.
+  services.tlp.enable = true;
 
   # Whether to enable the OpenSSH secure shell daemon, which allows secure remote logins.
   services.openssh.enable = true;
-
-  # Enable the gnome-keyring secrets vault.
-  # Will be exposed through DBus to programs willing to store secrets.
-  services.gnome.gnome-keyring.enable = true;
 
   # Enable multimedia (sound, video, screensharing) using pipewire.
   security.rtkit.enable = true;
