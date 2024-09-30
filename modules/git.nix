@@ -11,9 +11,6 @@
         push = {
           autoSetupRemote = true;
         };
-        core = {
-          editor = "hx";
-        };
       };
     };
   };

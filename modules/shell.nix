@@ -10,6 +10,7 @@
         fzg.body = builtins.readFile ../files/fish/functions/fzg.fish;
       };
       shellAbbrs = {
+        ns = "nix-shell --run fish -p";
         lg = "lazygit";
       };
     };

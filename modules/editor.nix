@@ -242,6 +242,7 @@
 
     home.sessionVariables = {
       EDITOR = "hx";
+      GIT_EDITOR = "hx";
     };
   };
 }
