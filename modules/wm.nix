@@ -175,7 +175,6 @@ with lib;
       size = 24;
       gtk = {
         enable = true;
-        defaultCursor = "Adwaita";
       };
       x11 = {
         enable = true;
