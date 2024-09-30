@@ -57,9 +57,6 @@
   # Enable fish on system level as well to disable the shell warning.
   programs.fish.enable = true;
 
-  # Enable dconf for GNOME settings.
-  programs.dconf.enable = true;
-
   # Enable home manager.
   home-manager = {
     # Use global nixpkgs config to allow unfree packages.
