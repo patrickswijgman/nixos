@@ -10,7 +10,7 @@ with lib;
 
 let
   oldPkgs = import (inputs.oldNixpkgs) { inherit (pkgs) system; };
-  customPkgs = pkgs.callPackage ./custom.nix { }; # convenience function to pass along default inputs (pkgs, libs)
+  scls = pkgs.callPackage ./custom/scls.nix { }; # convenience function to pass along default inputs (pkgs, libs)
 in
 {
   home-manager.users.patrick = {
@@ -42,7 +42,7 @@ in
       marksman
       yaml-language-server
       typos-lsp
-      (customPkgs.simple-completion-language-server)
+      (scls.package)
 
       # Docker
       docker-compose-language-service

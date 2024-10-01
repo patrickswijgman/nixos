@@ -7,7 +7,7 @@
 with lib;
 
 {
-  simple-completion-language-server = pkgs.rustPlatform.buildRustPackage {
+  package = pkgs.rustPlatform.buildRustPackage {
     pname = "simple-completion-language-server";
     version = "unstable";
 
