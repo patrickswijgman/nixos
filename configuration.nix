@@ -6,8 +6,11 @@
   config,
   pkgs,
   inputs,
+  lib,
   ...
 }:
+
+with lib;
 
 {
   imports = [
@@ -45,7 +48,7 @@
   users.users.patrick = {
     isNormalUser = true;
     description = "Patrick";
-    extraGroups = [
+    extraGroups = mkOptionDefault [
       "networkmanager"
       "wheel"
       "video"
