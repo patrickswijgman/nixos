@@ -34,7 +34,7 @@ with lib;
         ];
         keybindings = mkOptionDefault {
           "${modifier}+Ctrl+l" = "exec swaylock";
-          "${modifier}+Shift+s" = "exec grimshot copy area";
+          "${modifier}+Shift+s" = "exec flameshot gui";
           "${modifier}+Tab" = "workspace back_and_forth";
           "${modifier}+d" = "exec rofi -show run";
           "${modifier}+s" = "splitv";
@@ -105,6 +105,17 @@ with lib;
       };
     };
 
+    services.flameshot = {
+      enable = true;
+      # https://github.com/flameshot-org/flameshot/blob/master/flameshot.example.ini
+      settings = {
+        General = {
+          disabledTrayIcon = true;
+          showDesktopNotification = false;
+        };
+      };
+    };
+
     services.kanshi = {
       enable = true;
       settings = [
@@ -169,7 +180,7 @@ with lib;
       pamixer
       playerctl
       brightnessctl
-      sway-contrib.grimshot
+      kooha
     ];
 
     home.sessionVariables = {
