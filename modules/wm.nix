@@ -112,6 +112,7 @@ with lib;
         General = {
           disabledTrayIcon = true;
           showDesktopNotification = false;
+          showHelp = false;
         };
       };
     };
