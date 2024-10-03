@@ -56,7 +56,10 @@ with lib;
           };
         };
         bars = [
-          { statusCommand = "i3status-rs ~/.config/i3status-rust/config-default.toml"; }
+          {
+            statusCommand = "i3status-rs ~/.config/i3status-rust/config-default.toml";
+            trayOutput = "none";
+          }
         ];
       };
     };
