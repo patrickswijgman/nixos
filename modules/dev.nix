@@ -42,7 +42,7 @@ in
       marksman
       yaml-language-server
       typos-lsp
-      (scls.package)
+      (scls)
 
       # Docker
       docker-compose-language-service
