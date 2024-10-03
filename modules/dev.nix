@@ -47,9 +47,6 @@ in
       # Docker
       docker-compose-language-service
       dockerfile-language-server-nodejs
-
-      # Other
-      aseprite
     ];
   };
 }

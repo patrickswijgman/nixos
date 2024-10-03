@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./apps.nix
     ./bluetooth.nix
     ./browser.nix
     ./dev.nix

@@ -105,18 +105,6 @@ with lib;
       };
     };
 
-    services.flameshot = {
-      enable = true;
-      # https://github.com/flameshot-org/flameshot/blob/master/flameshot.example.ini
-      settings = {
-        General = {
-          disabledTrayIcon = true;
-          showDesktopNotification = false;
-          showHelp = false;
-        };
-      };
-    };
-
     services.kanshi = {
       enable = true;
       settings = [
@@ -160,6 +148,17 @@ with lib;
       enable = true;
       anchor = "top-center";
       margin = "30,20,10";
+    };
+
+    services.flameshot = {
+      enable = true;
+      settings = {
+        General = {
+          disabledTrayIcon = true;
+          showDesktopNotification = false;
+          showHelp = false;
+        };
+      };
     };
 
     home.pointerCursor = {
