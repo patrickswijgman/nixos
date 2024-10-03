@@ -96,12 +96,9 @@ with lib;
     };
     mime = {
       defaultApplications = {
-        "application/pdf" = "firefox-esr.desktop";
         "image/png" = "aseprite.desktop";
         "image/jpg" = "aseprite.desktop";
         "image/jpeg" = "aseprite.desktop";
-        "x-scheme-handler/http" = "firefox-esr.desktop";
-        "x-scheme-handler/https" = "firefox-esr.desktop";
         "x-scheme-handler/slack" = "slack.desktop";
       };
     };
