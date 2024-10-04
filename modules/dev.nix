@@ -32,6 +32,11 @@ in
       rustc
       cargo
 
+      # Python
+      pyright
+      ruff
+      ruff-lsp
+
       # Web
       nodejs_20
       typescript-language-server

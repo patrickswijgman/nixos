@@ -102,6 +102,15 @@
             formatter.command = "nixfmt";
           }
           {
+            name = "python";
+            language-servers = [
+              "pyright"
+              "ruff"
+              "typos"
+            ];
+            auto-format = true;
+          }
+          {
             name = "typescript";
             language-servers = [
               "typescript-language-server"

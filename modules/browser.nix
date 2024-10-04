@@ -24,6 +24,7 @@
         DisableSetDesktopBackground = true;
         FirefoxHome.TopSites = false;
         FirefoxHome.SponsoredTopSites = false;
+        FirefoxHome.Highlights = false;
         FirefoxSuggest.WebSuggestions = false;
         FirefoxSuggest.SponsoredSuggestions = false;
         TranslateEnabled = false;
