@@ -5,7 +5,7 @@
     programs.helix = {
       enable = true;
       settings = {
-        theme = "autumn";
+        theme = "jetbrains_dark";
 
         editor = {
           cursorline = true;
