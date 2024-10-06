@@ -119,9 +119,8 @@
             ];
             auto-format = true;
             formatter = {
-              command = "npx";
+              command = "prettier";
               args = [
-                "prettier"
                 "--parser"
                 "typescript"
               ];
@@ -137,9 +136,8 @@
             ];
             auto-format = true;
             formatter = {
-              command = "npx";
+              command = "prettier";
               args = [
-                "prettier"
                 "--parser"
                 "typescript"
               ];
@@ -154,9 +152,8 @@
             ];
             auto-format = true;
             formatter = {
-              command = "npx";
+              command = "prettier";
               args = [
-                "prettier"
                 "--parser"
                 "typescript"
               ];
@@ -172,9 +169,8 @@
             ];
             auto-format = true;
             formatter = {
-              command = "npx";
+              command = "prettier";
               args = [
-                "prettier"
                 "--parser"
                 "typescript"
               ];
@@ -184,9 +180,8 @@
             name = "html";
             auto-format = true;
             formatter = {
-              command = "npx";
+              command = "prettier";
               args = [
-                "prettier"
                 "--parser"
                 "html"
               ];
@@ -196,9 +191,8 @@
             name = "css";
             auto-format = true;
             formatter = {
-              command = "npx";
+              command = "prettier";
               args = [
-                "prettier"
                 "--parser"
                 "css"
               ];
@@ -208,9 +202,8 @@
             name = "json";
             auto-format = true;
             formatter = {
-              command = "npx";
+              command = "prettier";
               args = [
-                "prettier"
                 "--parser"
                 "json"
               ];
@@ -220,9 +213,8 @@
             name = "yaml";
             auto-format = true;
             formatter = {
-              command = "npx";
+              command = "prettier";
               args = [
-                "prettier"
                 "--parser"
                 "yaml"
               ];
@@ -237,9 +229,8 @@
             ];
             auto-format = true;
             formatter = {
-              command = "npx";
+              command = "prettier";
               args = [
-                "prettier"
                 "--parser"
                 "markdown"
               ];

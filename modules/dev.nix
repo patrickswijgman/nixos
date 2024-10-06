@@ -39,6 +39,7 @@ in
 
       # Web
       nodejs_20
+      nodePackages.prettier
       typescript-language-server
       tailwindcss-language-server
       (oldPkgs.vscode-langservers-extracted)
