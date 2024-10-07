@@ -13,7 +13,7 @@
           bufferline = "multiple";
           popup-border = "all";
           shell = [
-            "fish"
+            "$SHELL"
             "-c"
           ];
           cursor-shape = {

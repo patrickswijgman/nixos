@@ -53,11 +53,7 @@ with lib;
       "wheel"
       "video"
     ];
-    shell = pkgs.fish;
   };
-
-  # Enable fish on system level as well to disable the shell warning.
-  programs.fish.enable = true;
 
   # Enable home manager.
   home-manager = {
@@ -93,14 +89,6 @@ with lib;
         xdg-desktop-portal-wlr
         xdg-desktop-portal-gtk
       ];
-    };
-    mime = {
-      defaultApplications = {
-        "image/png" = "aseprite.desktop";
-        "image/jpg" = "aseprite.desktop";
-        "image/jpeg" = "aseprite.desktop";
-        "x-scheme-handler/slack" = "slack.desktop";
-      };
     };
   };
 

@@ -10,7 +10,7 @@ with lib;
 
 let
   oldPkgs = import (inputs.oldNixpkgs) { inherit (pkgs) system; };
-  scls = pkgs.callPackage ./custom/scls.nix { }; # convenience function to pass along default inputs (pkgs, libs)
+  scls = pkgs.callPackage ./custom/scls.nix { }; # convenience function to pass along default inputs (pkgs, lib)
 in
 {
   home-manager.users.patrick = {

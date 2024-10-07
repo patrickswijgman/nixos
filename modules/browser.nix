@@ -1,4 +1,11 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+
+with lib;
 
 {
   home-manager.users.patrick = {
@@ -56,6 +63,15 @@
     home.sessionVariables = {
       BROWSER = "firefox-esr";
       MOZ_ENABLE_WAYLAND = 1;
+    };
+  };
+
+  xdg = {
+    mime = {
+      defaultApplications = mkOptionDefault {
+        "application/pdf" = "firefox-esr.desktop";
+        "application/json" = "firefox-esr.desktop";
+      };
     };
   };
 }

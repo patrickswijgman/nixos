@@ -11,6 +11,6 @@
     ./git.nix
     ./shell.nix
     ./term.nix
-    ./wm.nix
+    ./windowManager.nix
   ];
 }
