@@ -12,10 +12,6 @@
           line-number = "relative";
           bufferline = "multiple";
           popup-border = "all";
-          shell = [
-            "$SHELL"
-            "-c"
-          ];
           cursor-shape = {
             normal = "block";
             insert = "bar";
