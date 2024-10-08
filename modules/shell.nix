@@ -37,7 +37,7 @@
                 type = "git";
                 style = "plain";
                 foreground = "cyan";
-                template = " {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }}<cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>";
+                template = " {{ .HEAD }}<yellow>{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }}{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>";
                 properties = {
                   branch_icon = "";
                   commit_icon = "@";
@@ -55,6 +55,22 @@
                 style = "plain";
                 foreground = "yellow";
                 template = " (nix-shell)";
+              }
+            ];
+          }
+          {
+            type = "prompt";
+            alignment = "left";
+            newline = true;
+            segments = [
+              {
+                type = "status";
+                style = "plain";
+                foreground = "red";
+                template = "{{ .String }}";
+                properties = {
+                  status_template = "last command failed with exit code {{ .Code }}: {{ reason .Code }}";
+                };
               }
             ];
           }
