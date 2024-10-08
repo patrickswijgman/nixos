@@ -71,6 +71,8 @@ with lib;
       defaultApplications = mkOptionDefault {
         "application/pdf" = "firefox-esr.desktop";
         "application/json" = "firefox-esr.desktop";
+        "x-scheme-handler/http" = "firefox-esr.desktop";
+        "x-scheme-handler/https" = "firefox-esr.desktop";
       };
     };
   };
