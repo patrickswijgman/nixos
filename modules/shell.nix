@@ -34,10 +34,55 @@
                 };
               }
               {
+                type = "git";
+                style = "plain";
+                foreground = "cyan";
+                template = " {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }}<cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>";
+                properties = {
+                  branch_icon = "";
+                  commit_icon = "@";
+                  fetch_status = true;
+                };
+              }
+              {
+                type = "node";
+                style = "plain";
+                foreground = "green";
+                template = " Node {{ .Full }}";
+              }
+              {
+                type = "nix-shell";
+                style = "plain";
+                foreground = "yellow";
+                template = " (nix-shell)";
+              }
+            ];
+          }
+          {
+            type = "prompt";
+            alignment = "left";
+            newline = true;
+            segments = [
+              {
                 type = "text";
                 style = "plain";
-                foreground = "magenta";
-                template = "$";
+                foreground_templates = [
+                  "{{if gt .Code 0}}red{{end}}"
+                  "{{if eq .Code 0}}green{{end}}"
+                ];
+                template = "❯";
+              }
+            ];
+          }
+          {
+            type = "rprompt";
+            segments = [
+              {
+                type = "executiontime";
+                style = "plain";
+                foreground = "yellow";
+                background = "transparent";
+                template = "{{ .FormattedMs }}";
               }
             ];
           }
