@@ -40,11 +40,10 @@ with lib;
         DownloadDirectory = "~/Downloads";
         PromptForDownloadLocation = false;
         # Check about:config for options.
+        # Double check https://mozilla.github.io/policy-templates/#preferences for supported options.
         Preferences = {
-          "app.normandy.first_run" = false;
           "browser.aboutConfig.showWarning" = false;
           "browser.ctrlTab.sortByRecentlyUsed" = true;
-          "devtools.theme" = "dark";
         };
         # Check https://mozilla.github.io/policy-templates/#extensionsettings for options.
         ExtensionSettings = {
