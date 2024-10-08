@@ -37,6 +37,16 @@
             ./hosts/work/configuration.nix
           ];
         };
+
+        desktop = inputs.nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [
+            ./configuration.nix
+            ./hosts/desktop/configuration.nix
+          ];
+        };
       };
     };
 }

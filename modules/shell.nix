@@ -112,10 +112,6 @@
         "~/.ssh/id_ed25519"
       ];
     };
-
-    home.sessionVariables = {
-      SHELL = "fish";
-    };
   };
 
   # Enable fish on system level as well to disable the shell warning.

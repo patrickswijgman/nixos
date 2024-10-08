@@ -12,6 +12,10 @@
           line-number = "relative";
           bufferline = "multiple";
           popup-border = "all";
+          shell = [
+            "fish"
+            "-c"
+          ];
           cursor-shape = {
             normal = "block";
             insert = "bar";
