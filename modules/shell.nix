@@ -25,6 +25,22 @@
             newline = true;
             segments = [
               {
+                type = "status";
+                style = "plain";
+                foreground = "red";
+                template = "{{ .String }}";
+                properties = {
+                  status_template = "last command failed with exit code {{ .Code }}: {{ reason .Code }}";
+                };
+              }
+            ];
+          }
+          {
+            type = "prompt";
+            alignment = "left";
+            newline = true;
+            segments = [
+              {
                 type = "path";
                 style = "plain";
                 foreground = "blue";
@@ -55,22 +71,6 @@
                 style = "plain";
                 foreground = "yellow";
                 template = " (nix-shell)";
-              }
-            ];
-          }
-          {
-            type = "prompt";
-            alignment = "left";
-            newline = true;
-            segments = [
-              {
-                type = "status";
-                style = "plain";
-                foreground = "red";
-                template = "{{ .String }}";
-                properties = {
-                  status_template = "last command failed with exit code {{ .Code }}: {{ reason .Code }}";
-                };
               }
             ];
           }
