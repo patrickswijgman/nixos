@@ -16,7 +16,7 @@ with lib;
         "en-US"
         "nl"
       ];
-      # Check https://mozilla.github.io/policy-templates for policies.
+      # https://mozilla.github.io/policy-templates
       policies = {
         RequestedLocales = [
           "en-US"
@@ -39,13 +39,13 @@ with lib;
         NoDefaultBookmarks = true;
         DownloadDirectory = "~/Downloads";
         PromptForDownloadLocation = false;
-        # Check about:config for options.
+        # See about:config
         # Double check https://mozilla.github.io/policy-templates/#preferences for supported options.
         Preferences = {
           "browser.aboutConfig.showWarning" = false;
           "browser.ctrlTab.sortByRecentlyUsed" = true;
         };
-        # Check https://mozilla.github.io/policy-templates/#extensionsettings for options.
+        # https://mozilla.github.io/policy-templates/#extensionsettings
         ExtensionSettings = {
           "nl-NL@dictionaries.addons.mozilla.org" = {
             install_url = "https://addons.mozilla.org/firefox/downloads/file/3776797/woordenboek_nederlands-4.20.19.xpi";

@@ -7,7 +7,7 @@
       settings = {
         keyboard.bindings = [
           {
-            key = "Return";
+            key = "N";
             mods = "Control|Shift";
             action = "SpawnNewInstance";
           }

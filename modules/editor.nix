@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  helix = pkgs.callPackage ./custom/helix.nix { }; # convenience function to pass along default inputs (pkgs, lib)
+  helix = pkgs.callPackage ./custom/helix.nix { }; # convenience function to inherit inputs (pkgs, lib)
 in
 {
   home-manager.users.patrick = {
@@ -11,6 +11,7 @@ in
       settings = {
         theme = "jetbrains_dark";
 
+        # https://github.com/helix-editor/helix/blob/master/book/src/editor.md
         editor = {
           cursorline = true;
           line-number = "relative";
@@ -20,6 +21,10 @@ in
             "fish"
             "-c"
           ];
+          end-of-line-diagnostics = "hint";
+          inline-diagnostics = {
+            cursor-line = "warning";
+          };
           cursor-shape = {
             normal = "block";
             insert = "bar";
@@ -33,8 +38,6 @@ in
           };
           soft-wrap = {
             enable = true;
-            max-wrap = 25;
-            max-indent-retain = 0;
           };
         };
 
@@ -86,6 +89,7 @@ in
         };
       };
 
+      # https://github.com/helix-editor/helix/blob/master/book/src/languages.md
       languages = {
         language-server = {
           scls = {
@@ -243,6 +247,10 @@ in
         ];
       };
     };
+
+    home.packages = with pkgs; [
+      gcc
+    ];
 
     home.sessionVariables = {
       EDITOR = "hx";
