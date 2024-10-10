@@ -23,14 +23,13 @@ pkgs.rustPlatform.buildRustPackage rec {
   env.HELIX_DISABLE_AUTO_GRAMMAR_BUILD = "true";
   env.HELIX_DEFAULT_RUNTIME = "${placeholder "out"}/lib/runtime";
 
-  buildPhase = ''
-    cargo build --package=helix-term --release --locked
-  '';
+  cargoBuildFlags = [
+    "--package=helix-term"
+    "--release"
+    "--locked"
+  ];
 
-  installPhase = ''
-    mkdir -p $out/bin
-    cp target/release/hx $out/bin
-
+  postInstall = ''
     mkdir -p $out/lib
     cp -r runtime $out/lib
 
