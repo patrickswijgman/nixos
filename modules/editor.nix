@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  helix = pkgs.callPackage ./custom/helix.nix { }; # convenience function to inherit inputs (pkgs, lib)
+  helix = pkgs.callPackage ./custom/helix.nix { };
 in
 {
   home-manager.users.patrick = {

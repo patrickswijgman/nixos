@@ -1,13 +1,8 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}:
+{ config, pkgs, ... }:
 
 let
-  oldPkgs = import (inputs.oldNixpkgs) { inherit (pkgs) system; };
-  scls = pkgs.callPackage ./custom/scls.nix { }; # convenience function to inherit inputs (pkgs, lib)
+  scls = pkgs.callPackage ./custom/scls.nix { };
+  vscode-langservers-extracted = pkgs.callPackage ./custom/vscode-langservers-extracted.nix { };
 in
 {
   home-manager.users.patrick = {
@@ -39,7 +34,7 @@ in
       nodePackages.prettier
       typescript-language-server
       tailwindcss-language-server
-      (oldPkgs.vscode-langservers-extracted)
+      (vscode-langservers-extracted)
 
       # Text and config files
       marksman

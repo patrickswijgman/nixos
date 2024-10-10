@@ -1,7 +1,5 @@
 { pkgs, lib, ... }:
 
-with lib;
-
 pkgs.rustPlatform.buildRustPackage rec {
   pname = "simple-completion-language-server";
   version = "unstable";
@@ -18,7 +16,7 @@ pkgs.rustPlatform.buildRustPackage rec {
   # Don't run tests.
   doCheck = false;
 
-  meta = {
+  meta = with lib; {
     description = "Simple completion language server";
     license = licenses.mit;
     maintainers = with maintainers; [ patrickswijgman ];

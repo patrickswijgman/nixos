@@ -1,7 +1,5 @@
 { pkgs, lib, ... }:
 
-with lib;
-
 pkgs.rustPlatform.buildRustPackage rec {
   pname = "helix";
   version = "unstable";
