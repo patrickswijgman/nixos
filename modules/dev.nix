@@ -1,12 +1,9 @@
 {
   config,
   pkgs,
-  lib,
   inputs,
   ...
 }:
-
-with lib;
 
 let
   oldPkgs = import (inputs.oldNixpkgs) { inherit (pkgs) system; };

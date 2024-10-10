@@ -1,9 +1,13 @@
 { config, pkgs, ... }:
 
+let
+  helix = pkgs.callPackage ./custom/helix.nix { }; # convenience function to pass along default inputs (pkgs, lib)
+in
 {
   home-manager.users.patrick = {
     programs.helix = {
       enable = true;
+      package = helix;
       settings = {
         theme = "jetbrains_dark";
 
