@@ -22,7 +22,6 @@
           {
             type = "prompt";
             alignment = "left";
-            newline = true;
             segments = [
               {
                 type = "status";
@@ -103,6 +102,13 @@
             ];
           }
         ];
+        transient_prompt = {
+          foreground_templates = [
+            "{{if gt .Code 0}}red{{end}}"
+            "{{if eq .Code 0}}green{{end}}"
+          ];
+          template = "❯ ";
+        };
       };
     };
 
