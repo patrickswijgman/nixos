@@ -40,6 +40,9 @@
 
     programs.fzf = {
       enable = true;
+      defaultOptions = [
+        "--bind 'enter:execute:hx {}'"
+      ];
     };
 
     programs.bat = {
