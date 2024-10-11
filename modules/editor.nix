@@ -9,7 +9,7 @@ in
       enable = true;
       package = helix;
       settings = {
-        theme = "fleet_dark";
+        theme = "fleet_dark_custom";
 
         # https://github.com/helix-editor/helix/blob/master/book/src/editor.md
         editor = {
@@ -245,6 +245,15 @@ in
             };
           }
         ];
+      };
+
+      # https://github.com/helix-editor/helix/blob/master/book/src/themes.md#syntax-highlighting
+      themes = {
+        # ~/.local/state/nix/profiles/profile/lib/helix/runtime/themes/fleet_dark.toml
+        fleet_dark_custom = {
+          inherits = "fleet_dark";
+          "ui.text.inactive" = "Gray 80";
+        };
       };
     };
 
