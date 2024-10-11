@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 
 let
-  scls = pkgs.callPackage ./custom/scls.nix { };
-  vscode-langservers-extracted = pkgs.callPackage ./custom/vscode-langservers-extracted.nix { };
+  scls = pkgs.callPackage ./custom/simple-completion-language-server.nix { };
+  vlse = pkgs.callPackage ./custom/vscode-langservers-extracted.nix { };
 in
 {
   home-manager.users.patrick = {
@@ -33,7 +33,7 @@ in
       nodePackages.prettier
       typescript-language-server
       tailwindcss-language-server
-      (vscode-langservers-extracted)
+      (vlse)
 
       # Text and config files
       marksman
