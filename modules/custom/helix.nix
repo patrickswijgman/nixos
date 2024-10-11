@@ -21,7 +21,7 @@ pkgs.rustPlatform.buildRustPackage rec {
   # hx --grammar fetch
   # hx --grammar build
   env.HELIX_DISABLE_AUTO_GRAMMAR_BUILD = "true";
-  env.HELIX_DEFAULT_RUNTIME = "${placeholder "out"}/lib/runtime";
+  env.HELIX_DEFAULT_RUNTIME = "${placeholder "out"}/lib/helix/runtime";
 
   cargoBuildFlags = [
     "--package=helix-term"
@@ -30,8 +30,8 @@ pkgs.rustPlatform.buildRustPackage rec {
   ];
 
   postInstall = ''
-    mkdir -p $out/lib
-    cp -r runtime $out/lib
+    mkdir -p $out/lib/helix
+    cp -r runtime $out/lib/helix
 
     installShellCompletion contrib/completion/hx.{bash,fish,zsh}
 
