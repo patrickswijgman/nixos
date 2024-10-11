@@ -27,7 +27,6 @@ in
       # Python
       pyright
       ruff
-      ruff-lsp
 
       # Web
       nodejs_20
