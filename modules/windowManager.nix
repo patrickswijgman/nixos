@@ -159,6 +159,7 @@ with lib;
         General = {
           disabledTrayIcon = true;
           showDesktopNotification = false;
+          showSidePanelButton = false;
           showHelp = false;
         };
       };
