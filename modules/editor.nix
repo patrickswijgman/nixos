@@ -9,7 +9,7 @@ in
       enable = true;
       package = helix;
       settings = {
-        theme = "jetbrains_dark";
+        theme = "fleet_dark";
 
         # https://github.com/helix-editor/helix/blob/master/book/src/editor.md
         editor = {
