@@ -111,6 +111,16 @@ with lib;
     services.kanshi = {
       enable = true;
       settings = [
+        # Desktop
+        {
+          profile.outputs = [
+            {
+              criteria = "Iiyama North America PL2760Q 1154192101586";
+              mode = "2560x1440@143.856Hz";
+            }
+          ];
+        }
+        # Laptop
         {
           profile.outputs = [
             {
@@ -119,7 +129,6 @@ with lib;
             }
           ];
         }
-        # Home
         {
           profile.outputs = [
             {
@@ -131,7 +140,6 @@ with lib;
             }
           ];
         }
-        # Work office
         {
           profile.outputs = [
             {
