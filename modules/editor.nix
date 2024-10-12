@@ -13,6 +13,7 @@ in
 
         # https://github.com/helix-editor/helix/blob/master/book/src/editor.md
         editor = {
+          scrolloff = 9999;
           cursorline = true;
           line-number = "relative";
           bufferline = "multiple";
