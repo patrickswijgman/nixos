@@ -19,6 +19,7 @@
       enable = true;
       settings = {
         hidden = true;
+        shell = "fish";
       };
       previewer.source = pkgs.writeShellScript "pv.sh" ''
         #!/bin/sh
@@ -40,9 +41,6 @@
 
     programs.fzf = {
       enable = true;
-      defaultOptions = [
-        "--bind 'enter:execute:hx {}'"
-      ];
     };
 
     programs.bat = {
