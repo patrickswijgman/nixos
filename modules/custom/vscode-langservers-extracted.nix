@@ -32,6 +32,5 @@ pkgs.buildNpmPackage rec {
     description = "HTML/CSS/JSON/ESLint language servers extracted from vscode";
     homepage = "https://github.com/hrsh7th/vscode-langservers-extracted";
     license = licenses.mit;
-    maintainers = with maintainers; [ patrickswijgman ];
   };
 }

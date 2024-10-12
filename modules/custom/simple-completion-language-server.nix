@@ -19,6 +19,5 @@ pkgs.rustPlatform.buildRustPackage rec {
   meta = with lib; {
     description = "Simple completion language server";
     license = licenses.mit;
-    maintainers = with maintainers; [ patrickswijgman ];
   };
 }
