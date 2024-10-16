@@ -34,6 +34,7 @@ in
       typescript-language-server
       tailwindcss-language-server
       (vlse)
+      deno
 
       # Text and config files
       marksman
