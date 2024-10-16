@@ -67,9 +67,12 @@ with lib;
 
   xdg = {
     mime = {
+      # https://developer.mozilla.org/en-US/docs/Web/HTTP/MIME_types/Common_types
       defaultApplications = mkOptionDefault {
         "application/pdf" = "firefox-esr.desktop";
         "application/json" = "firefox-esr.desktop";
+        "image/svg+xml" = "firefox-esr.desktop";
+        "image/gif" = "firefox-esr.desktop";
         "x-scheme-handler/http" = "firefox-esr.desktop";
         "x-scheme-handler/https" = "firefox-esr.desktop";
       };

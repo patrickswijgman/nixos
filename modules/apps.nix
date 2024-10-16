@@ -18,10 +18,11 @@ with lib;
 
   xdg = {
     mime = {
+      # https://developer.mozilla.org/en-US/docs/Web/HTTP/MIME_types/Common_types
       defaultApplications = mkOptionDefault {
         "image/png" = "aseprite.desktop";
-        "image/jpg" = "aseprite.desktop";
         "image/jpeg" = "aseprite.desktop";
+        "image/bmp" = "aseprite.desktop";
         "x-scheme-handler/slack" = "slack.desktop";
       };
     };
