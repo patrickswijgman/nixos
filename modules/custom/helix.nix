@@ -25,7 +25,6 @@ pkgs.rustPlatform.buildRustPackage rec {
 
   cargoBuildFlags = [
     "--package=helix-term"
-    "--release"
     "--locked"
   ];
 
