@@ -18,6 +18,7 @@
       settings = {
         version = 2;
         final_space = true;
+        disable_notice = true;
         blocks = [
           {
             type = "prompt";
