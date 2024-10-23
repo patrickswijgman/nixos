@@ -39,6 +39,7 @@ in
       # Text and config files
       marksman
       yaml-language-server
+      taplo
       typos-lsp
       (scls)
 
