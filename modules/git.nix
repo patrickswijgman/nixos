@@ -12,7 +12,7 @@
           autoSetupRemote = true;
         };
         core = {
-          editor = "hx";
+          editor = "vim";
         };
       };
     };
