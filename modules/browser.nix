@@ -25,7 +25,7 @@ with lib;
         SearchEngines.Default = "DuckDuckGo";
         SearchEngines.PreventInstalls = true;
         DisablePocket = true;
-        DisplayBookmarksToolbar = "never";
+        DisplayBookmarksToolbar = "newtab";
         DisplayMenuBar = "default-off";
         DisableProfileImport = true;
         DisableSetDesktopBackground = true;
