@@ -8,7 +8,7 @@
 
     home.packages = with pkgs; [
       # Nix
-      nil
+      nixd
       nixfmt-rfc-style
 
       # Go
