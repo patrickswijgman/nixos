@@ -28,9 +28,6 @@
           font_family = "FiraCode Nerd Font";
         };
         languages = {
-          Nix = {
-            language_servers = [ "nil" ];
-          };
           HTML = {
             formatter = "prettier";
             format_on_save = "on";
