@@ -17,7 +17,7 @@
         gb = "git checkout -b";
         gp = "git pull";
         gP = "git push";
-        ga = "git add";
+        ga = "git add .";
         gm = "git commit -m";
         gma = "git commit --amend";
         gd = "git diff";

@@ -131,6 +131,11 @@ with lib;
   # Whether to enable the OpenSSH secure shell daemon, which allows secure remote logins.
   services.openssh.enable = true;
 
+  # Enable disk mounting.
+  services.devmon.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+
   # Enable multimedia (sound, video, screensharing) using pipewire.
   security.rtkit.enable = true;
   services.pipewire = {
