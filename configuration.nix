@@ -96,7 +96,7 @@ with lib;
   fonts = {
     packages = with pkgs; [
       dejavu_fonts
-      fira-code
+      fira-code-nerdfont
       font-awesome_4
     ];
     fontconfig = {
@@ -104,7 +104,7 @@ with lib;
       defaultFonts = {
         serif = [ "DejaVu Serif" ];
         sansSerif = [ "DejaVu Sans" ];
-        monospace = [ "Fira Code" ];
+        monospace = [ "FiraCode Nerd Font" ];
       };
     };
   };
