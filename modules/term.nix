@@ -55,6 +55,7 @@
     };
 
     home.packages = with pkgs; [
+      slides
       unzip
       tree
       gdu
