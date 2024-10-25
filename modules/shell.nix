@@ -7,9 +7,26 @@
       interactiveShellInit = ''
         set fish_greeting
       '';
-      shellAbbrs = {
-        ns = "nix-shell --run fish -p";
+      shellAliases = {
+        g = "git";
+        zed = "zeditor";
         lg = "lazygit";
+      };
+      shellAbbrs = {
+        gc = "git checkout";
+        gb = "git checkout -b";
+        gp = "git pull";
+        gP = "git push";
+        ga = "git add";
+        gm = "git commit -m";
+        gma = "git commit --amend";
+        gd = "git diff";
+        gl = "git log";
+        gs = "git status";
+        gr = "git rebase -i";
+        gra = "git rebase --abort";
+        grc = "git rebase --continue";
+        ns = "nix-shell --run fish -p";
       };
     };
 
