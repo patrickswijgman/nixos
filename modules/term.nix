@@ -41,12 +41,7 @@
 
     programs.fzf = {
       enable = true;
-      defaultOptions = [
-
-
-
-
-      "--ansi"]
+      defaultOptions = [ "--ansi" ];
     };
 
     programs.bat = {
