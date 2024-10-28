@@ -21,6 +21,7 @@
 
       # Web
       nodejs_20
+      prettierd
       deno
     ];
   };

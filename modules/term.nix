@@ -15,22 +15,6 @@
       };
     };
 
-    programs.lf = {
-      enable = true;
-      settings = {
-        hidden = true;
-        shell = "fish";
-      };
-      previewer.source = pkgs.writeShellScript "pv.sh" ''
-        #!/bin/sh
-        case "$1" in
-            *.tar*) tar -tf "$1";;
-            *.zip) unzip -l "$1";;
-            *) bat "$1";;
-        esac
-      '';
-    };
-
     programs.lazygit = {
       enable = true;
     };
