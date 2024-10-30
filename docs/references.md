@@ -1,4 +1,4 @@
-# Packages and options
+# References
 
 [Home manager option](https://home-manager-options.extranix.com/?query=&release=master)
 

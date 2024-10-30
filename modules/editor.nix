@@ -214,76 +214,85 @@
         {
           key = "<leader>y";
           action = "\"+y";
+          options.desc = "Yank to system clipboard";
           mode = [
             "n"
             "v"
           ];
-          options = {
-            desc = "Yank to system clipboard";
-          };
         }
         {
           key = "<leader>p";
           action = "\"+p";
+          options.desc = "Paste from system clipboard";
           mode = [
             "n"
             "v"
           ];
-          options = {
-            desc = "Paste from system clipboard";
-          };
         }
         {
           key = "<leader>e";
           action = "<cmd>Neotree focus reveal<cr>";
+          options.desc = "Open file explorer";
         }
         {
           key = "<leader>ff";
           action = "<cmd>Telescope find_files<cr>";
+          options.desc = "List files";
         }
         {
           key = "<leader>fg";
           action = "<cmd>Telescope live_grep<cr>";
+          options.desc = "Live fuzzy search in workspace";
         }
         {
           key = "<leader>fw";
           action = "<cmd>Telescope grep_string<cr>";
+          options.desc = "Searches for word under the cursor or selection";
         }
         {
           key = "<leader>/";
           action = "<cmd>Telescope current_buffer_fuzzy_find<cr>";
+          options.desc = "Live fuzzy search in current buffer";
         }
         {
           key = "gd";
           action = "<cmd>Telescope lsp_definitions<cr>";
+          options.desc = "Go to definition for word under the cursor";
         }
         {
           key = "gr";
           action = "<cmd>Telescope lsp_references<cr>";
+          options.desc = "Lists references for word under the cursor";
         }
         {
           key = "gt";
           action = "<cmd>Telescope lsp_type_definitions<cr>";
+          options.desc = "Go to the type definition for word under the cursor";
         }
         {
           key = "<leader>ws";
           action = "<cmd>Telescope lsp_workspace_symbols<cr>";
+          options.desc = "Lists LSP symbols in workspace";
         }
         {
           key = "<leader>ds";
           action = "<cmd>Telescope lsp_document_symbols<cr>";
+          options.desc = "Lists LSP symbols in current buffer (document)";
         }
         {
           key = "<leader>dd";
           action = "<cmd>Telescope diagnostics bufnr=0<cr>";
+          options.desc = "Lists diagnostics in current buffer (document)";
         }
         {
           key = "<leader>vh";
           action = "<cmd>Telescope help_tags<cr>";
+          options.desc = "Lists help tags";
         }
         {
           key = "<leader>?";
           action = "<cmd>WhichKey<cr>";
+          options.desc = "Lists available keymaps in current mode";
         }
       ];
 
