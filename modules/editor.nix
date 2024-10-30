@@ -84,6 +84,21 @@
           enable = true;
         };
 
+        # Enable GitHub Copilot.
+        copilot-vim = {
+          enable = true;
+        };
+
+        # Notifications in the bottom-right for e.g. LSP messages.
+        fidget = {
+          enable = true;
+        };
+
+        # Show buffer tabs at the top.
+        bufferline = {
+          enable = true;
+        };
+
         # Completion engine for different sources such as lsp and buffer.
         cmp = {
           enable = true;
