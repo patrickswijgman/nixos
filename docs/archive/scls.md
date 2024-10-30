@@ -1,4 +1,4 @@
-# Simple completion server
+# Simple completion language server
 
 ### Custom package
 
