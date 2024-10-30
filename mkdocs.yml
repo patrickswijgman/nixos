@@ -1,9 +1,6 @@
 site_name: NixOS
-nav:
-  - Home: index.md
-  - References: references.md
-  - Commands: commands.md
-  - Archive/Helix: archive/helix.md
-  - Archive/Zed: archive/zed.md
-  - Archive/SCLS: archive/scls.md
-theme: readthedocs
+theme:
+  name: readthedocs
+  highlightjs: true
+  hljs_languages:
+    - nix
