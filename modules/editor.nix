@@ -42,7 +42,10 @@
               enabled = true;
               leaveDirsOpen = true;
             };
-            hijackNetrwBehavior = "open_current";
+            filteredItems = {
+              hideDotfiles = false;
+              hideByName = [ ".git" ];
+            };
           };
         };
 
@@ -76,6 +79,11 @@
           };
         };
 
+        # Show keymaps in each mode after a short delay.
+        which-key = {
+          enable = true;
+        };
+
         # Completion engine for different sources such as lsp and buffer.
         cmp = {
           enable = true;
@@ -87,10 +95,16 @@
               end
             '';
             mapping = {
-              "<c-space>" = "cmp.mapping.complete()";
-              "<c-p>" = "cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select })";
-              "<c-n>" = "cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select })";
+              "<up>" = "cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select })";
+              "<down>" = "cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select })";
               "<cr>" = "cmp.mapping.confirm({ select = true })";
+
+              "<c-n>" = "cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select })";
+              "<c-p>" = "cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select })";
+              "<c-y" = "cmp.mapping.confirm({ select = true })";
+
+              "<c-space>" = "cmp.mapping.complete()";
+
               "<c-d>" = "cmp.mapping.scroll_docs(-4)";
               "<c-u>" = "cmp.mapping.scroll_docs(4)";
             };
@@ -101,16 +115,25 @@
           };
           cmdline = {
             "/" = {
+              mapping = {
+                __raw = "cmp.mapping.preset.cmdline()";
+              };
               sources = [
                 { name = "buffer"; }
               ];
             };
             "?" = {
+              mapping = {
+                __raw = "cmp.mapping.preset.cmdline()";
+              };
               sources = [
                 { name = "buffer"; }
               ];
             };
             ":" = {
+              mapping = {
+                __raw = "cmp.mapping.preset.cmdline()";
+              };
               sources = [
                 { name = "path"; }
                 { name = "cmdline"; }
@@ -189,6 +212,28 @@
 
       keymaps = [
         {
+          key = "<leader>y";
+          action = "\"+y";
+          mode = [
+            "n"
+            "v"
+          ];
+          options = {
+            desc = "Yank to system clipboard";
+          };
+        }
+        {
+          key = "<leader>p";
+          action = "\"+p";
+          mode = [
+            "n"
+            "v"
+          ];
+          options = {
+            desc = "Paste from system clipboard";
+          };
+        }
+        {
           key = "<leader>e";
           action = "<cmd>Neotree focus reveal<cr>";
         }
@@ -236,6 +281,10 @@
           key = "<leader>vh";
           action = "<cmd>Telescope help_tags<cr>";
         }
+        {
+          key = "<leader>?";
+          action = "<cmd>WhichKey<cr>";
+        }
       ];
 
       globals = {
@@ -257,12 +306,12 @@
         # Show a "max line length" column.
         colorcolumn = "80,120";
 
-        # Show line numbers
+        # Show line numbers.
         number = true;
         relativenumber = true;
 
-        # Make sure the cursor stays in the center of the screen when scrolling.
-        scrolloff = 9999;
+        # Cursor scroll offset.
+        scrolloff = 8;
 
         # Enable the sign column on the left to show things like warning and errors symbols.
         signcolumn = "yes";
