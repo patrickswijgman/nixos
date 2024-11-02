@@ -30,33 +30,30 @@
           enable = true;
         };
 
-        # Explorer (filesystem, buffers, etc).
+        # File explorer.
         neo-tree = {
           enable = true;
-          enableDiagnostics = false;
-          enableGitStatus = false;
-          popupBorderStyle = "single";
-          window = {
-            position = "left";
-            autoExpandWidth = true;
-          };
-          filesystem = {
-            followCurrentFile = {
-              enabled = true;
+          # Fix: some options are not renamed to snake_case equivalent, using extraOptions instead.
+          extraOptions = {
+            enable_diagnostics = false;
+            enable_git_status = false;
+            popup_border_style = "single";
+            window = {
+              position = "left";
+              auto_expand_width = true;
             };
-            filteredItems = {
-              hideDotfiles = false;
-              hideByName = [ ".git" ];
+            filesystem = {
+              follow_current_file = {
+                enabled = true;
+                leave_dirs_open = true;
+              };
+              filtered_items = {
+                hide_dotfiles = false;
+                hide_by_name = [ ".git" ];
+              };
             };
+            sources = [ "filesystem" ];
           };
-          documentSymbols = {
-            followCursor = true;
-          };
-          sources = [
-            "filesystem"
-            "buffers"
-            "document_symbols"
-          ];
         };
 
         # Syntax highlighting (includes all grammars by default).
@@ -143,7 +140,7 @@
                 filetype = "neo-tree";
                 text = "";
                 text_align = "center";
-                separator = false;
+                separator = true;
               }
             ];
           };
@@ -296,37 +293,27 @@
           ];
         }
         {
-          key = "<leader>ef";
+          key = "<leader>e";
           action = "<cmd>Neotree filesystem reveal<cr>";
           options.desc = "Open file explorer";
         }
         {
-          key = "<leader>eo";
-          action = "<cmd>Neotree document_symbols reveal<cr>";
-          options.desc = "Open outline (document symbols) explorer";
-        }
-        {
-          key = "<leader>eb";
-          action = "<cmd>Neotree buffers reveal<cr>";
-          options.desc = "Open buffers explorer";
-        }
-        {
-          key = "<leader>ff";
+          key = "<leader>f";
           action = "<cmd>Telescope find_files<cr>";
           options.desc = "List files";
         }
         {
-          key = "<leader>fg";
+          key = "<leader>g";
           action = "<cmd>Telescope live_grep<cr>";
           options.desc = "Live fuzzy search in workspace";
         }
         {
-          key = "<leader>fw";
+          key = "<leader>w";
           action = "<cmd>Telescope grep_string<cr>";
           options.desc = "Searches for word under the cursor or selection";
         }
         {
-          key = "<leader>fb";
+          key = "<leader>b";
           action = "<cmd>Telescope buffers<cr>";
           options.desc = "List buffers";
         }
@@ -351,22 +338,22 @@
           options.desc = "Go to the type definition for word under the cursor";
         }
         {
-          key = "<leader>ws";
+          key = "<leader>t";
           action = "<cmd>Telescope lsp_workspace_symbols<cr>";
           options.desc = "Lists LSP symbols in workspace";
         }
         {
-          key = "<leader>ds";
+          key = "<leader>o";
           action = "<cmd>Telescope lsp_document_symbols<cr>";
           options.desc = "Lists LSP symbols in current buffer (document)";
         }
         {
-          key = "<leader>dd";
+          key = "<leader>d";
           action = "<cmd>Telescope diagnostics bufnr=0<cr>";
           options.desc = "Lists diagnostics in current buffer (document)";
         }
         {
-          key = "<leader>vh";
+          key = "<leader>h";
           action = "<cmd>Telescope help_tags<cr>";
           options.desc = "Lists help tags";
         }

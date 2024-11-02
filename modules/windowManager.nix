@@ -211,7 +211,7 @@ with lib;
   # Fix for swaylock to be able to detect a correct password.
   security.pam.services.swaylock = { };
 
-  # Enable OpenGL for hardware accelaration.
+  # Enable OpenGL for hardware acceleration.
   hardware.graphics.enable = true;
 
   # Enable the gnome-keyring secrets vault.
