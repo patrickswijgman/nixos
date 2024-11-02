@@ -108,6 +108,16 @@
         # Show buffer tabs at the top.
         bufferline = {
           enable = true;
+          settings.options = {
+            offsets = [
+              {
+                filetype = "neo-tree";
+                text = "";
+                text_align = "center";
+                separator = false;
+              }
+            ];
+          };
         };
 
         # Completion engine for different sources such as lsp and buffer.

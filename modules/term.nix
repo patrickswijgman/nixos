@@ -41,6 +41,7 @@
     };
 
     home.packages = with pkgs; [
+      pomodoro
       slides
       unzip
       tree
