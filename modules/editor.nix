@@ -30,9 +30,12 @@
           enable = true;
         };
 
-        # File browser.
+        # Explorer.
         neo-tree = {
           enable = true;
+          enableDiagnostics = false;
+          enableGitStatus = false;
+          popupBorderStyle = "single";
           window = {
             position = "left";
             autoExpandWidth = true;
@@ -47,9 +50,17 @@
               hideByName = [ ".git" ];
             };
           };
+          documentSymbols = {
+            followCursor = true;
+          };
+          sources = [
+            "filesystem"
+            "buffers"
+            "document_symbols"
+          ];
         };
 
-        # Syntax highlighting.
+        # Syntax highlighting (includes all grammars by default).
         treesitter = {
           enable = true;
           settings = {
@@ -131,7 +142,7 @@
           cmdline = {
             "/" = {
               mapping = {
-                __raw = "cmp.mapping.preset.cmdline()";
+                __raw = ''cmp.mapping.preset.cmdline()'';
               };
               sources = [
                 { name = "buffer"; }
@@ -139,7 +150,7 @@
             };
             "?" = {
               mapping = {
-                __raw = "cmp.mapping.preset.cmdline()";
+                __raw = ''cmp.mapping.preset.cmdline()'';
               };
               sources = [
                 { name = "buffer"; }
@@ -147,7 +158,7 @@
             };
             ":" = {
               mapping = {
-                __raw = "cmp.mapping.preset.cmdline()";
+                __raw = ''cmp.mapping.preset.cmdline()'';
               };
               sources = [
                 { name = "path"; }
@@ -245,9 +256,19 @@
           ];
         }
         {
-          key = "<leader>e";
-          action = "<cmd>Neotree focus reveal<cr>";
+          key = "<leader>ef";
+          action = "<cmd>Neotree filesystem focus reveal<cr>";
           options.desc = "Open file explorer";
+        }
+        {
+          key = "<leader>eo";
+          action = "<cmd>Neotree document_symbols focus reveal<cr>";
+          options.desc = "Open outline (document symbols) explorer";
+        }
+        {
+          key = "<leader>eb";
+          action = "<cmd>Neotree buffers focus reveal<cr>";
+          options.desc = "Open buffers explorer";
         }
         {
           key = "<leader>ff";
@@ -263,6 +284,11 @@
           key = "<leader>fw";
           action = "<cmd>Telescope grep_string<cr>";
           options.desc = "Searches for word under the cursor or selection";
+        }
+        {
+          key = "<leader>fb";
+          action = "<cmd>Telescope buffers<cr>";
+          options.desc = "List buffers";
         }
         {
           key = "<leader>/";
