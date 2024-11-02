@@ -20,17 +20,17 @@
           enable = true;
         };
 
-        # Icons for telescope and neo-tree.
+        # Icons for other plugins (telescope, neo-tree).
         web-devicons = {
           enable = true;
         };
 
-        # Find things.
+        # Find things (files, text, buffers, etc).
         telescope = {
           enable = true;
         };
 
-        # Explorer.
+        # Explorer (filesystem, buffers, etc).
         neo-tree = {
           enable = true;
           enableDiagnostics = false;
@@ -43,7 +43,6 @@
           filesystem = {
             followCurrentFile = {
               enabled = true;
-              leaveDirsOpen = true;
             };
             filteredItems = {
               hideDotfiles = false;
@@ -93,6 +92,36 @@
         # Show keymaps in each mode after a short delay.
         which-key = {
           enable = true;
+          settings = {
+            icons.mappings = false;
+            # LSP keymaps (these don't have a 'desc' option).
+            spec = [
+              {
+                __unkeyed = "]d";
+                desc = "Next diagnostic";
+              }
+              {
+                __unkeyed = "[d";
+                desc = "Previous diagnostic";
+              }
+              {
+                __unkeyed = "gh";
+                desc = "Open diagnostic float";
+              }
+              {
+                __unkeyed = "K";
+                desc = "Hover";
+              }
+              {
+                __unkeyed = "<leader>a";
+                desc = "Code action";
+              }
+              {
+                __unkeyed = "<leader>r";
+                desc = "Rename";
+              }
+            ];
+          };
         };
 
         # Enable GitHub Copilot.
@@ -205,6 +234,7 @@
           };
         };
 
+        # LSP (language servers) settings.
         lsp = {
           enable = true;
           servers = {
@@ -267,17 +297,17 @@
         }
         {
           key = "<leader>ef";
-          action = "<cmd>Neotree filesystem focus reveal<cr>";
+          action = "<cmd>Neotree filesystem reveal<cr>";
           options.desc = "Open file explorer";
         }
         {
           key = "<leader>eo";
-          action = "<cmd>Neotree document_symbols focus reveal<cr>";
+          action = "<cmd>Neotree document_symbols reveal<cr>";
           options.desc = "Open outline (document symbols) explorer";
         }
         {
           key = "<leader>eb";
-          action = "<cmd>Neotree buffers focus reveal<cr>";
+          action = "<cmd>Neotree buffers reveal<cr>";
           options.desc = "Open buffers explorer";
         }
         {
@@ -345,13 +375,53 @@
           action = "<cmd>WhichKey<cr>";
           options.desc = "Lists available keymaps in current mode";
         }
+        {
+          key = "<c-h>";
+          action = "<c-w>h";
+          options.desc = "Go to the left window";
+        }
+        {
+          key = "<c-j>";
+          action = "<c-w>j";
+          options.desc = "Go to the down window";
+        }
+        {
+          key = "<c-k>";
+          action = "<c-w>k";
+          options.desc = "Go to the up window";
+        }
+        {
+          key = "<c-l>";
+          action = "<c-w>l";
+          options.desc = "Go to the right window";
+        }
+        {
+          key = "<c-q>";
+          action = "<c-w>q";
+          options.desc = "Close window";
+        }
+        {
+          key = "<a-h>";
+          action = "<cmd>bprevious<cr>";
+          options.desc = "Previous buffer";
+        }
+        {
+          key = "<a-l>";
+          action = "<cmd>bnext<cr>";
+          options.desc = "Next buffer";
+        }
+        {
+          key = "<a-q>";
+          action = "<cmd>bdelete<cr><cmd>bnext<cr>";
+          options.desc = "Close buffer";
+        }
       ];
 
       globals = {
         # Set <leader> key to space.
         mapleader = " ";
 
-        # Disable netrw.
+        # Disable netrw in favor of an explorer plugin like neo-tree.
         loaded_netrw = true;
         loaded_netrwPlugin = true;
       };

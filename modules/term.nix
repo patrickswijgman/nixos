@@ -25,17 +25,22 @@
 
     programs.fd = {
       enable = true;
+      extraOptions = [
+        "--hidden"
+        "--color=never"
+      ];
     };
 
     programs.fzf = {
       enable = true;
-      defaultOptions = [ "--ansi" ];
+      defaultOptions = [
+        "--ansi"
+      ];
     };
 
     programs.bat = {
       enable = true;
       config = {
-        theme = "Visual Studio Dark+";
         color = "always";
       };
     };
