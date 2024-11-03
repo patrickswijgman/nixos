@@ -146,10 +146,22 @@
         # Statusline.
         lualine = {
           enable = true;
-          settings.options = {
-            always_show_tabline = false;
-            disabled_filetypes = [ "neo-tree" ];
-          };
+          # Fix: empty lists are omitted, using raw lua config instead.
+          luaConfig.content = ''
+            require('lualine').setup({
+              options = {
+                disabled_filetypes = {'neo-tree'}
+              },
+              sections = {
+                lualine_a = {'mode'},
+                lualine_b = {'branch', 'diagnostics'},
+                lualine_c = {{ 'filename', path = 1 }},
+                lualine_x = {'filetype'},
+                lualine_y = {},
+                lualine_z = {'location'}
+              }
+            })
+          '';
         };
 
         # Helper for closing buffers without closing the window.
