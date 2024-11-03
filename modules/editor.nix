@@ -138,8 +138,6 @@
             offsets = [
               {
                 filetype = "neo-tree";
-                text = "";
-                text_align = "center";
                 separator = true;
               }
             ];
@@ -250,6 +248,10 @@
         lsp = {
           enable = true;
           servers = {
+            nil_ls = {
+              enable = true;
+            };
+
             ts_ls = {
               enable = true;
               settings = {
@@ -261,7 +263,31 @@
               };
             };
 
-            nil_ls = {
+            eslint = {
+              enable = true;
+            };
+
+            html = {
+              enable = true;
+            };
+
+            cssls = {
+              enable = true;
+            };
+
+            tailwindcss = {
+              enable = true;
+            };
+
+            jsonls = {
+              enable = true;
+            };
+
+            yamlls = {
+              enable = true;
+            };
+
+            marksman = {
               enable = true;
             };
 
