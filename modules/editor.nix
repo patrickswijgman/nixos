@@ -147,8 +147,14 @@
         lualine = {
           enable = true;
           settings.options = {
+            always_show_tabline = false;
             disabled_filetypes = [ "neo-tree" ];
           };
+        };
+
+        # Helper for closing buffers without closing the window.
+        vim-bbye = {
+          enable = true;
         };
 
         # Completion engine for different sources such as lsp and buffer.
@@ -299,6 +305,14 @@
             };
 
             typos_lsp = {
+              enable = true;
+            };
+
+            gopls = {
+              enable = true;
+            };
+
+            golangci_lint_ls = {
               enable = true;
             };
 
@@ -469,7 +483,7 @@
         }
         {
           key = "<a-q>";
-          action = "<cmd>bdelete<cr><cmd>bnext<cr>";
+          action = "<cmd>Bwipeout<cr>";
           options.desc = "Close buffer";
         }
       ];

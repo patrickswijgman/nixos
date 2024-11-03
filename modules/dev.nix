@@ -10,10 +10,6 @@
       # Nix
       nixfmt-rfc-style
 
-      # Go
-      gopls
-      golangci-lint
-
       # Rust
       rustc
       cargo
