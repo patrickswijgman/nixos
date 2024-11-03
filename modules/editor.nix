@@ -151,28 +151,37 @@
           enable = true;
           autoEnableSources = true; # Auto-enable corresponding cmp plugin for each source.
           settings = {
-            snippet.expand = ''
-              function(args)
-                vim.snippet.expand(args.body)
-              end
-            '';
+            snippet = {
+              expand = ''
+                function(args)
+                  vim.snippet.expand(args.body)
+                end
+              '';
+            };
             mapping = {
-              "<up>" = "cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select })";
-              "<down>" = "cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select })";
-              "<cr>" = "cmp.mapping.confirm({ select = true })";
-
-              "<c-n>" = "cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select })";
-              "<c-p>" = "cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select })";
-              "<c-y" = "cmp.mapping.confirm({ select = true })";
-
-              "<c-space>" = "cmp.mapping.complete()";
-
-              "<c-d>" = "cmp.mapping.scroll_docs(-4)";
-              "<c-u>" = "cmp.mapping.scroll_docs(4)";
+              __raw = ''
+                cmp.mapping.preset.insert({
+                  ["<up>"]      = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+                  ["<down>"]    = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+                  ["<cr>"]      = cmp.mapping.confirm({ select = true }),
+                  ["<c-n>"]     = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+                  ["<c-p>"]     = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+                  ["<c-y>"]     = cmp.mapping.confirm({ select = true }),
+                  ["<c-space>"] = cmp.mapping.complete(),
+                  ["<c-d>"]     = cmp.mapping.scroll_docs(-4),
+                  ["<c-u>"]     = cmp.mapping.scroll_docs(4),
+                })
+              '';
             };
             sources = [
-              { name = "nvim_lsp"; }
-              { name = "buffer"; }
+              {
+                name = "nvim_lsp";
+                group_index = 1;
+              }
+              {
+                name = "buffer";
+                group_index = 2;
+              }
             ];
           };
           cmdline = {
@@ -197,8 +206,14 @@
                 __raw = ''cmp.mapping.preset.cmdline()'';
               };
               sources = [
-                { name = "path"; }
-                { name = "cmdline"; }
+                {
+                  name = "path";
+                  group_index = 1;
+                }
+                {
+                  name = "cmdline";
+                  group_index = 2;
+                }
               ];
               matching = {
                 disallow_symbol_nonprefix_matching = false;
