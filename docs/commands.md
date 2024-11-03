@@ -21,6 +21,14 @@ sudo nix flake lock --update-input <input>
 ```bash
 # set owner of folder and its files (recursive) to the current user
 sudo chown -R $USER:users <folder>
+
+# find file by regular expression
+# tip: use -l to show more details
+# tip: filter results with fzf
+fd <regex>
+
+# find directory by regular expression
+fd -t d <regex>
 ```
 
 ### Fonts
