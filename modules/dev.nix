@@ -8,7 +8,6 @@
 
     home.packages = with pkgs; [
       # Nix
-      nixd
       nixfmt-rfc-style
 
       # Go
@@ -18,6 +17,7 @@
       # Rust
       rustc
       cargo
+      gcc # C compiler
 
       # Web
       nodejs_20
@@ -26,6 +26,10 @@
 
       # Markdown
       mkdocs
+      slides
+
+      # Other
+      pomodoro
     ];
   };
 }

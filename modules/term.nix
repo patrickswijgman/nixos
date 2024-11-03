@@ -50,12 +50,10 @@
     };
 
     home.packages = with pkgs; [
-      pomodoro
-      slides
+      openvpn
       unzip
       tree
       gdu
-      openvpn
     ];
   };
 }

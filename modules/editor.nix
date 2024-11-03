@@ -40,7 +40,6 @@
             popup_border_style = "single";
             window = {
               position = "left";
-              auto_expand_width = true;
             };
             filesystem = {
               follow_current_file = {
@@ -141,6 +140,14 @@
                 separator = true;
               }
             ];
+          };
+        };
+
+        # Statusline.
+        lualine = {
+          enable = true;
+          settings.options = {
+            disabled_filetypes = [ "neo-tree" ];
           };
         };
 
@@ -294,6 +301,12 @@
             typos_lsp = {
               enable = true;
             };
+
+            rust_analyzer = {
+              enable = true;
+              installRustc = false;
+              installCargo = false;
+            };
           };
           onAttach = ''
             -- Disable semantic tokens as Treesitter is used for syntax highlighting instead.
@@ -315,6 +328,7 @@
       };
 
       keymaps = [
+        # General.
         {
           key = "<leader>y";
           action = "\"+y";
@@ -333,11 +347,13 @@
             "v"
           ];
         }
+        # Explorer.
         {
           key = "<leader>e";
           action = "<cmd>Neotree filesystem reveal<cr>";
           options.desc = "Open file explorer";
         }
+        # Telescope.
         {
           key = "<leader>f";
           action = "<cmd>Telescope find_files<cr>";
@@ -398,11 +414,13 @@
           action = "<cmd>Telescope help_tags<cr>";
           options.desc = "Lists help tags";
         }
+        # Misc.
         {
           key = "<leader>?";
           action = "<cmd>WhichKey<cr>";
           options.desc = "Lists available keymaps in current mode";
         }
+        # Window shortcuts.
         {
           key = "<c-h>";
           action = "<c-w>h";
@@ -424,10 +442,16 @@
           options.desc = "Go to the right window";
         }
         {
+          key = "<c-tab>";
+          action = "<c-w>w";
+          options.desc = "Switch windows";
+        }
+        {
           key = "<c-q>";
           action = "<c-w>q";
           options.desc = "Close window";
         }
+        # Buffer shortcuts.
         {
           key = "<a-h>";
           action = "<cmd>bprevious<cr>";
@@ -437,6 +461,11 @@
           key = "<a-l>";
           action = "<cmd>bnext<cr>";
           options.desc = "Next buffer";
+        }
+        {
+          key = "<a-tab>";
+          action = "<cmd>blast<cr>";
+          options.desc = "Switch buffers";
         }
         {
           key = "<a-q>";
