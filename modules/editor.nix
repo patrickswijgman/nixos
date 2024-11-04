@@ -148,16 +148,18 @@
           enable = true;
           # Fix: empty lists are omitted, using raw lua instead.
           settings.__raw = ''
-            options = {
-              disabled_filetypes = { 'neo-tree' }
-            },
-            sections = {
-              lualine_a = { 'mode' },
-              lualine_b = { 'branch', 'diagnostics' },
-              lualine_c = { { 'filename', path = 1 } },
-              lualine_x = { 'filetype' },
-              lualine_y = {},
-              lualine_z = { 'location' }
+            {
+              options = {
+                disabled_filetypes = { 'neo-tree' }
+              },
+              sections = {
+                lualine_a = { 'mode' },
+                lualine_b = { 'branch', 'diagnostics' },
+                lualine_c = { { 'filename', path = 1 } },
+                lualine_x = { 'filetype' },
+                lualine_y = { 'location' },
+                lualine_z = {}
+              }
             }
           '';
         };
