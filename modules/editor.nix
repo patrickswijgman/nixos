@@ -146,21 +146,19 @@
         # Statusline.
         lualine = {
           enable = true;
-          # Fix: empty lists are omitted, using raw lua config instead.
-          luaConfig.content = ''
-            require('lualine').setup({
-              options = {
-                disabled_filetypes = {'neo-tree'}
-              },
-              sections = {
-                lualine_a = {'mode'},
-                lualine_b = {'branch', 'diagnostics'},
-                lualine_c = {{ 'filename', path = 1 }},
-                lualine_x = {'filetype'},
-                lualine_y = {},
-                lualine_z = {'location'}
-              }
-            })
+          # Fix: empty lists are omitted, using raw lua instead.
+          settings.__raw = ''
+            options = {
+              disabled_filetypes = { 'neo-tree' }
+            },
+            sections = {
+              lualine_a = { 'mode' },
+              lualine_b = { 'branch', 'diagnostics' },
+              lualine_c = { { 'filename', path = 1 } },
+              lualine_x = { 'filetype' },
+              lualine_y = {},
+              lualine_z = { 'location' }
+            }
           '';
         };
 
@@ -181,21 +179,19 @@
                 end
               '';
             };
-            mapping = {
-              __raw = ''
-                cmp.mapping.preset.insert({
-                  ["<up>"]      = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-                  ["<down>"]    = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-                  ["<cr>"]      = cmp.mapping.confirm({ select = true }),
-                  ["<c-n>"]     = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-                  ["<c-p>"]     = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-                  ["<c-y>"]     = cmp.mapping.confirm({ select = true }),
-                  ["<c-space>"] = cmp.mapping.complete(),
-                  ["<c-d>"]     = cmp.mapping.scroll_docs(-4),
-                  ["<c-u>"]     = cmp.mapping.scroll_docs(4),
-                })
-              '';
-            };
+            mapping.__raw = ''
+              cmp.mapping.preset.insert({
+                ["<up>"]      = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+                ["<down>"]    = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+                ["<cr>"]      = cmp.mapping.confirm({ select = true }),
+                ["<c-n>"]     = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+                ["<c-p>"]     = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+                ["<c-y>"]     = cmp.mapping.confirm({ select = true }),
+                ["<c-space>"] = cmp.mapping.complete(),
+                ["<c-d>"]     = cmp.mapping.scroll_docs(-4),
+                ["<c-u>"]     = cmp.mapping.scroll_docs(4),
+              })
+            '';
             sources = [
               {
                 name = "nvim_lsp";
@@ -209,25 +205,19 @@
           };
           cmdline = {
             "/" = {
-              mapping = {
-                __raw = ''cmp.mapping.preset.cmdline()'';
-              };
+              mapping.__raw = ''cmp.mapping.preset.cmdline()'';
               sources = [
                 { name = "buffer"; }
               ];
             };
             "?" = {
-              mapping = {
-                __raw = ''cmp.mapping.preset.cmdline()'';
-              };
+              mapping.__raw = ''cmp.mapping.preset.cmdline()'';
               sources = [
                 { name = "buffer"; }
               ];
             };
             ":" = {
-              mapping = {
-                __raw = ''cmp.mapping.preset.cmdline()'';
-              };
+              mapping.__raw = ''cmp.mapping.preset.cmdline()'';
               sources = [
                 {
                   name = "path";
