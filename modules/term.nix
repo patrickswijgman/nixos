@@ -50,10 +50,11 @@
     };
 
     home.packages = with pkgs; [
-      openvpn
+      zip
       unzip
       tree
       gdu
+      openvpn
     ];
   };
 }

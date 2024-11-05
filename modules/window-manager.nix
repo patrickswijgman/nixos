@@ -40,7 +40,7 @@ with lib;
           "${modifier}+Shift+s" = "exec flameshot gui";
           "${modifier}+Tab" = "workspace back_and_forth";
           "${modifier}+d" = "exec rofi -show run";
-          "${modifier}+s" = "splitv";
+          "${modifier}+x" = "splitv";
           "${modifier}+v" = "splith";
           "XF86AudioMute" = "exec pamixer -t";
           "XF86AudioRaiseVolume" = "exec pamixer -i 5";
@@ -162,6 +162,7 @@ with lib;
       enable = true;
       anchor = "top-center";
       margin = "30,20,10";
+      layer = "overlay";
     };
 
     services.flameshot = {

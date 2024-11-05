@@ -28,6 +28,51 @@
         # Find things (files, text, buffers, etc).
         telescope = {
           enable = true;
+          settings = {
+            defaults = {
+              # Configure to use ripgrep when searching with grep_string or live_grep.
+              vimgrep_arguments = [
+                "rg"
+                "--follow" # Follow symbolic links.
+                "--hidden" # Search for hidden files.
+                "--color=never" # Don't use colors, Telescope can't interpret them.
+                "--no-heading" # Don't group matches by each file.
+                "--with-filename" # Print the file path with the matched lines.
+                "--line-number" # Show line numbers.
+                "--column" # Show column numbers.
+                "--smart-case" # Smart case search.
+                # Exclude some patterns from search.
+                "--glob=!**/.git/*"
+                "--glob=!**/.idea/*"
+                "--glob=!**/.vscode/*"
+                "--glob=!**/build/*"
+                "--glob=!**/dist/*"
+                "--glob=!**/yarn.lock"
+                "--glob=!**/package-lock.json"
+              ];
+            };
+            pickers = {
+              # Configure to use ripgrep when searching for a file.
+              find_files = {
+                find_command = [
+                  "rg"
+                  "--files" # List all files.
+                  "--hidden" # Search for hidden files.
+                  "--sort=path" # Ascending sort by path.
+                  "--color=never" # Don't use colors, Telescope can't interpret them.
+                  "--smart-case" # Smart case search.
+                  # Exclude some patterns from search.
+                  "--glob=!**/.git/*"
+                  "--glob=!**/.idea/*"
+                  "--glob=!**/.vscode/*"
+                  "--glob=!**/build/*"
+                  "--glob=!**/dist/*"
+                  "--glob=!**/yarn.lock"
+                  "--glob=!**/package-lock.json"
+                ];
+              };
+            };
+          };
         };
 
         # File explorer.
@@ -40,6 +85,7 @@
             popup_border_style = "single";
             window = {
               position = "left";
+              width = 60;
             };
             filesystem = {
               follow_current_file = {
@@ -75,7 +121,7 @@
             "typescriptreact"
           ];
           userDefaultOptions = {
-            mode = "virtualtext";
+            mode = "background";
             RGB = true;
             RRGGBB = true;
             RRGGBBAA = true;
@@ -482,7 +528,7 @@
         }
         {
           key = "<a-tab>";
-          action = "<cmd>blast<cr>";
+          action = "<c-6>";
           options.desc = "Switch buffers";
         }
         {

@@ -29,6 +29,15 @@ fd <regex>
 
 # find directory by regular expression
 fd -t d <regex>
+
+# Zip a folder
+zip -r <filename> <folder>
+
+# Unzip a folder
+unzip <zip-filename> -d <destination-folder>
+
+# List files in a zip file
+unzip -l <filename>
 ```
 
 ### Fonts
