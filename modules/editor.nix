@@ -136,7 +136,7 @@
           enable = true;
           settings = {
             icons.mappings = false;
-            # LSP keymaps (these don't have a 'desc' option).
+            # LSP keymaps (these don't have a description option).
             spec = [
               {
                 __unkeyed = "]d";
@@ -192,7 +192,7 @@
         # Statusline.
         lualine = {
           enable = true;
-          # Fix: empty lists are omitted, using raw lua instead.
+          # Fix: empty lists are omitted, using raw Lua instead.
           settings.__raw = ''
             {
               options = {
@@ -215,7 +215,7 @@
           enable = true;
         };
 
-        # Completion engine for different sources such as lsp and buffer.
+        # Completion engine for different sources such as LSP and buffer.
         cmp = {
           enable = true;
           autoEnableSources = true; # Auto-enable corresponding cmp plugin for each source.
@@ -317,11 +317,13 @@
 
             ts_ls = {
               enable = true;
-              settings = {
+              extraOptions = {
                 # https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#preferences-options
-                preferences = {
-                  importModuleSpecifierPreference = "non-relative";
-                  importModuleSpecifierEnding = "js";
+                init_options = {
+                  preferences = {
+                    importModuleSpecifierPreference = "non-relative";
+                    importModuleSpecifierEnding = "js";
+                  };
                 };
               };
             };
@@ -478,6 +480,11 @@
           action = "<cmd>Telescope help_tags<cr>";
           options.desc = "Lists help tags";
         }
+        {
+          key = "<leader>s";
+          action = "<cmd>Telescope spell_suggest<cr>";
+          options.desc = "Lists spelling suggestions";
+        }
         # Misc.
         {
           key = "<leader>?";
@@ -579,7 +586,7 @@
         expandtab = true;
         autoindent = true;
 
-        # Keep undos between sessions.
+        # Keep undo history between sessions.
         undofile = true;
 
         # Disable swap file, it's annoying.
@@ -595,6 +602,12 @@
 
         # Enable 24-bit RGB colors, requires compatible terminal.
         termguicolors = true;
+
+        # Enable spell checking.
+        spell = true;
+        spelllang = "en_us";
+        spelloptions = "camel";
+        spellfile = "/home/patrick/nixos/runtime/nvim/spell/en.utf-8.add";
       };
     };
 
