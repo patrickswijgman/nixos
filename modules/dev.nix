@@ -26,6 +26,8 @@
 
       # Other
       pomodoro
+      graph-easy
+      cowsay
     ];
   };
 }
