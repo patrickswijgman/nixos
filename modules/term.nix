@@ -55,6 +55,9 @@
       tree
       gdu
       openvpn
+      slides
+      graph-easy
+      cowsay
     ];
   };
 }

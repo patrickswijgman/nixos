@@ -197,6 +197,8 @@ with lib;
       playerctl
       brightnessctl
       kooha
+      font-manager
+      pomodoro
     ];
 
     home.sessionVariables = {
@@ -214,6 +216,9 @@ with lib;
 
   # Enable OpenGL for hardware acceleration.
   hardware.graphics.enable = true;
+
+  # Enable database for GNOME settings.
+  programs.dconf.enable = true;
 
   # Enable the gnome-keyring secrets vault.
   # Will be exposed through DBus to programs willing to store secrets.

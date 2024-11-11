@@ -22,12 +22,6 @@
 
       # Markdown
       mkdocs
-      slides
-
-      # Other
-      pomodoro
-      graph-easy
-      cowsay
     ];
   };
 }

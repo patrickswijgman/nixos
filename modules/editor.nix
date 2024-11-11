@@ -162,6 +162,10 @@
                 __unkeyed = "<leader>r";
                 desc = "Rename";
               }
+              {
+                __unkeyed = "<leader>h";
+                desc = "Signature help";
+              }
             ];
           };
         };
@@ -229,9 +233,6 @@
             };
             mapping.__raw = ''
               cmp.mapping.preset.insert({
-                ["<up>"]      = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-                ["<down>"]    = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-                ["<cr>"]      = cmp.mapping.confirm({ select = true }),
                 ["<c-n>"]     = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
                 ["<c-p>"]     = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
                 ["<c-y>"]     = cmp.mapping.confirm({ select = true }),
@@ -388,6 +389,7 @@
               "K" = "hover";
               "<leader>a" = "code_action";
               "<leader>r" = "rename";
+              "<leader>h" = "signature_help";
             };
           };
         };
@@ -484,6 +486,11 @@
           key = "<leader>s";
           action = "<cmd>Telescope spell_suggest<cr>";
           options.desc = "Lists spelling suggestions";
+        }
+        {
+          key = "F1";
+          action = "<cmd>Telescope help_tags<cr>";
+          options.desc = "Lists help tags";
         }
         # Misc.
         {
