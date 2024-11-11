@@ -9,6 +9,10 @@
 
       colorschemes.vscode.enable = true;
 
+      extraPlugins = with pkgs; [
+        vimPlugins.tailwindcss-colors-nvim
+      ];
+
       plugins = {
         # Comments.
         commentary = {
@@ -127,7 +131,7 @@
             RRGGBBAA = true;
             rgb_fn = true;
             names = true;
-            tailwind = true;
+            tailwind = false; # Use tailwindcss-colors-nvim instead.
           };
         };
 
@@ -216,6 +220,11 @@
 
         # Helper for closing buffers without closing the window.
         vim-bbye = {
+          enable = true;
+        };
+
+        # Show a buffer in fullscreen.
+        zen-mode = {
           enable = true;
         };
 
@@ -343,6 +352,9 @@
 
             tailwindcss = {
               enable = true;
+              onAttach.function = ''
+                require("tailwindcss-colors").buf_attach(bufnr)
+              '';
             };
 
             jsonls = {
@@ -494,6 +506,11 @@
         }
         # Misc.
         {
+          key = "<leader>z";
+          action = "<cmd>ZenMode<cr>";
+          options.desc = "Toggle zen mode";
+        }
+        {
           key = "<leader>?";
           action = "<cmd>WhichKey<cr>";
           options.desc = "Lists available keymaps in current mode";
@@ -616,6 +633,19 @@
         spelloptions = "camel";
         spellfile = "/home/patrick/nixos/runtime/nvim/spell/en.utf-8.add";
       };
+
+      autoCmd = [
+        {
+          event = [
+            "BufRead"
+            "BufNewFile"
+          ];
+          pattern = [ "*.env*" ];
+          command = "set filetype=properties";
+          desc = "Set filetype for .env files";
+        }
+      ];
+
     };
 
     home.sessionVariables = {
