@@ -538,18 +538,14 @@
         spellfile = "/home/patrick/nixos/runtime/nvim/spell/en.utf-8.add";
       };
 
-      autoCmd = [
-        {
-          event = [
-            "BufRead"
-            "BufNewFile"
-          ];
-          pattern = [ ".env*" ];
-          command = "set filetype=properties";
-          desc = "Set filetype for .env files";
-        }
-      ];
-
+      # Set filetype for files.
+      filetype = {
+        pattern = {
+          ".env" = "properties";
+          ".env.*" = "properties";
+          ".env.*.local" = "properties";
+        };
+      };
     };
 
     home.sessionVariables = {
