@@ -24,9 +24,6 @@ with lib;
             always = true;
           }
           {
-            command = "pomodoro 25 5";
-          }
-          {
             command = "systemctl --user restart kanshi";
             always = true;
           }
@@ -198,7 +195,6 @@ with lib;
       brightnessctl
       kooha
       font-manager
-      pomodoro
     ];
 
     home.sessionVariables = {

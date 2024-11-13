@@ -9,10 +9,6 @@
 
       colorschemes.vscode.enable = true;
 
-      extraPlugins = with pkgs; [
-        vimPlugins.tailwindcss-colors-nvim
-      ];
-
       plugins = {
         # Comments.
         commentary = {
@@ -37,15 +33,15 @@
               # Configure to use ripgrep when searching with grep_string or live_grep.
               vimgrep_arguments = [
                 "rg"
-                "--follow" # Follow symbolic links.
-                "--hidden" # Search for hidden files.
-                "--color=never" # Don't use colors, Telescope can't interpret them.
-                "--no-heading" # Don't group matches by each file.
-                "--with-filename" # Print the file path with the matched lines.
-                "--line-number" # Show line numbers.
-                "--column" # Show column numbers.
-                "--smart-case" # Smart case search.
-                # Exclude some patterns from search.
+                "--follow"
+                "--hidden"
+                "--sort=path"
+                "--color=never"
+                "--no-heading"
+                "--with-filename"
+                "--line-number"
+                "--column"
+                "--smart-case"
                 "--glob=!**/.git/*"
                 "--glob=!**/.idea/*"
                 "--glob=!**/.vscode/*"
@@ -60,12 +56,11 @@
               find_files = {
                 find_command = [
                   "rg"
-                  "--files" # List all files.
-                  "--hidden" # Search for hidden files.
-                  "--sort=path" # Ascending sort by path.
-                  "--color=never" # Don't use colors, Telescope can't interpret them.
-                  "--smart-case" # Smart case search.
-                  # Exclude some patterns from search.
+                  "--files"
+                  "--hidden"
+                  "--sort=path"
+                  "--color=never"
+                  "--smart-case"
                   "--glob=!**/.git/*"
                   "--glob=!**/.idea/*"
                   "--glob=!**/.vscode/*"
@@ -88,8 +83,7 @@
             enable_git_status = false;
             popup_border_style = "single";
             window = {
-              position = "left";
-              width = 60;
+              position = "float";
             };
             filesystem = {
               follow_current_file = {
@@ -110,28 +104,6 @@
           enable = true;
           settings = {
             highlight.enable = true;
-          };
-        };
-
-        # Highlight colors.
-        nvim-colorizer = {
-          enable = true;
-          fileTypes = [
-            "html"
-            "css"
-            "javascript"
-            "javascriptreact"
-            "typescript"
-            "typescriptreact"
-          ];
-          userDefaultOptions = {
-            mode = "background";
-            RGB = true;
-            RRGGBB = true;
-            RRGGBBAA = true;
-            rgb_fn = true;
-            names = true;
-            tailwind = false; # Use tailwindcss-colors-nvim instead.
           };
         };
 
@@ -181,45 +153,6 @@
 
         # Notifications in the bottom-right for e.g. LSP messages.
         fidget = {
-          enable = true;
-        };
-
-        # Show buffer tabs at the top.
-        bufferline = {
-          enable = true;
-          settings.options = {
-            offsets = [
-              {
-                filetype = "neo-tree";
-                separator = true;
-              }
-            ];
-          };
-        };
-
-        # Statusline.
-        lualine = {
-          enable = true;
-          # Fix: empty lists are omitted, using raw Lua instead.
-          settings.__raw = ''
-            {
-              options = {
-                disabled_filetypes = { 'neo-tree' }
-              },
-              sections = {
-                lualine_a = { 'mode' },
-                lualine_b = { 'branch', 'diagnostics' },
-                lualine_c = { { 'filename', path = 1 } },
-                lualine_x = { 'filetype' },
-                lualine_y = { 'location' },
-                lualine_z = {}
-              }
-            }
-          '';
-        };
-
-        # Helper for closing buffers without closing the window.
-        vim-bbye = {
           enable = true;
         };
 
@@ -352,9 +285,6 @@
 
             tailwindcss = {
               enable = true;
-              onAttach.function = ''
-                require("tailwindcss-colors").buf_attach(bufnr)
-              '';
             };
 
             jsonls = {
@@ -490,19 +420,14 @@
           options.desc = "Lists diagnostics in current buffer (document)";
         }
         {
-          key = "<leader>h";
-          action = "<cmd>Telescope help_tags<cr>";
-          options.desc = "Lists help tags";
-        }
-        {
           key = "<leader>s";
           action = "<cmd>Telescope spell_suggest<cr>";
           options.desc = "Lists spelling suggestions";
         }
         {
-          key = "F1";
+          key = "<f1>";
           action = "<cmd>Telescope help_tags<cr>";
-          options.desc = "Lists help tags";
+          options.desc = "Lists vim help tags";
         }
         # Misc.
         {
@@ -546,34 +471,13 @@
           action = "<c-w>q";
           options.desc = "Close window";
         }
-        # Buffer shortcuts.
-        {
-          key = "<a-h>";
-          action = "<cmd>bprevious<cr>";
-          options.desc = "Previous buffer";
-        }
-        {
-          key = "<a-l>";
-          action = "<cmd>bnext<cr>";
-          options.desc = "Next buffer";
-        }
-        {
-          key = "<a-tab>";
-          action = "<c-6>";
-          options.desc = "Switch buffers";
-        }
-        {
-          key = "<a-q>";
-          action = "<cmd>Bwipeout<cr>";
-          options.desc = "Close buffer";
-        }
       ];
 
       globals = {
         # Set <leader> key to space.
         mapleader = " ";
 
-        # Disable netrw in favor of an explorer plugin like neo-tree.
+        # Disable netrw in favor of neo-tree.
         loaded_netrw = true;
         loaded_netrwPlugin = true;
       };
@@ -640,7 +544,7 @@
             "BufRead"
             "BufNewFile"
           ];
-          pattern = [ "*.env*" ];
+          pattern = [ ".env*" ];
           command = "set filetype=properties";
           desc = "Set filetype for .env files";
         }
