@@ -77,7 +77,7 @@
         # File explorer.
         neo-tree = {
           enable = true;
-          # Fix: some options are not renamed to snake_case equivalent, using extraOptions instead.
+          # Fix: some nested options are not renamed to snake_case equivalent, using extraOptions instead.
           extraOptions = {
             enable_diagnostics = false;
             enable_git_status = false;
@@ -161,6 +161,11 @@
           enable = true;
         };
 
+        # Automatic session management.
+        auto-session = {
+          enable = true;
+        };
+
         # Completion engine for different sources such as LSP and buffer.
         cmp = {
           enable = true;
@@ -175,9 +180,9 @@
             };
             mapping.__raw = ''
               cmp.mapping.preset.insert({
-                ["<c-n>"]     = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-                ["<c-p>"]     = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-                ["<c-y>"]     = cmp.mapping.confirm({ select = true }),
+                ["<tab>"]     = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+                ["<s-tab>"]   = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+                ["<cr>"]      = cmp.mapping.confirm({ select = false }),
                 ["<c-space>"] = cmp.mapping.complete(),
                 ["<c-d>"]     = cmp.mapping.scroll_docs(-4),
                 ["<c-u>"]     = cmp.mapping.scroll_docs(4),
