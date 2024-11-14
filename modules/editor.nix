@@ -74,6 +74,11 @@
           };
         };
 
+        # Bookmark files quickly.
+        arrow = {
+          enable = true;
+        };
+
         # File explorer.
         neo-tree = {
           enable = true;
@@ -230,6 +235,44 @@
             };
           };
         };
+
+        # blink-cmp = {
+        #   enable = true;
+        #   settings = {
+        #     keymap = {
+        #       "<tab>" = [
+        #         "select_next"
+        #         "fallback"
+        #       ];
+        #       "<s-tab>" = [
+        #         "select_prev"
+        #         "fallback"
+        #       ];
+        #       "<cr>" = [
+        #         "select_and_accept"
+        #       ];
+        #       "<c-space>" = [
+        #         "show"
+        #         "show_documentation"
+        #         "hide_documentation"
+        #       ];
+        #       "<c-e>" = [
+        #         "hide"
+        #       ];
+        #     };
+        #     documentation = {
+        #       auto_show = true;
+        #     };
+        #     windows = {
+        #       autocomplete = {
+        #         selection = "manual";
+        #       };
+        #     };
+        #     highlight = {
+        #       use_nvim_cmp_as_default = true;
+        #     };
+        #   };
+        # };
 
         # Code formatters.
         conform-nvim = {

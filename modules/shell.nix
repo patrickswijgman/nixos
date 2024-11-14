@@ -8,8 +8,6 @@
         set fish_greeting
       '';
       shellAliases = {
-        g = "git";
-        zed = "zeditor";
         lg = "lazygit";
       };
       shellAbbrs = {
