@@ -4,9 +4,7 @@
   home-manager.users.patrick = {
     programs.fish = {
       enable = true;
-      interactiveShellInit = ''
-        set fish_greeting
-      '';
+      interactiveShellInit = builtins.readFile ../files/fish/config.fish;
       shellAliases = {
         lg = "lazygit";
       };
