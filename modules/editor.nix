@@ -52,8 +52,8 @@
               ];
             };
             pickers = {
-              # Configure to use ripgrep when searching for a file.
               find_files = {
+                # Configure to use ripgrep when searching for a file.
                 find_command = [
                   "rg"
                   "--files"
@@ -156,11 +156,6 @@
           enable = true;
         };
 
-        # Notifications in the bottom-right for e.g. LSP messages.
-        fidget = {
-          enable = true;
-        };
-
         # Show a buffer in fullscreen.
         zen-mode = {
           enable = true;
@@ -185,9 +180,9 @@
             };
             mapping.__raw = ''
               cmp.mapping.preset.insert({
-                ["<tab>"]     = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-                ["<s-tab>"]   = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-                ["<cr>"]      = cmp.mapping.confirm({ select = false }),
+                ["<c-n>"]     = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+                ["<c-p>"]     = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+                ["<c-y>"]     = cmp.mapping.confirm({ select = false }),
                 ["<c-space>"] = cmp.mapping.complete(),
                 ["<c-d>"]     = cmp.mapping.scroll_docs(-4),
                 ["<c-u>"]     = cmp.mapping.scroll_docs(4),
