@@ -156,6 +156,11 @@ lsp.ts_ls.setup({
 	},
 })
 
+lsp.eslint.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
 lsp.tailwindcss.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
