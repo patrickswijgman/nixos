@@ -11,7 +11,8 @@ vim.cmd("colorscheme fleet")
 --- Options
 --- https://neovim.io/doc/user/lua-guide.html#lua-guide-options
 
-vim.opt.mouse = "a" -- enable mouse
+-- Enable mouse
+vim.opt.mouse = "a"
 
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -223,6 +224,15 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 
 vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
+	desc = "Run nixfmt on save",
+	pattern = "*.nix",
+	callback = function()
+		vim.cmd("silent !nixfmt " .. vim.fn.expand("%:p"))
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+	group = group,
 	desc = "Run stylua on save",
 	pattern = "*.lua",
 	callback = function()
@@ -235,7 +245,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	desc = "Run LSP format on save",
 	pattern = { "*.go", "*.rs" },
 	callback = function()
-		vim.lsp.buf.format()
+		local bufnr = vim.api.nvim_get_current_buf()
+		vim.lsp.buf.format({ async = false, bufnr = bufnr })
 	end,
 })
 
