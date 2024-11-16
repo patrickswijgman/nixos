@@ -201,10 +201,7 @@ vim.filetype.add({
 --- https://neovim.io/doc/user/lua-guide.html#_autocommands
 --- Use ':autocmd' to list all autocommands
 
-local group = vim.api.nvim_create_augroup("patrick", { clear = true })
-
 vim.api.nvim_create_autocmd("BufWritePost", {
-	group = group,
 	desc = "Run prettier on save",
 	pattern = {
 		"*.html",
@@ -223,7 +220,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 })
 
 vim.api.nvim_create_autocmd("BufWritePost", {
-	group = group,
 	desc = "Run nixfmt on save",
 	pattern = "*.nix",
 	callback = function()
@@ -232,7 +228,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 })
 
 vim.api.nvim_create_autocmd("BufWritePost", {
-	group = group,
 	desc = "Run stylua on save",
 	pattern = "*.lua",
 	callback = function()
@@ -241,7 +236,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-	group = group,
 	desc = "Run LSP format on save",
 	pattern = { "*.go", "*.rs" },
 	callback = function()
@@ -251,7 +245,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-	group = group,
 	desc = "Disable spell checking for specific filetypes",
 	pattern = { "qf", "checkhealth" },
 	callback = function()
