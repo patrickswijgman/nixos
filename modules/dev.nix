@@ -24,11 +24,11 @@
 
       # Web
       nodejs_20
+      nodePackages.prettier
       typescript
       typescript-language-server
       tailwindcss-language-server
       vscode-langservers-extracted # Eslint, HTML, CSS, JSON, YAML, Markdown
-      prettierd
 
       # Markdown
       mkdocs

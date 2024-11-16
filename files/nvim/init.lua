@@ -56,6 +56,7 @@ vim.g.mapleader = " "
 
 --- Keymaps
 --- https://neovim.io/doc/user/lua-guide.html#lua-guide-mappings
+--- Use ':map' to list all keymaps or a specific keymap
 
 local function find()
 	vim.ui.input({ prompt = "Find > " }, function(input)
@@ -109,27 +110,6 @@ require("auto-session").setup({
 require("nvim-treesitter.configs").setup({
 	highlight = {
 		enable = true,
-	},
-})
-
-require("conform").setup({
-	formatters_by_ft = {
-		html = { "prettierd" },
-		css = { "prettierd" },
-		javascript = { "prettierd" },
-		javascriptreact = { "prettierd" },
-		typescript = { "prettierd" },
-		typescriptreact = { "prettierd" },
-		json = { "prettierd" },
-		jsonc = { "prettierd" },
-		yaml = { "prettierd" },
-		markdown = { "prettierd" },
-		nix = { "nixfmt" },
-		lua = { "stylua" },
-		_ = { "trim_whitespace" },
-	},
-	format_on_save = {
-		lsp_format = "fallback",
 	},
 })
 
@@ -189,7 +169,6 @@ lsp.ts_ls.setup({
 	on_attach = on_attach,
 	init_options = {
 		preferences = {
-			-- Prefer absolute imports ending with the file extension.
 			importModuleSpecifierPreference = "non-relative",
 			importModuleSpecifierEnding = "js",
 		},
@@ -219,10 +198,51 @@ vim.filetype.add({
 
 --- Autocommands
 --- https://neovim.io/doc/user/lua-guide.html#_autocommands
+--- Use ':autocmd' to list all autocommands
 
--- Disable spell checking for specific filetypes
+local group = vim.api.nvim_create_augroup("patrick", { clear = true })
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+	group = group,
+	desc = "Run prettier on save",
+	pattern = {
+		"*.html",
+		"*.css",
+		"*.js",
+		"*.jsx",
+		"*.ts",
+		"*.tsx",
+		"*.json",
+		"*.yaml",
+		"*.md",
+	},
+	callback = function()
+		vim.cmd("silent !prettier --write " .. vim.fn.expand("%:p"))
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+	group = group,
+	desc = "Run stylua on save",
+	pattern = "*.lua",
+	callback = function()
+		vim.cmd("silent !stylua " .. vim.fn.expand("%:p"))
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = group,
+	desc = "Run LSP format on save",
+	pattern = { "*.go", "*.rs" },
+	callback = function()
+		vim.lsp.buf.format()
+	end,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "qf,checkhealth",
+	group = group,
+	desc = "Disable spell checking for specific filetypes",
+	pattern = { "qf", "checkhealth" },
 	callback = function()
 		vim.opt_local.spell = false
 	end,

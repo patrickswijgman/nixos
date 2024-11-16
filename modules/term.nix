@@ -41,6 +41,7 @@
     programs.bat = {
       enable = true;
       config = {
+        theme = "ansi";
         color = "always";
       };
     };
