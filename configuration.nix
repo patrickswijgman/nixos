@@ -24,7 +24,7 @@ with lib;
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
-  # Select internationalisation properties.
+  # Select internationalization properties.
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "nl_NL.UTF-8";

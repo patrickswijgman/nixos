@@ -1,85 +1,110 @@
--- Colorscheme
+--- Utils
+
+local function is_empty(str)
+	return str == nil or str == ""
+end
+
+--- Colorscheme
+
 vim.cmd("colorscheme fleet")
 
--- Options
+--- Options
+--- https://neovim.io/doc/user/lua-guide.html#lua-guide-options
 
--- Enable the mouse
-vim.opt.mouse = "a"
+vim.opt.mouse = "a" -- enable mouse
 
--- Spot the cursor more easily by highlighting the current line
-vim.opt.cursorline = true
-
--- Show a "max line length" column
-vim.opt.colorcolumn = ""
-
--- Show line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- Cursor scroll offset
+vim.opt.cursorline = true
+vim.opt.signcolumn = "yes"
+vim.opt.colorcolumn = {}
 vim.opt.scrolloff = 8
 
--- Enable the sign column on the left to show things like warning and errors symbols
-vim.opt.signcolumn = "yes"
-
--- Search settings
 vim.opt.showmatch = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
--- Default indentation settings
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 
--- Keep undo history between sessions
 vim.opt.undofile = true
-
--- Disable swap file, it's annoying
 vim.opt.swapfile = false
 vim.opt.backup = false
+vim.opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
--- Change default splitting behavior
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
--- Update time for CursorHold autocommand event
+vim.opt.completeopt = { "menuone", "popup" }
+
+vim.opt.grepprg = "rg --vimgrep --smart-case --hidden"
+
 vim.opt.updatetime = 50
 
--- Enable 24-bit RGB colors, requires compatible terminal
 vim.opt.termguicolors = true
 
--- Enable spell checking
 vim.opt.spell = true
 vim.opt.spelllang = "en_us"
 vim.opt.spelloptions = "camel"
 vim.opt.spellfile = "/home/patrick/nixos/runtime/nvim/spell/en.utf-8.add"
 
--- Set <leader> key to space
 vim.g.mapleader = " "
 
--- Keymaps
+--- Keymaps
+--- https://neovim.io/doc/user/lua-guide.html#lua-guide-mappings
 
-vim.keymap.set("n", "q", "<nop>")
-vim.keymap.set("n", "Q", "<nop>")
+local function find()
+	vim.ui.input({ prompt = "Find > " }, function(input)
+		if not is_empty(input) then
+			vim.cmd("find ./**/" .. input .. "*")
+		end
+	end)
+end
+
+local function grep()
+	vim.ui.input({ prompt = "Grep > " }, function(input)
+		if not is_empty(input) then
+			vim.cmd("silent grep! " .. input .. " ./**/*")
+			vim.cmd("copen")
+		end
+	end)
+end
+
+vim.keymap.set({ "n", "v" }, "q", "")
+vim.keymap.set({ "n", "v" }, "Q", "")
 
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 vim.keymap.set({ "n", "v" }, "<leader>p", '"+p')
 
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<cr>")
-vim.keymap.set("n", "<leader>f", "<cmd>Files<cr>")
-vim.keymap.set("n", "<leader>/", "<cmd>Rg<cr>")
+vim.keymap.set("n", "<leader>f", find)
+vim.keymap.set("n", "<leader>g", grep)
+vim.keymap.set("n", "<leader>q", "<cmd>copen<cr>")
+
+vim.keymap.set("n", "]q", "<cmd>cnext<cr>")
+vim.keymap.set("n", "[q", "<cmd>cprev<cr>")
+vim.keymap.set("n", "]b", "<cmd>bnext<cr>")
+vim.keymap.set("n", "[b", "<cmd>bprev<cr>")
+vim.keymap.set("n", "]t", "<cmd>tabnext<cr>")
+vim.keymap.set("n", "[t", "<cmd>tabprev<cr>")
 
 vim.keymap.set("n", "<c-h>", "<c-w>h")
 vim.keymap.set("n", "<c-j>", "<c-w>j")
 vim.keymap.set("n", "<c-k>", "<c-w>k")
 vim.keymap.set("n", "<c-l>", "<c-w>l")
 
--- Plugins
+--- Plugins
 
-require("auto-session").setup({})
+require("auto-session").setup({
+	use_git_branch = true,
+	session_lens = {
+		load_on_setup = false,
+	},
+})
 
 require("nvim-treesitter.configs").setup({
 	highlight = {
@@ -118,9 +143,9 @@ local function on_attach(client, bufnr)
 	client.server_capabilities.semanticTokensProvider = nil
 
 	local opts = { buffer = bufnr }
-	vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<cr>", opts)
-	vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>", opts)
-	vim.keymap.set("n", "gk", "<cmd>lua vim.diagnostic.open_float()<cr>", opts)
+	-- ]d     = go to next diagnostic
+	-- [d     = go to previous diagnostic
+	-- <c-w>d = open floating window with diagnostics on current line
 	vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
 	vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
 	vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
@@ -140,7 +165,21 @@ lsp.lua_ls.setup({
 	on_attach = on_attach,
 	settings = {
 		Lua = {
-			diagnostics = { globals = { "vim" } },
+			runtime = {
+				-- Tell the language server which version of Lua you're using
+				-- (most likely LuaJIT in the case of Neovim)
+				version = "LuaJIT",
+			},
+			-- Make the server aware of Neovim runtime files
+			workspace = {
+				checkThirdParty = false,
+				library = { vim.env.VIMRUNTIME },
+			},
+			diagnostics = {
+				globals = {
+					"vim",
+				},
+			},
 		},
 	},
 })
@@ -150,6 +189,7 @@ lsp.ts_ls.setup({
 	on_attach = on_attach,
 	init_options = {
 		preferences = {
+			-- Prefer absolute imports ending with the file extension.
 			importModuleSpecifierPreference = "non-relative",
 			importModuleSpecifierEnding = "js",
 		},
@@ -166,7 +206,9 @@ lsp.tailwindcss.setup({
 	on_attach = on_attach,
 })
 
--- Filetypes
+--- Filetypes
+--- https://neovim.io/doc/user/lua.html#vim.filetype
+
 vim.filetype.add({
 	pattern = {
 		[".env"] = "properties",
@@ -175,11 +217,12 @@ vim.filetype.add({
 	},
 })
 
--- Autocommands
+--- Autocommands
+--- https://neovim.io/doc/user/lua-guide.html#_autocommands
 
--- Disable spell checking in quickfix windows
+-- Disable spell checking for specific filetypes
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "qf",
+	pattern = "qf,checkhealth",
 	callback = function()
 		vim.opt_local.spell = false
 	end,

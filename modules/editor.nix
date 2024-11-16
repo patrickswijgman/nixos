@@ -9,7 +9,6 @@
       plugins = with pkgs.vimPlugins; [
         nvim-lspconfig
         nvim-treesitter.withAllGrammars
-        fzf-vim
         copilot-vim
         auto-session
         conform-nvim
