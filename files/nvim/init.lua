@@ -1,6 +1,6 @@
 --- Utils
 
--- Wrapper around vim.fn.input() that checks and sanitizes the input.
+-- Convenience wrapper around vim.fn.input() that checks input.
 local function with_input(opts, callback)
 	vim.ui.input(opts, function(input)
 		if input and input ~= "" then
