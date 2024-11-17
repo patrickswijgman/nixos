@@ -11,7 +11,6 @@
         nvim-treesitter.withAllGrammars
         copilot-vim
         auto-session
-        vim-commentary
         fleet-theme-nvim
       ];
 

@@ -1,21 +1,16 @@
 --- Utils
 
--- Escape special (regex) characters and spaces.
-local function escape(str)
-	return vim.fn.escape(str, "() ")
-end
-
 -- Wrapper around vim.fn.input() that checks and sanitizes the input.
 local function with_input(opts, callback)
 	vim.ui.input(opts, function(input)
 		if input and input ~= "" then
-			callback(escape(input))
+			callback(input)
 		end
 	end)
 end
 
 -- Set items in the quickfix list and open the quickfix window.
-local function quickfix(list, make_qf_item, handle_lone_item)
+local function quickfix(list, make_qf_item)
 	local qf_list = {}
 
 	for _, item in ipairs(list) do
@@ -26,18 +21,7 @@ local function quickfix(list, make_qf_item, handle_lone_item)
 	end
 
 	vim.fn.setqflist(qf_list, "r")
-
-	if #qf_list == 1 then
-		if handle_lone_item then
-			if handle_lone_item(qf_list[1]) then
-				vim.cmd("copen")
-			end
-		else
-			vim.cmd("copen")
-		end
-	else
-		vim.cmd("copen")
-	end
+	vim.cmd("copen")
 end
 
 --- Colorscheme
@@ -77,7 +61,7 @@ vim.opt.splitbelow = true
 
 vim.opt.completeopt = "menuone,popup"
 
-vim.opt.grepprg = "rg --vimgrep --smart-case --sort=path"
+vim.opt.grepprg = "rg --vimgrep --smart-case --fixed-strings --sort=path"
 
 vim.opt.updatetime = 50
 
@@ -100,14 +84,15 @@ local function find()
 	with_input({ prompt = "Find > ", completion = "file" }, function(input)
 		local files = vim.fn.systemlist("fd --type=file --full-path " .. input)
 
-		quickfix(files, function(file)
-			return {
-				filename = file,
-				text = file,
-			}
-		end, function(item)
-			vim.cmd("edit " .. item.filename)
-		end)
+		if #files == 1 then
+			vim.cmd("edit " .. files[1])
+		else
+			quickfix(files, function(file)
+				return {
+					filename = file,
+				}
+			end)
+		end
 	end)
 end
 
@@ -123,7 +108,7 @@ function GET_BUFFER_WORDS(arg_lead)
 		for word in line:gmatch("%w+") do
 			if not words_set[word] then
 				words_set[word] = true
-				if word:find("^" .. escape(arg_lead)) then
+				if word:find("^" .. arg_lead) then
 					table.insert(words_list, word)
 				end
 			end
