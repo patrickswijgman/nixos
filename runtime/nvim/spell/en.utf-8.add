@@ -112,3 +112,4 @@ passwd
 autocmd
 fd
 fn
+FZF

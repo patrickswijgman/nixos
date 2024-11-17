@@ -72,6 +72,10 @@ vim.opt.spelllang = "en_us"
 vim.opt.spelloptions = "camel"
 vim.opt.spellfile = "/home/patrick/nixos/runtime/nvim/spell/en.utf-8.add"
 
+vim.g.netrw_banner = 0
+vim.g.netrw_liststyle = 3
+vim.g.netrw_browse_split = 3
+
 vim.g.mapleader = " "
 
 --- Keymaps
@@ -90,6 +94,7 @@ local function find()
 			quickfix(files, function(file)
 				return {
 					filename = file,
+					text = "",
 				}
 			end)
 		end
@@ -114,6 +119,8 @@ function GET_BUFFER_WORDS(arg_lead)
 			end
 		end
 	end
+
+	table.sort(words_list)
 
 	return words_list
 end
@@ -148,24 +155,6 @@ local function buffers()
 	end)
 end
 
--- Toggle the quickfix window.
-local function toggle_quickfix_window()
-	local is_qf_open = false
-	local wins = vim.fn.getwininfo()
-
-	for _, win in ipairs(wins) do
-		if win.quickfix == 1 then
-			is_qf_open = true
-		end
-	end
-
-	if is_qf_open then
-		vim.cmd("cclose")
-	else
-		vim.cmd("copen")
-	end
-end
-
 vim.keymap.set({ "n", "v" }, "q", "")
 vim.keymap.set({ "n", "v" }, "Q", "")
 
@@ -176,7 +165,7 @@ vim.keymap.set("n", "<leader>e", "<cmd>Explore<cr>")
 vim.keymap.set("n", "<leader>f", find)
 vim.keymap.set("n", "<leader>g", grep)
 
-vim.keymap.set("n", "<leader>q", toggle_quickfix_window)
+vim.keymap.set("n", "<leader>q", "<cmd>copen<cr>")
 vim.keymap.set("n", "]q", "<cmd>cnext<cr>")
 vim.keymap.set("n", "[q", "<cmd>cprev<cr>")
 
@@ -221,7 +210,7 @@ local lsp = require("lspconfig")
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 local function on_attach(client, bufnr)
-	-- Disable semantic highlighting as Treesitter is used for highlighting instead.
+	-- Disable semantic highlighting as Treesitter is used for highlighting instead
 	client.server_capabilities.semanticTokensProvider = nil
 
 	local opts = { buffer = bufnr }
