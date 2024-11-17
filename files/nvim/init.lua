@@ -1,8 +1,8 @@
 --- Utils
 
-local function with_input(prompt, callback)
-	vim.ui.input({ prompt = prompt }, function(input)
-		if input ~= nil and input ~= "" then
+local function with_input(prompt, callback, completion)
+	vim.ui.input({ prompt = prompt, completion = completion }, function(input)
+		if input and input ~= "" then
 			callback(input)
 		end
 	end)
@@ -81,7 +81,7 @@ vim.g.mapleader = " "
 
 local function find()
 	with_input("Find > ", function(input)
-		local files = vim.fn.systemlist("fd --type=file " .. input)
+		local files = vim.fn.systemlist("fd --type=file --full-path " .. input)
 
 		quickfix(files, function(file)
 			return {
@@ -91,7 +91,7 @@ local function find()
 				text = file,
 			}
 		end)
-	end)
+	end, "file")
 end
 
 local function grep()
@@ -123,6 +123,23 @@ local function buffers()
 	end)
 end
 
+local function toggle_quickfix_window()
+	local is_qf_open = false
+	local wins = vim.fn.getwininfo()
+
+	for _, win in ipairs(wins) do
+		if win.quickfix == 1 then
+			is_qf_open = true
+		end
+	end
+
+	if is_qf_open then
+		vim.cmd("cclose")
+	else
+		vim.cmd("copen")
+	end
+end
+
 vim.keymap.set({ "n", "v" }, "q", "")
 vim.keymap.set({ "n", "v" }, "Q", "")
 
@@ -133,7 +150,7 @@ vim.keymap.set("n", "<leader>e", "<cmd>Explore<cr>")
 vim.keymap.set("n", "<leader>f", find)
 vim.keymap.set("n", "<leader>g", grep)
 
-vim.keymap.set("n", "<leader>q", "<cmd>copen<cr>")
+vim.keymap.set("n", "<leader>q", toggle_quickfix_window)
 vim.keymap.set("n", "]q", "<cmd>cnext<cr>")
 vim.keymap.set("n", "[q", "<cmd>cprev<cr>")
 
