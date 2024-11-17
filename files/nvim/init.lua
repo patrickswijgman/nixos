@@ -324,9 +324,8 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = { "*.go", "*.rs" },
-	callback = function()
-		local bufnr = vim.api.nvim_get_current_buf()
-		vim.lsp.buf.format({ async = false, bufnr = bufnr })
+	callback = function(args)
+		vim.lsp.buf.format({ async = false, bufnr = args.buf })
 	end,
 })
 
