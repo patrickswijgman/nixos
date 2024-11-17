@@ -103,14 +103,14 @@ end
 
 -- Returns a list of unique words in the current buffer that start with the given argument.
 -- Global function so it can be used as a custom completion function.
-function GET_BUFFER_WORDS(arg_lead)
+function _G.get_buffer_words(arg_lead)
 	local bufnr = vim.api.nvim_get_current_buf()
 	local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
 	local words_list = {}
 	local words_set = {}
 
 	for _, line in ipairs(lines) do
-		for word in line:gmatch("%w+") do
+		for word in line:gmatch("%a+") do
 			if not words_set[word] then
 				words_set[word] = true
 				if word:find("^" .. arg_lead) then
@@ -128,7 +128,7 @@ end
 -- Grep for a word in the current working directory using ripgrep with auto complete.
 -- Show the results in the quickfix window.
 local function grep()
-	with_input({ prompt = "Grep > ", completion = "customlist,v:lua.GET_BUFFER_WORDS" }, function(input)
+	with_input({ prompt = "Grep > ", completion = "customlist,v:lua.get_buffer_words" }, function(input)
 		vim.cmd('silent grep! "' .. input .. '"')
 		vim.cmd("copen")
 	end)
