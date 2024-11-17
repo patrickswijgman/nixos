@@ -1,7 +1,27 @@
 --- Utils
 
-local function is_empty(str)
-	return str == nil or str == ""
+local function with_input(prompt, callback)
+	vim.ui.input({ prompt = prompt }, function(input)
+		if input ~= nil and input ~= "" then
+			callback(input)
+		end
+	end)
+end
+
+local function quickfix(list, make_qf_item)
+	local qf_list = {}
+
+	for _, item in ipairs(list) do
+		local qf_item = make_qf_item(item)
+		if qf_item then
+			table.insert(qf_list, qf_item)
+		end
+	end
+
+	if #qf_list > 0 then
+		vim.fn.setqflist(qf_list, "r")
+		vim.cmd("copen")
+	end
 end
 
 --- Colorscheme
@@ -19,7 +39,7 @@ vim.opt.relativenumber = true
 
 vim.opt.cursorline = true
 vim.opt.signcolumn = "yes"
-vim.opt.colorcolumn = {}
+vim.opt.colorcolumn = ""
 vim.opt.scrolloff = 8
 
 vim.opt.showmatch = true
@@ -40,9 +60,9 @@ vim.opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpo
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.opt.completeopt = { "menuone", "popup" }
+vim.opt.completeopt = "menuone,popup"
 
-vim.opt.grepprg = "rg --vimgrep --smart-case --hidden"
+vim.opt.grepprg = "rg --vimgrep --smart-case --sort=path"
 
 vim.opt.updatetime = 50
 
@@ -60,19 +80,46 @@ vim.g.mapleader = " "
 --- Use ':map' to list all keymaps or a specific keymap
 
 local function find()
-	vim.ui.input({ prompt = "Find > " }, function(input)
-		if not is_empty(input) then
-			vim.cmd("find ./**/" .. input .. "*")
-		end
+	with_input("Find > ", function(input)
+		local files = vim.fn.systemlist("fd --type=file " .. input)
+
+		quickfix(files, function(file)
+			return {
+				filename = file,
+				lnum = 1,
+				col = 1,
+				text = file,
+			}
+		end)
 	end)
 end
 
 local function grep()
-	vim.ui.input({ prompt = "Grep > " }, function(input)
-		if not is_empty(input) then
-			vim.cmd("silent grep! " .. input .. " ./**/*")
-			vim.cmd("copen")
+	with_input("Grep > ", function(input)
+		vim.cmd("silent grep! " .. input)
+		vim.cmd("copen")
+	end)
+end
+
+local function buffers()
+	local bufs = vim.api.nvim_list_bufs()
+
+	quickfix(bufs, function(bufnr)
+		if not vim.api.nvim_buf_is_loaded(bufnr) then
+			return
 		end
+
+		local bufname = vim.api.nvim_buf_get_name(bufnr)
+		if bufname == "" then
+			bufname = "[No Name]"
+		end
+
+		return {
+			filename = bufname,
+			lnum = 1,
+			col = 1,
+			text = "Buffer " .. bufnr,
+		}
 	end)
 end
 
@@ -85,19 +132,30 @@ vim.keymap.set({ "n", "v" }, "<leader>p", '"+p')
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<cr>")
 vim.keymap.set("n", "<leader>f", find)
 vim.keymap.set("n", "<leader>g", grep)
-vim.keymap.set("n", "<leader>q", "<cmd>copen<cr>")
 
+vim.keymap.set("n", "<leader>q", "<cmd>copen<cr>")
 vim.keymap.set("n", "]q", "<cmd>cnext<cr>")
 vim.keymap.set("n", "[q", "<cmd>cprev<cr>")
+
+vim.keymap.set("n", "<leader>b", buffers)
 vim.keymap.set("n", "]b", "<cmd>bnext<cr>")
 vim.keymap.set("n", "[b", "<cmd>bprev<cr>")
+
 vim.keymap.set("n", "]t", "<cmd>tabnext<cr>")
 vim.keymap.set("n", "[t", "<cmd>tabprev<cr>")
+
+vim.keymap.set("n", "<leader>t", "<cmd>tabnew<cr>")
+vim.keymap.set("n", "<a-h>", "<cmd>tabprev<cr>")
+vim.keymap.set("n", "<a-l>", "<cmd>tabnext<cr>")
+vim.keymap.set("n", "<a-q>", "<cmd>tabclose<cr>")
+vim.keymap.set("n", "<a-tab>", "<cmd>tablast<cr>")
 
 vim.keymap.set("n", "<c-h>", "<c-w>h")
 vim.keymap.set("n", "<c-j>", "<c-w>j")
 vim.keymap.set("n", "<c-k>", "<c-w>k")
 vim.keymap.set("n", "<c-l>", "<c-w>l")
+vim.keymap.set("n", "<c-q>", "<c-w>q")
+vim.keymap.set("n", "<c-tab>", "<c-w>w")
 
 --- Plugins
 
@@ -202,7 +260,6 @@ vim.filetype.add({
 --- Use ':autocmd' to list all autocommands
 
 vim.api.nvim_create_autocmd("BufWritePost", {
-	desc = "Run prettier on save",
 	pattern = {
 		"*.html",
 		"*.css",
@@ -220,7 +277,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 })
 
 vim.api.nvim_create_autocmd("BufWritePost", {
-	desc = "Run nixfmt on save",
 	pattern = "*.nix",
 	callback = function()
 		vim.cmd("silent !nixfmt " .. vim.fn.expand("%:p"))
@@ -228,7 +284,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 })
 
 vim.api.nvim_create_autocmd("BufWritePost", {
-	desc = "Run stylua on save",
 	pattern = "*.lua",
 	callback = function()
 		vim.cmd("silent !stylua " .. vim.fn.expand("%:p"))
@@ -236,7 +291,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-	desc = "Run LSP format on save",
 	pattern = { "*.go", "*.rs" },
 	callback = function()
 		local bufnr = vim.api.nvim_get_current_buf()
@@ -245,7 +299,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-	desc = "Disable spell checking for specific filetypes",
 	pattern = { "qf", "checkhealth" },
 	callback = function()
 		vim.opt_local.spell = false
