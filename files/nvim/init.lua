@@ -103,8 +103,6 @@ local function find()
 		quickfix(files, function(file)
 			return {
 				filename = file,
-				lnum = 1,
-				col = 1,
 				text = file,
 			}
 		end, function(item)
@@ -160,8 +158,6 @@ local function buffers()
 
 		return {
 			filename = bufname,
-			lnum = 1,
-			col = 1,
 			text = "Buffer " .. bufnr,
 		}
 	end)
