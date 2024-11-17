@@ -110,3 +110,5 @@ stateful
 man
 passwd
 autocmd
+fd
+fn

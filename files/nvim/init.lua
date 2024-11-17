@@ -1,14 +1,21 @@
 --- Utils
 
-local function with_input(prompt, callback, completion)
-	vim.ui.input({ prompt = prompt, completion = completion }, function(input)
+-- Escape special (regex) characters and spaces.
+local function escape(str)
+	return vim.fn.escape(str, "() ")
+end
+
+-- Wrapper around vim.fn.input() that checks and sanitizes the input.
+local function with_input(opts, callback)
+	vim.ui.input(opts, function(input)
 		if input and input ~= "" then
-			callback(input)
+			callback(escape(input))
 		end
 	end)
 end
 
-local function quickfix(list, make_qf_item)
+-- Set items in the quickfix list and open the quickfix window.
+local function quickfix(list, make_qf_item, handle_lone_item)
 	local qf_list = {}
 
 	for _, item in ipairs(list) do
@@ -18,8 +25,17 @@ local function quickfix(list, make_qf_item)
 		end
 	end
 
-	if #qf_list > 0 then
-		vim.fn.setqflist(qf_list, "r")
+	vim.fn.setqflist(qf_list, "r")
+
+	if #qf_list == 1 then
+		if handle_lone_item then
+			if handle_lone_item(qf_list[1]) then
+				vim.cmd("copen")
+			end
+		else
+			vim.cmd("copen")
+		end
+	else
 		vim.cmd("copen")
 	end
 end
@@ -31,7 +47,6 @@ vim.cmd("colorscheme fleet")
 --- Options
 --- https://neovim.io/doc/user/lua-guide.html#lua-guide-options
 
--- Enable mouse
 vim.opt.mouse = "a"
 
 vim.opt.number = true
@@ -79,8 +94,10 @@ vim.g.mapleader = " "
 --- https://neovim.io/doc/user/lua-guide.html#lua-guide-mappings
 --- Use ':map' to list all keymaps or a specific keymap
 
+-- Find files using fd with auto complete.
+-- Show the results in the quickfix window.
 local function find()
-	with_input("Find > ", function(input)
+	with_input({ prompt = "Find > ", completion = "file" }, function(input)
 		local files = vim.fn.systemlist("fd --type=file --full-path " .. input)
 
 		quickfix(files, function(file)
@@ -90,17 +107,44 @@ local function find()
 				col = 1,
 				text = file,
 			}
+		end, function(item)
+			vim.cmd("edit " .. item.filename)
 		end)
-	end, "file")
+	end)
 end
 
+-- Returns a list of unique words in the current buffer that start with the given argument.
+-- Global function so it can be used as a custom completion function.
+function GET_BUFFER_WORDS(arg_lead)
+	local bufnr = vim.api.nvim_get_current_buf()
+	local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+	local words_list = {}
+	local words_set = {}
+
+	for _, line in ipairs(lines) do
+		for word in line:gmatch("%w+") do
+			if not words_set[word] then
+				words_set[word] = true
+				if word:find("^" .. escape(arg_lead)) then
+					table.insert(words_list, word)
+				end
+			end
+		end
+	end
+
+	return words_list
+end
+
+-- Grep for a word in the current working directory using ripgrep with auto complete.
+-- Show the results in the quickfix window.
 local function grep()
-	with_input("Grep > ", function(input)
-		vim.cmd("silent grep! " .. input)
+	with_input({ prompt = "Grep > ", completion = "customlist,v:lua.GET_BUFFER_WORDS" }, function(input)
+		vim.cmd('silent grep! "' .. input .. '"')
 		vim.cmd("copen")
 	end)
 end
 
+-- Open the list of buffers in the quickfix window.
 local function buffers()
 	local bufs = vim.api.nvim_list_bufs()
 
@@ -123,6 +167,7 @@ local function buffers()
 	end)
 end
 
+-- Toggle the quickfix window.
 local function toggle_quickfix_window()
 	local is_qf_open = false
 	local wins = vim.fn.getwininfo()
