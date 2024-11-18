@@ -51,14 +51,18 @@ vim.opt.splitbelow = true
 vim.opt.completeopt = "menuone,popup,noinsert,noselect"
 
 -- Command line completion
-vim.opt.path:append("**")
-vim.opt.grepprg = "rg --vimgrep --smart-case --sort=path"
+vim.opt.wildmenu = true
+vim.opt.wildmode = "full"
+vim.opt.wildoptions = "pum"
 vim.opt.wildignore = {
-	"**/.git/*",
-	"**/node_modules/*",
-	"**/dist/*",
-	"**/target/*",
+	"*/.git/*",
+	"*/node_modules/*",
+	"*/dist/*",
+	"*/target/*",
 }
+
+-- Grep program
+vim.opt.grepprg = "rg --vimgrep --smart-case --sort=path"
 
 -- Spelling
 vim.opt.spell = true
@@ -86,7 +90,7 @@ vim.g.mapleader = " "
 
 -- Auto complete file names.
 function _G.find_completion(arg_lead)
-	return vim.fn.globpath("**", arg_lead .. "*", true, true)
+	return vim.fn.globpath("**", arg_lead .. "*", false, true)
 end
 
 -- Find a file using fd with auto complete.
@@ -127,12 +131,19 @@ local function grep()
 	end)
 end
 
+-- Open a buffer with auto complete.
+local function buffers()
+	with_input("Buffer > ", "buffer", function(input)
+		vim.cmd("buffer " .. input)
+	end)
+end
+
 -- Copy pasting using the system clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 vim.keymap.set({ "n", "v" }, "<leader>p", '"+p')
 
 -- Searching
-vim.keymap.set("n", "<leader>e", "<cmd>Explore<cr>")
+vim.keymap.set("n", "<leader>e", "<cmd>tabnew<cr><cmd>Explore<cr>")
 vim.keymap.set("n", "<leader>f", find)
 vim.keymap.set("n", "<leader>g", grep)
 
@@ -142,7 +153,7 @@ vim.keymap.set("n", "]q", "<cmd>cnext<cr>")
 vim.keymap.set("n", "[q", "<cmd>cprev<cr>")
 
 -- Buffers
-vim.keymap.set("n", "<leader>b", "<cmd>buffers<cr>")
+vim.keymap.set("n", "<leader>b", buffers)
 vim.keymap.set("n", "]b", "<cmd>bnext<cr>")
 vim.keymap.set("n", "[b", "<cmd>bprev<cr>")
 
@@ -204,14 +215,18 @@ local function on_attach(client, bufnr)
 	vim.keymap.set("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
 end
 
-lsp.nil_ls.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
+-- Setup a language server with default capabilities and keybindings.
+local function setup(server, extra_opts)
+	local opts = vim.tbl_extend("force", {
+		capabilities = capabilities,
+		on_attach = on_attach,
+	}, extra_opts or {})
 
-lsp.lua_ls.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
+	lsp[server].setup(opts)
+end
+
+setup("nil_ls")
+setup("lua_ls", {
 	settings = {
 		Lua = {
 			runtime = {
@@ -232,10 +247,7 @@ lsp.lua_ls.setup({
 		},
 	},
 })
-
-lsp.ts_ls.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
+setup("ts_ls", {
 	init_options = {
 		preferences = {
 			importModuleSpecifierPreference = "non-relative",
@@ -243,16 +255,11 @@ lsp.ts_ls.setup({
 		},
 	},
 })
-
-lsp.eslint.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
-lsp.tailwindcss.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
+setup("eslint")
+setup("tailwindcss")
+setup("gopls")
+setup("golangci_lint_ls")
+setup("yamlls")
 
 --- FILETYPES
 --- https://neovim.io/doc/user/lua.html#vim.filetype
@@ -269,35 +276,20 @@ vim.filetype.add({
 --- https://neovim.io/doc/user/lua-guide.html#_autocommands
 --- Use ':autocmd' to list all autocommands
 
--- Automatically format files on save
+-- Automatically format files on save with given formatter command.
+local function format(pattern, command)
+	vim.api.nvim_create_autocmd("BufWritePost", {
+		pattern = pattern,
+		callback = function()
+			vim.cmd("silent !" .. command .. " " .. vim.fn.expand("%:p"))
+		end,
+	})
+end
 
-vim.api.nvim_create_autocmd("BufWritePost", {
-	pattern = "*.html,*.css,*.js,*.jsx,*.ts,*.tsx,*.json,*.yaml,*.md",
-	callback = function()
-		vim.cmd("silent !prettier --write " .. vim.fn.expand("%:p"))
-	end,
-})
-
-vim.api.nvim_create_autocmd("BufWritePost", {
-	pattern = "*.nix",
-	callback = function()
-		vim.cmd("silent !nixfmt " .. vim.fn.expand("%:p"))
-	end,
-})
-
-vim.api.nvim_create_autocmd("BufWritePost", {
-	pattern = "*.lua",
-	callback = function()
-		vim.cmd("silent !stylua " .. vim.fn.expand("%:p"))
-	end,
-})
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*.go,*.rs",
-	callback = function(args)
-		vim.lsp.buf.format({ async = false, bufnr = args.buf })
-	end,
-})
+format("*.html,*.css,*.js,*.jsx,*.ts,*.tsx,*.json,*.yaml,*.md", "prettier --write")
+format("*.nix", "nixfmt")
+format("*.lua", "stylua")
+format("*.go", "gofmt -w")
 
 -- Disable spellcheck for certain filetypes
 
@@ -305,5 +297,13 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = "qf,checkhealth",
 	callback = function()
 		vim.opt_local.spell = false
+	end,
+})
+
+-- Highlight yanked text
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+	callback = function()
+		vim.highlight.on_yank()
 	end,
 })

@@ -16,6 +16,7 @@
       # Go
       go
       gopls
+      golangci-lint
       golangci-lint-langserver
 
       # Lua
@@ -29,6 +30,9 @@
       typescript-language-server
       tailwindcss-language-server
       vscode-langservers-extracted # Eslint, HTML, CSS, JSON, YAML, Markdown
+
+      # YAML
+      yaml-language-server
 
       # Markdown
       mkdocs

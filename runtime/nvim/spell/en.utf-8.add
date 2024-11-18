@@ -114,3 +114,7 @@ fd
 fn
 FZF
 Autocompletion
+formatter
+golangci
+nginx
+webphone
