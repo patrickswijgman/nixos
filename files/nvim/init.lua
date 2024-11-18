@@ -71,7 +71,7 @@ vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3
 vim.g.netrw_browse_split = 3
 
--- Update time for CursorHold events, such as for LSP event
+-- Update time for CursorHold events, such as for LSP events
 vim.opt.updatetime = 50
 
 -- Use fancy terminal colors
@@ -120,7 +120,6 @@ function _G.grep_completion(arg_lead)
 end
 
 -- Grep for a word in the current working directory using ripgrep with auto complete.
--- Show the results in the quickfix window.
 local function grep()
 	with_input("Grep > ", "customlist,v:lua.grep_completion", function(input)
 		vim.cmd("silent grep! " .. input)
