@@ -1,109 +1,103 @@
---- Utils
+-- UTILS
 
 -- Convenience wrapper around vim.fn.input() that checks input.
-local function with_input(opts, callback)
-	vim.ui.input(opts, function(input)
+local function with_input(prompt, completion, on_confirm)
+	vim.ui.input({ prompt = prompt, completion = completion }, function(input)
 		if input and input ~= "" then
-			callback(input)
+			on_confirm(input)
 		end
 	end)
 end
 
--- Set items in the quickfix list and open the quickfix window.
-local function quickfix(list, make_qf_item)
-	local qf_list = {}
-
-	for _, item in ipairs(list) do
-		local qf_item = make_qf_item(item)
-		if qf_item then
-			table.insert(qf_list, qf_item)
-		end
-	end
-
-	vim.fn.setqflist(qf_list, "r")
-	vim.cmd("copen")
-end
-
---- Colorscheme
+-- COLORSCHEME
 
 vim.cmd("colorscheme fleet")
 
---- Options
---- https://neovim.io/doc/user/lua-guide.html#lua-guide-options
+-- OPTIONS
+-- https://neovim.io/doc/user/lua-guide.html#lua-guide-options
 
+-- Editor
 vim.opt.mouse = "a"
-
 vim.opt.number = true
 vim.opt.relativenumber = true
-
 vim.opt.cursorline = true
 vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = ""
 vim.opt.scrolloff = 8
 
+-- Searching
 vim.opt.showmatch = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
+-- Indentation
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 
+-- Session management
 vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
+-- Window splitting behavior
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.opt.completeopt = "menuone,popup"
+-- Completion menu
+vim.opt.completeopt = "menuone,popup,noinsert,noselect"
 
-vim.opt.grepprg = "rg --vimgrep --smart-case --fixed-strings --sort=path"
+-- Command line completion
+vim.opt.path:append("**")
+vim.opt.grepprg = "rg --vimgrep --smart-case --sort=path"
+vim.opt.wildignore = {
+	"**/.git/*",
+	"**/node_modules/*",
+	"**/dist/*",
+	"**/target/*",
+}
 
-vim.opt.updatetime = 50
-
-vim.opt.termguicolors = true
-
+-- Spelling
 vim.opt.spell = true
 vim.opt.spelllang = "en_us"
 vim.opt.spelloptions = "camel"
 vim.opt.spellfile = "/home/patrick/nixos/runtime/nvim/spell/en.utf-8.add"
 
+-- Netrw (builtin file explorer)
 vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3
 vim.g.netrw_browse_split = 3
 
+-- Update time for CursorHold events, such as for LSP event
+vim.opt.updatetime = 50
+
+-- Use fancy terminal colors
+vim.opt.termguicolors = true
+
+-- Set leader key to space
 vim.g.mapleader = " "
 
---- Keymaps
---- https://neovim.io/doc/user/lua-guide.html#lua-guide-mappings
---- Use ':map' to list all keymaps or a specific keymap
+-- KEYMAPS
+-- https://neovim.io/doc/user/lua-guide.html#lua-guide-mappings
+-- Use ':map' to list all keymaps or a specific keymap
 
--- Find files using fd with auto complete.
--- Show the results in the quickfix window.
+-- Auto complete file names.
+function _G.find_completion(arg_lead)
+	return vim.fn.globpath("**", arg_lead .. "*", true, true)
+end
+
+-- Find a file using fd with auto complete.
 local function find()
-	with_input({ prompt = "Find > ", completion = "file" }, function(input)
-		local files = vim.fn.systemlist("fd --type=file --full-path " .. input)
-
-		if #files == 1 then
-			vim.cmd("edit " .. files[1])
-		else
-			quickfix(files, function(file)
-				return {
-					filename = file,
-					text = "",
-				}
-			end)
-		end
+	with_input("Find > ", "customlist,v:lua.find_completion", function(input)
+		vim.cmd("silent find " .. input)
 	end)
 end
 
--- Returns a list of unique words in the current buffer that start with the given argument.
--- Global function so it can be used as a custom completion function.
-function _G.get_buffer_words(arg_lead)
+-- Auto complete words in the current buffer.
+function _G.grep_completion(arg_lead)
 	local bufnr = vim.api.nvim_get_current_buf()
 	local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
 	local words_list = {}
@@ -128,60 +122,41 @@ end
 -- Grep for a word in the current working directory using ripgrep with auto complete.
 -- Show the results in the quickfix window.
 local function grep()
-	with_input({ prompt = "Grep > ", completion = "customlist,v:lua.get_buffer_words" }, function(input)
-		vim.cmd('silent grep! "' .. input .. '"')
+	with_input("Grep > ", "customlist,v:lua.grep_completion", function(input)
+		vim.cmd("silent grep! " .. input)
 		vim.cmd("copen")
 	end)
 end
 
--- Open the list of buffers in the quickfix window.
-local function buffers()
-	local bufs = vim.api.nvim_list_bufs()
-
-	quickfix(bufs, function(bufnr)
-		if not vim.api.nvim_buf_is_loaded(bufnr) then
-			return
-		end
-
-		local bufname = vim.api.nvim_buf_get_name(bufnr)
-		if bufname == "" then
-			bufname = "[No Name]"
-		end
-
-		return {
-			filename = bufname,
-			text = "Buffer " .. bufnr,
-		}
-	end)
-end
-
-vim.keymap.set({ "n", "v" }, "q", "")
-vim.keymap.set({ "n", "v" }, "Q", "")
-
+-- Copy pasting using the system clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 vim.keymap.set({ "n", "v" }, "<leader>p", '"+p')
 
+-- Searching
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<cr>")
 vim.keymap.set("n", "<leader>f", find)
 vim.keymap.set("n", "<leader>g", grep)
 
+-- Quickfix window
 vim.keymap.set("n", "<leader>q", "<cmd>copen<cr>")
 vim.keymap.set("n", "]q", "<cmd>cnext<cr>")
 vim.keymap.set("n", "[q", "<cmd>cprev<cr>")
 
-vim.keymap.set("n", "<leader>b", buffers)
+-- Buffers
+vim.keymap.set("n", "<leader>b", "<cmd>buffers<cr>")
 vim.keymap.set("n", "]b", "<cmd>bnext<cr>")
 vim.keymap.set("n", "[b", "<cmd>bprev<cr>")
 
+-- Tabs
+vim.keymap.set("n", "<leader>t", "<cmd>tabnew<cr>")
 vim.keymap.set("n", "]t", "<cmd>tabnext<cr>")
 vim.keymap.set("n", "[t", "<cmd>tabprev<cr>")
-
-vim.keymap.set("n", "<leader>t", "<cmd>tabnew<cr>")
 vim.keymap.set("n", "<a-h>", "<cmd>tabprev<cr>")
 vim.keymap.set("n", "<a-l>", "<cmd>tabnext<cr>")
 vim.keymap.set("n", "<a-q>", "<cmd>tabclose<cr>")
 vim.keymap.set("n", "<a-tab>", "<cmd>tablast<cr>")
 
+-- Window shortcuts
 vim.keymap.set("n", "<c-h>", "<c-w>h")
 vim.keymap.set("n", "<c-j>", "<c-w>j")
 vim.keymap.set("n", "<c-k>", "<c-w>k")
@@ -189,7 +164,11 @@ vim.keymap.set("n", "<c-l>", "<c-w>l")
 vim.keymap.set("n", "<c-q>", "<c-w>q")
 vim.keymap.set("n", "<c-tab>", "<c-w>w")
 
---- Plugins
+-- Disabled keymaps
+vim.keymap.set({ "n", "v" }, "q", "")
+vim.keymap.set({ "n", "v" }, "Q", "")
+
+--- PLUGINS
 
 require("auto-session").setup({
 	use_git_branch = true,
@@ -276,7 +255,7 @@ lsp.tailwindcss.setup({
 	on_attach = on_attach,
 })
 
---- Filetypes
+--- FILETYPES
 --- https://neovim.io/doc/user/lua.html#vim.filetype
 
 vim.filetype.add({
@@ -287,22 +266,14 @@ vim.filetype.add({
 	},
 })
 
---- Autocommands
+--- AUTOCOMMANDS
 --- https://neovim.io/doc/user/lua-guide.html#_autocommands
 --- Use ':autocmd' to list all autocommands
 
+-- Automatically format files on save
+
 vim.api.nvim_create_autocmd("BufWritePost", {
-	pattern = {
-		"*.html",
-		"*.css",
-		"*.js",
-		"*.jsx",
-		"*.ts",
-		"*.tsx",
-		"*.json",
-		"*.yaml",
-		"*.md",
-	},
+	pattern = "*.html,*.css,*.js,*.jsx,*.ts,*.tsx,*.json,*.yaml,*.md",
 	callback = function()
 		vim.cmd("silent !prettier --write " .. vim.fn.expand("%:p"))
 	end,
@@ -323,14 +294,16 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = { "*.go", "*.rs" },
+	pattern = "*.go,*.rs",
 	callback = function(args)
 		vim.lsp.buf.format({ async = false, bufnr = args.buf })
 	end,
 })
 
+-- Disable spellcheck for certain filetypes
+
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "qf", "checkhealth" },
+	pattern = "qf,checkhealth",
 	callback = function()
 		vim.opt_local.spell = false
 	end,
