@@ -9,6 +9,7 @@
     ./docker.nix
     ./editor.nix
     ./git.nix
+    ./services.nix
     ./shell.nix
     ./term.nix
     ./window-manager.nix
