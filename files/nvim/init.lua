@@ -145,13 +145,14 @@ local function on_attach(client, bufnr)
 	vim.keymap.set("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
 end
 
-local function setup_ls(server, extra_opts)
-	local opts = merge({ capabilities = capabilities, on_attach = on_attach }, extra_opts or {})
-	lsp[server].setup(opts)
-end
+lsp["nil_ls"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
 
-setup_ls("nil_ls")
-setup_ls("lua_ls", {
+lsp["lua_ls"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
 	settings = {
 		Lua = {
 			runtime = {
@@ -172,7 +173,10 @@ setup_ls("lua_ls", {
 		},
 	},
 })
-setup_ls("ts_ls", {
+
+lsp["ts_ls"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
 	init_options = {
 		preferences = {
 			importModuleSpecifierPreference = "non-relative",
@@ -180,11 +184,31 @@ setup_ls("ts_ls", {
 		},
 	},
 })
-setup_ls("eslint")
-setup_ls("tailwindcss")
-setup_ls("gopls")
-setup_ls("golangci_lint_ls")
-setup_ls("yamlls")
+
+lsp["eslint"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lsp["tailwindcss"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lsp["gopls"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lsp["golangci_lint_ls"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lsp["yamlls"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
 
 -- FILETYPES
 
@@ -200,20 +224,37 @@ vim.filetype.add({
 
 local group = vim.api.nvim_create_augroup("UserConfig", { clear = true })
 
-local function format_on_save(pattern, command)
-	vim.api.nvim_create_autocmd("BufWritePost", {
-		group = group,
-		pattern = pattern,
-		callback = function()
-			vim.cmd("silent !" .. command .. " " .. vim.fn.expand("%:p"))
-		end,
-	})
-end
+vim.api.nvim_create_autocmd("BufWritePost", {
+	group = group,
+	pattern = "*.nix",
+	callback = function()
+		vim.cmd("silent !nixfmt " .. get_current_file_path())
+	end,
+})
 
-format_on_save("*.html,*.css,*.js,*.jsx,*.ts,*.tsx,*.json,*.yaml,*.md", "prettier --write")
-format_on_save("*.nix", "nixfmt")
-format_on_save("*.lua", "stylua")
-format_on_save("*.go", "gofmt -w")
+vim.api.nvim_create_autocmd("BufWritePost", {
+	group = group,
+	pattern = "*.lua",
+	callback = function()
+		vim.cmd("silent !stylua " .. get_current_file_path())
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+	group = group,
+	pattern = "*.html,*.css,*.js,*.jsx,*.ts,*.tsx,*.json,*.yaml,*.md",
+	callback = function()
+		vim.cmd("silent !prettier --write " .. get_current_file_path())
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+	group = group,
+	pattern = "*.go",
+	callback = function()
+		vim.cmd("silent !gofmt -w " .. get_current_file_path())
+	end,
+})
 
 vim.api.nvim_create_autocmd("FileType", {
 	group = group,

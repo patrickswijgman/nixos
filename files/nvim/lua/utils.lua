@@ -11,3 +11,8 @@ end
 function _G.merge(a, b)
 	return vim.tbl_extend("force", a, b)
 end
+
+-- Get the full absolute path of the current file.
+function _G.get_current_file_path()
+	return vim.fn.expand("%:p")
+end
