@@ -13,8 +13,11 @@
         auto-session
         fleet-theme-nvim
       ];
+    };
 
-      extraLuaConfig = builtins.readFile ../files/nvim/init.lua;
+    home.file.".config/nvim" = {
+      source = ../files/nvim;
+      recursive = true;
     };
 
     home.sessionVariables = {

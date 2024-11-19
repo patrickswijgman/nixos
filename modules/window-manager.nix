@@ -37,7 +37,7 @@ with lib;
           "${modifier}+Shift+s" = "exec flameshot gui";
           "${modifier}+Tab" = "workspace back_and_forth";
           "${modifier}+d" = "exec rofi -show run";
-          "${modifier}+x" = "splitv";
+          "${modifier}+s" = "splitv";
           "${modifier}+v" = "splith";
           "XF86AudioMute" = "exec pamixer -t";
           "XF86AudioRaiseVolume" = "exec pamixer -i 5";
