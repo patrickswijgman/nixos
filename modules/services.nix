@@ -5,22 +5,16 @@
     systemd.user.services = {
       "clear-downloads" = {
         Unit = {
-          Description = "Clear Downloads folder before shutdown or reboot";
+          Description = "Clear Downloads folder before shutdown";
+          Before = [ "poweroff.target" ];
           DefaultDependencies = "no";
-          Before = [
-            "poweroff.target"
-            "reboot.target"
-          ];
         };
         Service = {
           Type = "oneshot";
-          ExecStart = "rm -rf /home/patrick/Downloads/*";
+          ExecStart = "/bin/sh -c 'rm -rf $HOME/Downloads/*'";
         };
         Install = {
-          WantedBy = [
-            "poweroff.target"
-            "reboot.target"
-          ];
+          WantedBy = [ "poweroff.target" ];
         };
       };
     };

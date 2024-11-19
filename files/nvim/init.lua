@@ -46,7 +46,7 @@ vim.opt.grepprg = "rg --vimgrep --smart-case --sort=path"
 vim.opt.spell = true
 vim.opt.spelllang = "en_us"
 vim.opt.spelloptions = "camel"
-vim.opt.spellfile = "/home/patrick/nixos/runtime/nvim/spell/en.utf-8.add"
+vim.opt.spellfile = vim.fn.expand("~/nixos/runtime/nvim/spell/en.utf-8.add")
 
 vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3
