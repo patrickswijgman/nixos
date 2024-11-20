@@ -66,13 +66,13 @@ local function get_files(query)
 	return vim.fn.systemlist("fd --type=file --type=directory --full-path " .. q)
 end
 
-local function set_files_list(buf, files, focus_file)
+local function set_files_list(buf, items, focus_item)
 	vim.api.nvim_set_option_value("modifiable", true, { buf = buf })
-	vim.api.nvim_buf_set_lines(buf, 0, -1, false, files)
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, items)
 	vim.api.nvim_set_option_value("modifiable", false, { buf = buf })
 
-	if focus_file then
-		vim.fn.search("^" .. focus_file, "w")
+	if focus_item then
+		vim.fn.search("^" .. focus_item, "w")
 	end
 end
 
@@ -83,15 +83,16 @@ local function open_file(file, target_win, win)
 end
 
 function M.open()
-	local target_win = vim.api.nvim_get_current_win()
 	local source_file = vim.fn.expand("%")
+	local target_win = vim.api.nvim_get_current_win()
+	local title = " Explorer - " .. vim.fn.getcwd() .. " "
 
 	local buf = create_buf(false, true, {
 		buftype = "nofile",
 		bufhidden = "wipe",
 	})
 
-	local win = create_float_win(buf, "Explorer - " .. vim.fn.getcwd(), 80, 0.5, {
+	local win = create_float_win(buf, title, 80, 0.8, {
 		cursorline = true,
 	})
 
@@ -138,10 +139,10 @@ function M.open()
 	end)
 
 	set_buf_keymap(buf, "d", function()
-		with_confirm("Delete file/directory?", function()
-			local file = vim.api.nvim_get_current_line()
-			delete_buf_with_filename(file)
-			vim.fn.system("rm -rf " .. file)
+		local item = vim.api.nvim_get_current_line()
+		with_confirm("Delete" .. item .. " ?", function()
+			delete_buf_with_filename(item)
+			vim.fn.system("rm -rf " .. item)
 			set_files_list(buf, get_files())
 		end)
 	end)

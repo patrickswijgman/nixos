@@ -16,16 +16,6 @@ function _G.with_confirm(prompt, on_confirm)
 	end)
 end
 
--- Merge tables into the first given table.
-function _G.merge(...)
-	return vim.tbl_extend("force", ...)
-end
-
--- Get the full absolute path of the current file.
-function _G.get_current_file_path()
-	return vim.fn.expand("%:p")
-end
-
 -- Check if a string ends with the given string.
 function _G.ends_with(str, tail)
 	return str:match(tail .. "$")

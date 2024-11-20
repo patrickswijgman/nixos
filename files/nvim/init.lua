@@ -58,16 +58,17 @@ vim.g.mapleader = " "
 -- KEYMAPS
 
 local function find()
-	with_input("Find > ", "customlist,v:lua.list_files", function(input)
+	with_input("Find > ", "file", function(input)
 		vim.cmd("silent! find " .. input)
 	end)
 end
 
 local function grep()
-	with_input("Grep > ", "customlist,v:lua.list_words", function(input)
+	local word = vim.fn.expand("<cword>")
+	with_input("Grep > ", nil, function(input)
 		vim.cmd("silent grep! " .. input)
 		vim.cmd("bo copen")
-	end)
+	end, word)
 end
 
 local function buffers()
@@ -236,7 +237,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	pattern = "*.nix",
 	callback = function()
-		vim.cmd("silent !nixfmt " .. get_current_file_path())
+		vim.cmd("silent !nixfmt " .. vim.fn.expand("%"))
 	end,
 })
 
@@ -244,7 +245,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	pattern = "*.lua",
 	callback = function()
-		vim.cmd("silent !stylua " .. get_current_file_path())
+		vim.cmd("silent !stylua " .. vim.fn.expand("%"))
 	end,
 })
 
@@ -252,7 +253,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	pattern = "*.html,*.css,*.js,*.jsx,*.ts,*.tsx,*.json,*.yaml,*.md",
 	callback = function()
-		vim.cmd("silent !prettier --write " .. get_current_file_path())
+		vim.cmd("silent !prettier --write " .. vim.fn.expand("%"))
 	end,
 })
 
@@ -260,7 +261,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	pattern = "*.go",
 	callback = function()
-		vim.cmd("silent !gofmt -w " .. get_current_file_path())
+		vim.cmd("silent !gofmt -w " .. vim.fn.expand("%"))
 	end,
 })
 
