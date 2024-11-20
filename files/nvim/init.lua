@@ -1,5 +1,4 @@
 require("utils")
-require("completion")
 
 -- COLORSCHEME
 
@@ -57,15 +56,26 @@ vim.g.mapleader = " "
 -- KEYMAPS
 
 local function find()
-	with_input("Find > ", "customlist,v:lua.find_completion", function(input)
+	with_input("Find > ", "customlist,v:lua.list_files", function(input)
 		vim.cmd("silent! find " .. input)
 	end)
 end
 
+local function files()
+	local list = vim.fn.systemlist("rg --files --sort=path")
+	local buf = vim.api.nvim_create_buf(false, true)
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, list)
+	vim.api.nvim_buf_set_keymap(buf, "n", "q", "<cmd>hide<cr>", { noremap = true, silent = true })
+	vim.api.nvim_set_current_buf(buf)
+	vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
+	vim.api.nvim_set_option_value("spell", false, { scope = "local" })
+	vim.api.nvim_set_option_value("readonly", true, { scope = "local" })
+end
+
 local function grep()
-	with_input("Grep > ", "customlist,v:lua.grep_completion", function(input)
+	with_input("Grep > ", "customlist,v:lua.list_words", function(input)
 		vim.cmd("silent grep! " .. input)
-		vim.cmd("copen")
+		vim.cmd("bo copen")
 	end)
 end
 
@@ -75,12 +85,18 @@ local function buffers()
 	end)
 end
 
+local function help()
+	vim.cmd("help " .. vim.fn.expand("<cword>"))
+end
+
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 vim.keymap.set({ "n", "v" }, "<leader>p", '"+p')
 
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<cr>")
+vim.keymap.set("n", "<leader>F", files)
 vim.keymap.set("n", "<leader>f", find)
 vim.keymap.set("n", "<leader>g", grep)
+vim.keymap.set("n", "<leader>h", help)
 
 vim.keymap.set("n", "<leader>q", "<cmd>copen<cr>")
 vim.keymap.set("n", "]q", "<cmd>cnext<cr>")
@@ -97,6 +113,8 @@ vim.keymap.set("n", "<a-h>", "<cmd>tabprev<cr>")
 vim.keymap.set("n", "<a-l>", "<cmd>tabnext<cr>")
 vim.keymap.set("n", "<a-q>", "<cmd>tabclose<cr>")
 vim.keymap.set("n", "<a-tab>", "<cmd>tablast<cr>")
+
+vim.keymap.set("n", "<leader>i", "<cmd>Inspect<cr>")
 
 vim.keymap.set("n", "<c-h>", "<c-w>h")
 vim.keymap.set("n", "<c-j>", "<c-w>j")

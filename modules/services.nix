@@ -6,15 +6,15 @@
       "clear-downloads" = {
         Unit = {
           Description = "Clear Downloads folder before shutdown";
-          Before = [ "poweroff.target" ];
+          Before = [ "exit.target" ];
           DefaultDependencies = "no";
         };
         Service = {
           Type = "oneshot";
-          ExecStart = "/bin/sh -c 'rm -rf $HOME/Downloads/*'";
+          ExecStart = "/bin/sh -c 'rm -rf \"$HOME/Downloads/*\"'";
         };
         Install = {
-          WantedBy = [ "poweroff.target" ];
+          WantedBy = [ "exit.target" ];
         };
       };
     };
