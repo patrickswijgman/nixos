@@ -1,4 +1,5 @@
 require("utils")
+
 local explorer = require("explorer")
 
 -- COLORSCHEME
@@ -82,8 +83,7 @@ end
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 vim.keymap.set({ "n", "v" }, "<leader>p", '"+p')
 
-vim.keymap.set("n", "<leader>e", "<cmd>Explore<cr>")
-vim.keymap.set("n", "<leader>F", explorer.open)
+vim.keymap.set("n", "<leader>e", explorer.open)
 vim.keymap.set("n", "<leader>f", find)
 vim.keymap.set("n", "<leader>g", grep)
 vim.keymap.set("n", "<leader>h", help)
@@ -236,7 +236,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	pattern = "*.nix",
 	callback = function()
-		vim.fn.system("nixfmt " .. get_current_file_path())
+		vim.cmd("silent !nixfmt " .. get_current_file_path())
 	end,
 })
 
@@ -244,7 +244,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	pattern = "*.lua",
 	callback = function()
-		vim.fn.system("stylua " .. get_current_file_path())
+		vim.cmd("silent !stylua " .. get_current_file_path())
 	end,
 })
 
@@ -252,7 +252,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	pattern = "*.html,*.css,*.js,*.jsx,*.ts,*.tsx,*.json,*.yaml,*.md",
 	callback = function()
-		vim.fn.system("prettier --write " .. get_current_file_path())
+		vim.cmd("silent !prettier --write " .. get_current_file_path())
 	end,
 })
 
@@ -260,7 +260,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	pattern = "*.go",
 	callback = function()
-		vim.fn.system("gofmt -w " .. get_current_file_path())
+		vim.cmd("silent !gofmt -w " .. get_current_file_path())
 	end,
 })
 

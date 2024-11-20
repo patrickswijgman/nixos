@@ -1,9 +1,5 @@
 local M = {}
 
-local function ends_with(str, char)
-	return vim.fn.match(str, vim.fn.escape(char, "/") .. "$") ~= -1
-end
-
 local function set_buf_keymap(buf, key, callback)
 	vim.api.nvim_buf_set_keymap(buf, "n", key, "", {
 		noremap = true,
@@ -22,6 +18,15 @@ local function create_buf(listed, scratch, opts)
 	end
 
 	return buf
+end
+
+local function delete_buf_with_filename(filename)
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		local name = vim.api.nvim_buf_get_name(buf)
+		if name:match(filename) then
+			vim.api.nvim_buf_delete(buf, { force = true })
+		end
+	end
 end
 
 local function create_float_win(buf, title, width, height, opts)
@@ -58,13 +63,14 @@ end
 
 local function get_files(query)
 	local q = query or ""
-	return vim.fn.systemlist("fd --type=file --full-path " .. q)
+	return vim.fn.systemlist("fd --type=file --type=directory --full-path " .. q)
 end
 
-local function set_files_list(buf, files)
+local function set_files_list(buf, files, focus_file)
 	vim.api.nvim_set_option_value("modifiable", true, { buf = buf })
 	vim.api.nvim_buf_set_lines(buf, 0, -1, false, files)
 	vim.api.nvim_set_option_value("modifiable", false, { buf = buf })
+	vim.fn.search("^" .. focus_file, "w")
 end
 
 local function open_file(file, target_win, win)
@@ -73,26 +79,20 @@ local function open_file(file, target_win, win)
 	vim.api.nvim_win_close(win, true)
 end
 
-local function focus_file(file)
-	vim.fn.search(file, "w")
-end
-
 function M.open()
 	local target_win = vim.api.nvim_get_current_win()
-	local current_file = vim.fn.expand("%")
+	local source_file = vim.fn.expand("%")
 
 	local buf = create_buf(false, true, {
 		buftype = "nofile",
 		bufhidden = "wipe",
 	})
 
-	set_files_list(buf, get_files())
-
-	local win = create_float_win(buf, vim.fn.getcwd(), 80, 0.5, {
+	local win = create_float_win(buf, "Explorer - " .. vim.fn.getcwd(), 80, 0.5, {
 		cursorline = true,
 	})
 
-	focus_file(current_file)
+	set_files_list(buf, get_files(), source_file)
 
 	set_buf_keymap(buf, "f", function()
 		with_input("Filter > ", "file", function(input)
@@ -119,18 +119,26 @@ function M.open()
 		with_input("Create file/directory > ", "dir", function(input)
 			if ends_with(input, "/") then
 				vim.fn.system("mkdir -p " .. input)
-				set_files_list(buf, get_files())
 			else
 				vim.fn.system("touch " .. input)
-				set_files_list(buf, get_files())
-				focus_file(input)
 			end
+			set_files_list(buf, get_files(), input)
 		end)
 	end)
 
-	set_buf_keymap(buf, "D", function()
-		with_confirm("Delete file/directory?", "file", function(input)
-			vim.fn.system("rm -rf " .. input)
+	set_buf_keymap(buf, "r", function()
+		local file = vim.api.nvim_get_current_line()
+		with_input("Move file/directory > ", "dir", function(input)
+			vim.fn.system("mv " .. file .. " " .. input)
+			set_files_list(buf, get_files(), input)
+		end, file)
+	end)
+
+	set_buf_keymap(buf, "d", function()
+		with_confirm("Delete file/directory?", function()
+			local file = vim.api.nvim_get_current_line()
+			delete_buf_with_filename(file)
+			vim.fn.system("rm -rf " .. file)
 			set_files_list(buf, get_files())
 		end)
 	end)
