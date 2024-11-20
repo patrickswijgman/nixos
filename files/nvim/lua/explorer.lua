@@ -70,7 +70,10 @@ local function set_files_list(buf, files, focus_file)
 	vim.api.nvim_set_option_value("modifiable", true, { buf = buf })
 	vim.api.nvim_buf_set_lines(buf, 0, -1, false, files)
 	vim.api.nvim_set_option_value("modifiable", false, { buf = buf })
-	vim.fn.search("^" .. focus_file, "w")
+
+	if focus_file then
+		vim.fn.search("^" .. focus_file, "w")
+	end
 end
 
 local function open_file(file, target_win, win)
