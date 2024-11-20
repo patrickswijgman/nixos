@@ -4,6 +4,7 @@
   home-manager.users.patrick = {
     programs.fish = {
       enable = true;
+      interactiveShellInit = builtins.readFile ../files/fish/config.fish;
       shellAliases = {
         lg = "lazygit";
       };
@@ -130,11 +131,6 @@
       keys = [
         "~/.ssh/id_ed25519"
       ];
-    };
-
-    home.file.".config/fish" = {
-      source = ../files/fish;
-      recursive = true;
     };
   };
 
