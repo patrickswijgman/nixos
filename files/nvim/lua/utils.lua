@@ -7,6 +7,15 @@ function _G.with_input(prompt, completion, on_confirm)
 	end)
 end
 
+--  Prompts the user for confirmation and then executes the `on_confirm` callback function if the user confirms.
+function _G.with_confirm(prompt, completion, on_confirm)
+	vim.ui.input({ prompt = prompt .. " (y/n)", completion = completion }, function(input)
+		if input and (input == "y" or input == "Y") then
+			on_confirm()
+		end
+	end)
+end
+
 -- Merge tables into the first given table.
 function _G.merge(...)
 	return vim.tbl_extend("force", ...)

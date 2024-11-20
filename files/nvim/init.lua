@@ -1,4 +1,5 @@
 require("utils")
+local explorer = require("explorer")
 
 -- COLORSCHEME
 
@@ -61,17 +62,6 @@ local function find()
 	end)
 end
 
-local function files()
-	local list = vim.fn.systemlist("rg --files --sort=path")
-	local buf = vim.api.nvim_create_buf(false, true)
-	vim.api.nvim_buf_set_lines(buf, 0, -1, false, list)
-	vim.api.nvim_buf_set_keymap(buf, "n", "q", "<cmd>hide<cr>", { noremap = true, silent = true })
-	vim.api.nvim_set_current_buf(buf)
-	vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
-	vim.api.nvim_set_option_value("spell", false, { scope = "local" })
-	vim.api.nvim_set_option_value("readonly", true, { scope = "local" })
-end
-
 local function grep()
 	with_input("Grep > ", "customlist,v:lua.list_words", function(input)
 		vim.cmd("silent grep! " .. input)
@@ -93,7 +83,7 @@ vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 vim.keymap.set({ "n", "v" }, "<leader>p", '"+p')
 
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<cr>")
-vim.keymap.set("n", "<leader>F", files)
+vim.keymap.set("n", "<leader>F", explorer.open)
 vim.keymap.set("n", "<leader>f", find)
 vim.keymap.set("n", "<leader>g", grep)
 vim.keymap.set("n", "<leader>h", help)
@@ -246,7 +236,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	pattern = "*.nix",
 	callback = function()
-		vim.cmd("silent !nixfmt " .. get_current_file_path())
+		vim.fn.system("nixfmt " .. get_current_file_path())
 	end,
 })
 
@@ -254,7 +244,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	pattern = "*.lua",
 	callback = function()
-		vim.cmd("silent !stylua " .. get_current_file_path())
+		vim.fn.system("stylua " .. get_current_file_path())
 	end,
 })
 
@@ -262,7 +252,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	pattern = "*.html,*.css,*.js,*.jsx,*.ts,*.tsx,*.json,*.yaml,*.md",
 	callback = function()
-		vim.cmd("silent !prettier --write " .. get_current_file_path())
+		vim.fn.system("prettier --write " .. get_current_file_path())
 	end,
 })
 
@@ -270,7 +260,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	pattern = "*.go",
 	callback = function()
-		vim.cmd("silent !gofmt -w " .. get_current_file_path())
+		vim.fn.system("gofmt -w " .. get_current_file_path())
 	end,
 })
 
