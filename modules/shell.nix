@@ -131,11 +131,11 @@
         "~/.ssh/id_ed25519"
       ];
     };
-  };
 
-  home.file.".config/fish" = {
-    source = ../files/fish;
-    recursive = true;
+    home.file.".config/fish" = {
+      source = ../files/fish;
+      recursive = true;
+    };
   };
 
   # Enable fish on system level as well to disable the shell warning.
