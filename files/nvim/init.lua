@@ -76,7 +76,7 @@ end
 
 local function help()
 	local word = vim.fn.expand("<cword>")
-	vim.cmd("silent help " .. word .. " <cr>")
+	vim.cmd("silent help " .. word)
 end
 
 local function create()
