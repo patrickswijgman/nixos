@@ -128,3 +128,4 @@ http
 webhooks
 webhook
 cronjob
+bool

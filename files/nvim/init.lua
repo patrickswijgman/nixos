@@ -1,6 +1,4 @@
-require("utils")
-
-local explorer = require("explorer")
+local utils = require("utils")
 
 -- COLORSCHEME
 
@@ -58,54 +56,90 @@ vim.g.mapleader = " "
 -- KEYMAPS
 
 local function find()
-	with_input("Find > ", "file", function(input)
-		vim.cmd("silent! find " .. input)
+	local dir = vim.fn.expand("%:h") .. "/"
+	utils.with_input("Find: ", dir, "customlist,v:lua.require'utils'.list_files", function(input)
+		vim.cmd("silent find " .. input)
 	end)
 end
 
 local function grep()
 	local word = vim.fn.expand("<cword>")
-	with_input("Grep > ", nil, function(input)
-		vim.cmd("silent grep! " .. input)
-		vim.cmd("bo copen")
-	end, word)
-end
-
-local function buffers()
-	with_input("Buffer > ", "buffer", function(input)
-		vim.cmd("buffer " .. input)
+	utils.with_input("Grep: ", word, nil, function(input)
+		vim.cmd("silent grep! " .. input .. " | copen")
 	end)
 end
 
 local function help()
-	vim.cmd("help " .. vim.fn.expand("<cword>"))
+	local word = vim.fn.expand("<cword>")
+	vim.cmd("silent help " .. word .. "<cr>")
+end
+
+local function delete()
+	local file = vim.fn.expand("%")
+	utils.with_confirm("Delete: " .. file, function()
+		vim.cmd("silent !rm -r " .. file)
+		utils.delete_buf_with_filename(file)
+	end)
+end
+
+local function move()
+	local file = vim.fn.expand("%")
+	local dir = vim.fn.expand("%:h")
+	utils.with_input("Move: ", file, "file", function(input)
+		vim.cmd("silent !mkdir -p " .. dir)
+		vim.cmd("silent !mv " .. file .. " " .. input)
+		utils.delete_buf_with_filename(file)
+	end)
+end
+
+local function create()
+	local dir = vim.fn.expand("%:h")
+	utils.with_input("Create: ", dir, "dir", function(input)
+		if utils.ends_with(input, "/") then
+			vim.cmd("silent !mkdir -p " .. input)
+		else
+			vim.cmd("silent !mkdir -p " .. utils.dirname(input))
+			vim.cmd("silent !touch " .. input)
+		end
+	end)
+end
+
+local function tree(dir)
+	vim.cmd("silent !tree --gitignore " .. dir)
+end
+
+local function tree_current_file_dir()
+	tree(vim.fn.expand("%:h"))
 end
 
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 vim.keymap.set({ "n", "v" }, "<leader>p", '"+p')
 
-vim.keymap.set("n", "<leader>e", explorer.open)
+vim.keymap.set("n", "<leader>e", tree_current_file_dir)
+vim.keymap.set("n", "<leader>E", tree)
 vim.keymap.set("n", "<leader>f", find)
 vim.keymap.set("n", "<leader>g", grep)
 vim.keymap.set("n", "<leader>h", help)
+vim.keymap.set("n", "<leader>c", create)
+vim.keymap.set("n", "<leader>m", move)
+vim.keymap.set("n", "<leader>D", delete)
+vim.keymap.set("n", "<leader>i", ":Inspect<cr>")
 
-vim.keymap.set("n", "<leader>q", "<cmd>copen<cr>")
-vim.keymap.set("n", "]q", "<cmd>cnext<cr>")
-vim.keymap.set("n", "[q", "<cmd>cprev<cr>")
+vim.keymap.set("n", "<leader>q", ":copen<cr>")
+vim.keymap.set("n", "]q", ":cnext<cr>")
+vim.keymap.set("n", "[q", ":cprev<cr>")
 
-vim.keymap.set("n", "<leader>b", buffers)
-vim.keymap.set("n", "]b", "<cmd>bnext<cr>")
-vim.keymap.set("n", "[b", "<cmd>bprev<cr>")
+vim.keymap.set("n", "<leader>b", ":buffers ")
+vim.keymap.set("n", "]b", ":bnext<cr>")
+vim.keymap.set("n", "[b", ":bprev<cr>")
 
-vim.keymap.set("n", "<leader>t", "<cmd>tabnew<cr>")
-vim.keymap.set("n", "]t", "<cmd>tabnext<cr>")
-vim.keymap.set("n", "[t", "<cmd>tabprev<cr>")
-vim.keymap.set("n", "<a-h>", "<cmd>tabprev<cr>")
-vim.keymap.set("n", "<a-l>", "<cmd>tabnext<cr>")
-vim.keymap.set("n", "<a-q>", "<cmd>tabclose<cr>")
-vim.keymap.set("n", "<a-tab>", "<cmd>tablast<cr>")
-
-vim.keymap.set("n", "<leader>i", "<cmd>Inspect<cr>")
+vim.keymap.set("n", "<leader>t", ":tabnew<cr>")
+vim.keymap.set("n", "]t", ":tabnext<cr>")
+vim.keymap.set("n", "[t", ":tabprev<cr>")
+vim.keymap.set("n", "<a-h>", ":tabprev<cr>")
+vim.keymap.set("n", "<a-l>", ":tabnext<cr>")
+vim.keymap.set("n", "<a-q>", ":tabclose<cr>")
+vim.keymap.set("n", "<a-tab>", ":tablast<cr>")
 
 vim.keymap.set("n", "<c-h>", "<c-w>h")
 vim.keymap.set("n", "<c-j>", "<c-w>j")
@@ -145,13 +179,13 @@ local function on_attach(client, bufnr)
 	-- ]d     = go to next diagnostic
 	-- [d     = go to previous diagnostic
 	-- <c-w>d = open floating window with diagnostics on current line
-	vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
-	vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
-	vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
-	vim.keymap.set("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
-	vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
-	vim.keymap.set("n", "<leader>a", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-	vim.keymap.set("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+	vim.keymap.set("n", "K", ":lua vim.lsp.buf.hover()<cr>", opts)
+	vim.keymap.set("n", "gs", ":lua vim.lsp.buf.signature_help()<cr>", opts)
+	vim.keymap.set("n", "gd", ":lua vim.lsp.buf.definition()<cr>", opts)
+	vim.keymap.set("n", "gt", ":lua vim.lsp.buf.type_definition()<cr>", opts)
+	vim.keymap.set("n", "gr", ":lua vim.lsp.buf.references()<cr>", opts)
+	vim.keymap.set("n", "<leader>a", ":lua vim.lsp.buf.code_action()<cr>", opts)
+	vim.keymap.set("n", "<leader>r", ":lua vim.lsp.buf.rename()<cr>", opts)
 end
 
 lsp["nil_ls"].setup({
