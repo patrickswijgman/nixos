@@ -70,7 +70,7 @@ end
 
 local function buffers()
 	utils.with_input("Buffer", "", "buffer", function(input)
-		vim.cmd("silent buffers " .. input)
+		vim.cmd("silent buffer " .. input)
 	end)
 end
 
