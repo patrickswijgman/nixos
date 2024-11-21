@@ -65,7 +65,7 @@ end
 local function grep()
 	local word = vim.fn.expand("<cword>")
 	utils.with_input("Grep: ", word, nil, function(input)
-		vim.cmd("silent grep! " .. input .. " | copen")
+		vim.cmd("silent grep! " .. input .. " | bo copen")
 	end)
 end
 
