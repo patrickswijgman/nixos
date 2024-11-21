@@ -1,7 +1,7 @@
 local M = {}
 
 function M.with_input(prompt, default, completion, on_confirm)
-	vim.ui.input({ prompt = prompt, default = default, completion = completion }, function(input)
+	vim.ui.input({ prompt = prompt .. ": ", default = default, completion = completion }, function(input)
 		if input and input ~= "" then
 			on_confirm(input)
 		end
@@ -9,7 +9,7 @@ function M.with_input(prompt, default, completion, on_confirm)
 end
 
 function M.with_confirm(prompt, on_confirm)
-	vim.ui.input({ prompt = prompt .. " (y/n) " }, function(input)
+	vim.ui.input({ prompt = prompt .. " (y/n): " }, function(input)
 		if input and (input == "y" or input == "Y") then
 			on_confirm()
 		end
@@ -61,7 +61,7 @@ function M.delete_buf_with_filename(filename)
 	for _, buf in ipairs(bufs) do
 		local name = vim.api.nvim_buf_get_name(buf)
 
-		if name:match(filename) then
+		if name:match("^" .. vim.pesc(filename)) then
 			vim.api.nvim_buf_delete(buf, { force = true })
 		end
 	end

@@ -56,20 +56,20 @@ vim.g.mapleader = " "
 -- KEYMAPS
 
 local function find()
-	utils.with_input("Find: ", "", "customlist,v:lua.require'utils'.list_files", function(input)
+	utils.with_input("Find", "", "customlist,v:lua.require'utils'.list_files", function(input)
 		vim.cmd("silent find " .. input)
 	end)
 end
 
 local function grep()
 	local word = vim.fn.expand("<cword>")
-	utils.with_input("Grep: ", word, "customlist,v:lua.require'utils'.list_words", function(input)
+	utils.with_input("Grep", word, "customlist,v:lua.require'utils'.list_words", function(input)
 		vim.cmd("silent grep! " .. input .. " | bo copen")
 	end)
 end
 
 local function buffers()
-	utils.with_input("Buffer: ", "", "buffer", function(input)
+	utils.with_input("Buffer", "", "buffer", function(input)
 		vim.cmd("silent buffers " .. input)
 	end)
 end
@@ -81,7 +81,7 @@ end
 
 local function create()
 	local dir = vim.fn.expand("%:h")
-	utils.with_input("Create: ", dir, "dir", function(input)
+	utils.with_input("Create", dir, "dir", function(input)
 		if utils.ends_with(input, "/") then
 			vim.cmd("silent !mkdir -p " .. input)
 		else
@@ -93,7 +93,7 @@ end
 
 local function move()
 	local file = vim.fn.expand("%")
-	utils.with_input("Move: ", file, "file", function(input)
+	utils.with_input("Move", file, "file", function(input)
 		vim.cmd("silent !mkdir -p " .. utils.dirname(input))
 		vim.cmd("silent !mv " .. file .. " " .. input)
 		vim.cmd("edit " .. input)
@@ -103,7 +103,7 @@ end
 
 local function delete()
 	local file = vim.fn.expand("%")
-	utils.with_confirm("Delete: " .. file, function()
+	utils.with_confirm("Delete " .. file, function()
 		vim.cmd("silent !rm -r " .. file)
 		utils.delete_buf_with_filename(file)
 	end)
@@ -111,7 +111,7 @@ end
 
 local function tree(dir)
 	local output = vim.fn.system("tree --gitignore " .. (dir or ""))
-	vim.notify(output, vim.log.levels.INFO, { title = "Tree" })
+	vim.notify(output, vim.log.levels.INFO)
 end
 
 local function tree_current_file_dir()
@@ -183,7 +183,9 @@ local function on_attach(client, bufnr)
 	-- Disable semantic highlighting as Treesitter is used for highlighting instead
 	client.server_capabilities.semanticTokensProvider = nil
 
-	local opts = { buffer = bufnr }
+	---@diagnostic disable-next-line: redefined-local
+	local opts = { noremap = true, silent = true, buffer = bufnr }
+
 	-- ]d     = go to next diagnostic
 	-- [d     = go to previous diagnostic
 	-- <c-w>d = open floating window with diagnostics on current line
