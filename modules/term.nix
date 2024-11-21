@@ -5,6 +5,9 @@
     programs.alacritty = {
       enable = true;
       settings = {
+        general.import = [
+          "~/.config/alacritty/themes/catppuccin-macchiato.toml"
+        ];
         keyboard.bindings = [
           {
             key = "N";
@@ -13,6 +16,11 @@
           }
         ];
       };
+    };
+
+    home.file.".config/alacritty" = {
+      source = ../files/alacritty;
+      recursive = true;
     };
 
     programs.lazygit = {
@@ -27,14 +35,14 @@
       enable = true;
       extraOptions = [
         "--hidden"
-        "--color=never"
+        # "--color=never"
       ];
     };
 
     programs.fzf = {
       enable = true;
       defaultOptions = [
-        "--ansi"
+        # "--ansi"
       ];
     };
 

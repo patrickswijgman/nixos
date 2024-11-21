@@ -63,6 +63,8 @@ with lib;
       inherit inputs;
     };
     users.patrick = {
+      imports = [ inputs.nixvim.homeManagerModules.nixvim ];
+
       # Home Manager needs a bit of information about you and the paths it should manage.
       home.username = "patrick";
       home.homeDirectory = "/home/patrick";

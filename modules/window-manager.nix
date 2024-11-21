@@ -193,8 +193,6 @@ with lib;
       pamixer
       playerctl
       brightnessctl
-      kooha
-      font-manager
     ];
 
     home.sessionVariables = {
