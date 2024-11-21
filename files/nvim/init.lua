@@ -110,7 +110,7 @@ local function delete()
 end
 
 local function tree(dir)
-	local output = vim.fn.system("tree -a --dirsfirst --gitignore " .. (dir or ""))
+	local output = vim.fn.system("tree -a --dirsfirst --gitignore -I '.git' " .. (dir or ""))
 	vim.notify(output, vim.log.levels.INFO)
 end
 
