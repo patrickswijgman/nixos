@@ -65,6 +65,11 @@ with lib;
           inner = 10;
           outer = 5;
         };
+        output = {
+          "*" = {
+            bg = "#000000 solid_color";
+          };
+        };
         colors = {
           background = config.colors.bg;
           focused = {
