@@ -8,6 +8,7 @@
 
       # Rust
       rustc
+      rustfmt
       cargo
       gcc # C compiler
 

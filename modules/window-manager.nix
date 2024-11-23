@@ -14,7 +14,9 @@ with lib;
       wrapperFeatures.gtk = true;
       config = rec {
         modifier = "Mod4";
+
         terminal = "alacritty";
+
         startup = [
           {
             command = "mako";
@@ -32,6 +34,7 @@ with lib;
             command = "systemctl --user import-environment";
           }
         ];
+
         keybindings = mkOptionDefault {
           "${modifier}+Ctrl+l" = "exec swaylock";
           "${modifier}+Shift+s" = "exec flameshot gui";
@@ -48,6 +51,7 @@ with lib;
           "XF86MonBrightnessUp" = "exec brightnessctl set 10%+";
           "XF86MonBrightnessDown" = "exec brightnessctl set 10%-";
         };
+
         input = {
           "type:pointer" = {
             accel_profile = "flat";
@@ -55,21 +59,26 @@ with lib;
             scroll_factor = "1";
           };
         };
-        window = {
-          titlebar = false;
-        };
-        floating = {
-          titlebar = false;
-        };
-        gaps = {
-          inner = 10;
-          outer = 5;
-        };
+
         output = {
           "*" = {
             bg = "#000000 solid_color";
           };
         };
+
+        window = {
+          titlebar = false;
+        };
+
+        floating = {
+          titlebar = false;
+        };
+
+        gaps = {
+          inner = 10;
+          outer = 5;
+        };
+
         colors = {
           background = config.colors.bg;
           focused = {
@@ -101,6 +110,7 @@ with lib;
             text = config.colors.error_text;
           };
         };
+
         bars = [
           {
             position = "top";

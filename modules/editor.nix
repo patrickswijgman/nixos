@@ -104,6 +104,7 @@ in
               yaml = [ "prettier" ];
               markdown = [ "prettier" ];
               nix = [ "nixfmt" ];
+              rust = [ "rustfmt" ];
               lua = [ "stylua" ];
               _ = [ "trim_whitespace" ];
             };
@@ -347,8 +348,13 @@ in
 
       autoCmd = [
         {
-          callback.__raw = "function() vim.highlight.on_yank() end";
           event = [ "TextYankPost" ];
+          callback.__raw = "function() vim.highlight.on_yank() end";
+        }
+        {
+          event = [ "FileType" ];
+          pattern = [ "checkhealth" ];
+          callback = "setlocal nospell";
         }
       ];
     };

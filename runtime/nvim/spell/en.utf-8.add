@@ -131,3 +131,4 @@ cronjob
 bool
 voipgrid
 ansi
+stdout
