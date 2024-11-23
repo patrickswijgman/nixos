@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+let
+  fleet-theme-nvim = pkgs.callPackage ./custom/fleet-theme-nvim.nix { };
+in
 {
   home-manager.users.patrick = {
     # https://nix-community.github.io/nixvim/
@@ -7,12 +10,11 @@
     programs.nixvim = {
       enable = true;
 
-      colorschemes.catppuccin = {
-        enable = true;
-        settings = {
-          flavour = "macchiato";
-        };
-      };
+      colorscheme = "fleet";
+
+      extraPlugins = [
+        fleet-theme-nvim
+      ];
 
       plugins = {
         web-devicons = {
@@ -64,6 +66,27 @@
 
         auto-session = {
           enable = true;
+          settings = {
+            use_git_branch = true;
+            session_lens = {
+              load_on_setup = false;
+            };
+          };
+        };
+
+        nvim-colorizer = {
+          enable = true;
+          userDefaultOptions = {
+            RGB = true;
+            RRGGBB = true;
+            RRGGBBAA = true;
+            names = false;
+            rgb_fn = false;
+            hsl_fn = false;
+            css = false;
+            css_fn = false;
+            mode = "background";
+          };
         };
 
         conform-nvim = {
@@ -81,6 +104,7 @@
               yaml = [ "prettier" ];
               markdown = [ "prettier" ];
               nix = [ "nixfmt" ];
+              lua = [ "stylua" ];
               _ = [ "trim_whitespace" ];
             };
             format_on_save = {
@@ -147,8 +171,12 @@
 
             rust_analyzer = {
               enable = true;
-              # installRustc = false;
-              # installCargo = false;
+              installRustc = false;
+              installCargo = false;
+            };
+
+            lua_ls = {
+              enable = true;
             };
           };
           onAttach = ''

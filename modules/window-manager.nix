@@ -36,8 +36,8 @@ with lib;
           "${modifier}+Ctrl+l" = "exec swaylock";
           "${modifier}+Shift+s" = "exec flameshot gui";
           "${modifier}+Tab" = "workspace back_and_forth";
-          "${modifier}+d" = "exec rofi -show run";
-          "${modifier}+s" = "splitv";
+          "${modifier}+d" = "exec fuzzel";
+          "${modifier}+x" = "splitv";
           "${modifier}+v" = "splith";
           "XF86AudioMute" = "exec pamixer -t";
           "XF86AudioRaiseVolume" = "exec pamixer -i 5";
@@ -55,48 +55,80 @@ with lib;
             scroll_factor = "1";
           };
         };
+        window = {
+          titlebar = false;
+        };
+        floating = {
+          titlebar = false;
+        };
+        gaps = {
+          inner = 10;
+          outer = 5;
+        };
+        colors = {
+          background = config.colors.bg;
+          focused = {
+            background = config.colors.cyan;
+            border = config.colors.cyan;
+            childBorder = config.colors.cyan;
+            indicator = config.colors.cyan;
+            text = config.colors.bg;
+          };
+          focusedInactive = {
+            background = config.colors.bg_light;
+            border = config.colors.bg_light;
+            childBorder = config.colors.bg_light;
+            indicator = config.colors.bg_light;
+            text = config.colors.text_dark;
+          };
+          unfocused = {
+            background = config.colors.bg_light;
+            border = config.colors.bg_light;
+            childBorder = config.colors.bg_light;
+            indicator = config.colors.bg_light;
+            text = config.colors.text_dark;
+          };
+          urgent = {
+            background = config.colors.error_bg;
+            border = config.colors.error_bg;
+            childBorder = config.colors.error_bg;
+            indicator = config.colors.error_bg;
+            text = config.colors.error_text;
+          };
+        };
         bars = [
           {
-            statusCommand = "i3status-rs ~/.config/i3status-rust/config-default.toml";
-            trayOutput = "none";
+            position = "top";
+            trayOutput = null;
+            colors = {
+              background = config.colors.bg;
+              statusline = config.colors.pink;
+              focusedWorkspace = {
+                background = config.colors.cyan;
+                border = config.colors.cyan;
+                text = config.colors.bg;
+              };
+              inactiveWorkspace = {
+                background = config.colors.bg_light;
+                border = config.colors.bg_light;
+                text = config.colors.text_dark;
+              };
+              urgentWorkspace = {
+                background = config.colors.error_bg;
+                border = config.colors.error_bg;
+                text = config.colors.error_text;
+              };
+            };
           }
         ];
       };
     };
 
-    programs.rofi = {
+    programs.fuzzel = {
       enable = true;
-      package = pkgs.rofi-wayland;
-    };
-
-    programs.i3status-rust = {
-      enable = true;
-      bars = {
-        default = {
-          theme = "native";
-          icons = "awesome4";
-          # https://docs.rs/i3status-rs/latest/i3status_rs/blocks/index.html#modules
-          blocks = [
-            { block = "disk_space"; }
-            { block = "memory"; }
-            { block = "cpu"; }
-            { block = "music"; }
-            {
-              block = "sound";
-              format = " $icon{ $volume.eng(w:2)|} $output_description ";
-            }
-            {
-              block = "bluetooth";
-              mac = "D8:AA:59:84:77:CD"; # JBL LIVE PRO+ TWS
-            }
-            {
-              block = "net";
-              format = " $icon{ $signal_strength $ssid | $ip }";
-            }
-            { block = "backlight"; }
-            { block = "battery"; }
-            { block = "time"; }
-          ];
+      settings = {
+        main = {
+          terminal = "alacritty -e";
         };
       };
     };

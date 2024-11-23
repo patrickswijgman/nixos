@@ -5,9 +5,22 @@
     programs.alacritty = {
       enable = true;
       settings = {
-        general.import = [
-          "~/.config/alacritty/themes/catppuccin-macchiato.toml"
-        ];
+        colors = {
+          primary = {
+            background = config.colors.bg;
+            foreground = config.colors.text;
+          };
+          normal = {
+            black = config.colors.bg;
+            red = config.colors.red;
+            green = config.colors.green;
+            yellow = config.colors.yellow;
+            blue = config.colors.blue;
+            magenta = config.colors.pink;
+            cyan = config.colors.cyan;
+            white = config.colors.text;
+          };
+        };
         keyboard.bindings = [
           {
             key = "N";
@@ -16,11 +29,6 @@
           }
         ];
       };
-    };
-
-    home.file.".config/alacritty" = {
-      source = ../files/alacritty;
-      recursive = true;
     };
 
     programs.lazygit = {
@@ -33,25 +41,14 @@
 
     programs.fd = {
       enable = true;
-      extraOptions = [
-        "--hidden"
-        # "--color=never"
-      ];
     };
 
     programs.fzf = {
       enable = true;
-      defaultOptions = [
-        # "--ansi"
-      ];
     };
 
     programs.bat = {
       enable = true;
-      config = {
-        theme = "ansi";
-        color = "always";
-      };
     };
 
     programs.htop = {
