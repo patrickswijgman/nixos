@@ -10,14 +10,17 @@ end
 
 function M.with_confirm(prompt, on_confirm)
 	vim.ui.input({ prompt = prompt .. " (y/n): " }, function(input)
-		if input and (input == "y" or input == "Y") then
+		if input == "y" or input == "Y" then
 			on_confirm()
 		end
 	end)
 end
 
 function M.list_files(query)
-	return vim.fn.systemlist("fd --type=file --type=directory --hidden --full-path --exclude='.git' " .. query)
+	return vim.fn.systemlist(
+		"fd --type=file --type=directory --full-path --hidden --no-ignore --exclude='.git' --exclude='node_modules' "
+			.. query
+	)
 end
 
 function M.list_words(starts_with)

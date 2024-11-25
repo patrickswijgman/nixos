@@ -13,7 +13,7 @@ with lib;
       enable = true;
       wrapperFeatures.gtk = true;
 
-      config = rec {
+      config = {
         modifier = "Mod4";
         terminal = "alacritty";
 
@@ -36,12 +36,12 @@ with lib;
         ];
 
         keybindings = mkOptionDefault {
-          "${modifier}+Ctrl+l" = "exec swaylock";
-          "${modifier}+Shift+s" = "exec flameshot gui";
-          "${modifier}+Tab" = "workspace back_and_forth";
-          "${modifier}+d" = "exec fuzzel";
-          "${modifier}+x" = "splitv";
-          "${modifier}+v" = "splith";
+          "Mod4+Ctrl+l" = "exec swaylock";
+          "Mod4+Shift+s" = "exec flameshot gui";
+          "Mod4+Tab" = "workspace back_and_forth";
+          "Mod4+d" = "exec rofi --show drun";
+          "Mod4+x" = "splitv";
+          "Mod4+v" = "splith";
           "XF86AudioMute" = "exec pamixer -t";
           "XF86AudioRaiseVolume" = "exec pamixer -i 5";
           "XF86AudioLowerVolume" = "exec pamixer -d 5";
@@ -66,86 +66,17 @@ with lib;
           };
         };
 
-        window = {
-          titlebar = false;
-        };
-
-        floating = {
-          titlebar = false;
-        };
-
-        gaps = {
-          inner = 10;
-          outer = 5;
-        };
-
-        colors = {
-          background = config.colors.bg;
-          focused = {
-            background = config.colors.cyan;
-            border = config.colors.cyan;
-            childBorder = config.colors.cyan;
-            indicator = config.colors.cyan;
-            text = config.colors.bg;
-          };
-          focusedInactive = {
-            background = config.colors.bg_light;
-            border = config.colors.bg_light;
-            childBorder = config.colors.bg_light;
-            indicator = config.colors.bg_light;
-            text = config.colors.text_dark;
-          };
-          unfocused = {
-            background = config.colors.bg_light;
-            border = config.colors.bg_light;
-            childBorder = config.colors.bg_light;
-            indicator = config.colors.bg_light;
-            text = config.colors.text_dark;
-          };
-          urgent = {
-            background = config.colors.error_bg;
-            border = config.colors.error_bg;
-            childBorder = config.colors.error_bg;
-            indicator = config.colors.error_bg;
-            text = config.colors.error_text;
-          };
-        };
-
         bars = [
           {
-            position = "top";
-            trayOutput = null;
-            colors = {
-              background = config.colors.bg;
-              statusline = config.colors.pink;
-              focusedWorkspace = {
-                background = config.colors.cyan;
-                border = config.colors.cyan;
-                text = config.colors.bg;
-              };
-              inactiveWorkspace = {
-                background = config.colors.bg_light;
-                border = config.colors.bg_light;
-                text = config.colors.text_dark;
-              };
-              urgentWorkspace = {
-                background = config.colors.error_bg;
-                border = config.colors.error_bg;
-                text = config.colors.error_text;
-              };
-            };
+            trayOutput = "none";
           }
         ];
       };
     };
 
-    programs.fuzzel = {
+    programs.rofi = {
       enable = true;
-      settings = {
-        main = {
-          terminal = "alacritty -e";
-        };
-      };
+      package = pkgs.rofi-wayland;
     };
 
     programs.swaylock = {

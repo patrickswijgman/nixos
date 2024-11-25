@@ -2,8 +2,6 @@
 
 {
   imports = [
-    ./colors.nix
-
     ./apps.nix
     ./bluetooth.nix
     ./browser.nix

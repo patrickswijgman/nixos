@@ -11,7 +11,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
 vim.opt.signcolumn = "yes"
-vim.opt.colorcolumn = ""
+vim.opt.colorcolumn = "80,120"
 vim.opt.scrolloff = 8
 vim.opt.splitright = true
 vim.opt.splitbelow = true
@@ -39,7 +39,7 @@ vim.opt.grepprg = "rg --vimgrep --smart-case --sort=path"
 vim.opt.spell = true
 vim.opt.spelllang = "en_us"
 vim.opt.spelloptions = "camel"
-vim.opt.spellfile = vim.fn.expand("~/nixos/runtime/nvim/spell/en.utf-8.add")
+vim.opt.spellfile = "/home/patrick/nixos/runtime/nvim/spell/en.utf-8.add"
 
 vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3
@@ -58,7 +58,7 @@ end
 local function grep()
 	local word = vim.fn.expand("<cword>")
 	utils.with_input("Grep", word, "customlist,v:lua.require'utils'.list_words", function(input)
-		vim.cmd("silent grep! " .. input .. " | bo copen")
+		vim.cmd("silent grep! " .. input .. " | Quickfix")
 	end)
 end
 
@@ -116,7 +116,7 @@ vim.keymap.set("n", "<leader>m", move, opts)
 vim.keymap.set("n", "<leader>D", delete, opts)
 vim.keymap.set("n", "<leader>i", ":Inspect<cr>", opts)
 
-vim.keymap.set("n", "<leader>q", ":copen<cr>", opts)
+vim.keymap.set("n", "<leader>q", ":Quickfix<cr>", opts)
 vim.keymap.set("n", "]q", ":cnext<cr>", opts)
 vim.keymap.set("n", "[q", ":cprev<cr>", opts)
 
@@ -130,7 +130,7 @@ vim.keymap.set("n", "[t", ":tabprev<cr>", opts)
 vim.keymap.set("n", "<a-h>", ":tabprev<cr>", opts)
 vim.keymap.set("n", "<a-l>", ":tabnext<cr>", opts)
 vim.keymap.set("n", "<a-q>", ":tabclose<cr>", opts)
-vim.keymap.set("n", "<a-tab>", ":tablast<cr>", opts)
+vim.keymap.set("n", "<a-tab>", "g<tab>", opts)
 
 vim.keymap.set("n", "<leader>z", ":ZenMode<cr>", opts)
 
@@ -175,7 +175,7 @@ require("colorizer").setup({
 
 require("zen-mode").setup({
 	window = {
-		width = 200,
+		width = 120,
 	},
 })
 
@@ -194,6 +194,7 @@ local function on_attach(client, bufnr)
 	-- ]d     = go to next diagnostic
 	-- [d     = go to previous diagnostic
 	-- <c-w>d = open floating window with diagnostics on current line
+	-- K      = open documentation for symbol under cursor
 	vim.keymap.set("n", "gs", ":lua vim.lsp.buf.signature_help()<cr>", opts)
 	vim.keymap.set("n", "gd", ":lua vim.lsp.buf.definition()<cr>", opts)
 	vim.keymap.set("n", "gt", ":lua vim.lsp.buf.type_definition()<cr>", opts)
@@ -313,6 +314,14 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("BufWritePost", {
+	group = group,
+	pattern = "*.rs",
+	callback = function()
+		vim.cmd("silent !rustfmt " .. vim.fn.expand("%"))
+	end,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
 	group = group,
 	pattern = "qf,checkhealth",
@@ -327,3 +336,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
+
+-- USER COMMANDS
+
+vim.api.nvim_create_user_command("Quickfix", "botright copen", {})
