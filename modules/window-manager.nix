@@ -15,6 +15,7 @@ with lib;
       config = {
         modifier = "Mod4";
         terminal = "alacritty";
+
         startup = [
           {
             command = "mako";
@@ -32,11 +33,12 @@ with lib;
             command = "systemctl --user import-environment";
           }
         ];
+
         keybindings = mkOptionDefault {
           "Mod4+Ctrl+l" = "exec swaylock";
           "Mod4+Shift+s" = "exec flameshot gui";
           "Mod4+Tab" = "workspace back_and_forth";
-          "Mod4+d" = "exec rofi -show drun";
+          "Mod4+d" = "exec fuzzel";
           "Mod4+x" = "splitv";
           "Mod4+v" = "splith";
           "XF86AudioMute" = "exec pamixer -t";
@@ -48,6 +50,7 @@ with lib;
           "XF86MonBrightnessUp" = "exec brightnessctl set 10%+";
           "XF86MonBrightnessDown" = "exec brightnessctl set 10%-";
         };
+
         input = {
           "type:pointer" = {
             accel_profile = "flat";
@@ -55,24 +58,57 @@ with lib;
             scroll_factor = "1";
           };
         };
-        bars = [
-          {
-            trayOutput = "none";
-          }
-        ];
+
+        window = {
+          titlebar = false;
+        };
+
+        floating = {
+          titlebar = false;
+        };
+
+        gaps = {
+          inner = 10;
+          outer = 0;
+        };
+
+        bars = [ ];
       };
+
+      extraConfig = ''
+        # target                 border    bg    text   indicator  child_border
+        client.focused           $lavender $base $text  $rosewater $lavender
+        client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
+        client.unfocused         $overlay0 $base $text  $rosewater $overlay0
+        client.urgent            $peach    $base $peach $overlay0  $peach
+        client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
+        client.background        $base
+
+        bar {
+          position top
+          tray_output none
+          colors {
+            background         $base
+            statusline         $text
+            focused_statusline $text
+            focused_separator  $base
+
+            # target           border bg        text
+            focused_workspace  $base  $mauve    $crust
+            active_workspace   $base  $surface2 $text
+            inactive_workspace $base  $base     $text
+            urgent_workspace   $base  $red      $crust
+          }
+        } 
+      '';
     };
 
-    programs.rofi = {
+    programs.fuzzel = {
       enable = true;
-      package = pkgs.rofi-wayland;
     };
 
     programs.swaylock = {
       enable = true;
-      settings = {
-        color = "000000";
-      };
     };
 
     services.kanshi = {
@@ -138,19 +174,6 @@ with lib;
           showSidePanelButton = false;
           showHelp = false;
         };
-      };
-    };
-
-    home.pointerCursor = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
-      size = 24;
-      gtk = {
-        enable = true;
-      };
-      x11 = {
-        enable = true;
-        defaultCursor = "Adwaita";
       };
     };
 
