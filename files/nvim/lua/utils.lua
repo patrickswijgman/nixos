@@ -17,8 +17,7 @@ function M.with_confirm(prompt, on_confirm)
 end
 
 function M.list_files(query)
-	-- TODO populate and open in quickfix window if query results in multiple files
-	return vim.fn.systemlist("fd --type=file --type=directory --full-path --hidden --exclude='.git' " .. query)
+	return vim.fn.systemlist("fd --type=file --full-path --hidden --exclude='.git' " .. query)
 end
 
 function M.list_words(starts_with)
