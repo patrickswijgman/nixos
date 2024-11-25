@@ -39,7 +39,7 @@ with lib;
           "Mod4+Ctrl+l" = "exec swaylock";
           "Mod4+Shift+s" = "exec flameshot gui";
           "Mod4+Tab" = "workspace back_and_forth";
-          "Mod4+d" = "exec rofi --show drun";
+          "Mod4+d" = "exec rofi -show drun";
           "Mod4+x" = "splitv";
           "Mod4+v" = "splith";
           "XF86AudioMute" = "exec pamixer -t";
