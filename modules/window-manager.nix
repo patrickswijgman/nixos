@@ -12,11 +12,9 @@ with lib;
     wayland.windowManager.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
-
       config = {
         modifier = "Mod4";
         terminal = "alacritty";
-
         startup = [
           {
             command = "mako";
@@ -34,7 +32,6 @@ with lib;
             command = "systemctl --user import-environment";
           }
         ];
-
         keybindings = mkOptionDefault {
           "Mod4+Ctrl+l" = "exec swaylock";
           "Mod4+Shift+s" = "exec flameshot gui";
@@ -51,7 +48,6 @@ with lib;
           "XF86MonBrightnessUp" = "exec brightnessctl set 10%+";
           "XF86MonBrightnessDown" = "exec brightnessctl set 10%-";
         };
-
         input = {
           "type:pointer" = {
             accel_profile = "flat";
@@ -59,13 +55,6 @@ with lib;
             scroll_factor = "1";
           };
         };
-
-        output = {
-          "*" = {
-            bg = "#000000 solid_color";
-          };
-        };
-
         bars = [
           {
             trayOutput = "none";
