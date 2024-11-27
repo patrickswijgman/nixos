@@ -87,6 +87,10 @@
           };
         };
 
+        lualine = {
+          enable = true;
+        };
+
         conform-nvim = {
           enable = true;
           settings = {
@@ -413,8 +417,6 @@
         shiftwidth = 2;
         expandtab = true;
         autoindent = true;
-
-        completeopt = "menuone,popup,noinsert,noselect";
 
         spell = true;
         spelllang = "en_us";

@@ -133,6 +133,10 @@
       keys = [
         "~/.ssh/id_ed25519"
       ];
+      extraFlags = [
+        "--quiet"
+        "--timeout 3600"
+      ];
     };
   };
 

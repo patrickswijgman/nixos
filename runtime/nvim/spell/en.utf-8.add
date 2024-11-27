@@ -133,3 +133,7 @@ voipgrid
 ansi
 stdout
 sdk
+Workspace
+statusline
+usecases
+rerender

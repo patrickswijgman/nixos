@@ -20,9 +20,12 @@
       stylua
 
       # Web
-      nodejs_20
+      nodejs_22
       nodePackages.prettier
       typescript
+
+      # Other
+      font-manager
     ];
   };
 }

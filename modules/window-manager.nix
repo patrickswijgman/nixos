@@ -72,34 +72,280 @@ with lib;
           outer = 0;
         };
 
-        bars = [ ];
+        colors = {
+          background = "$base";
+          focused = {
+            border = "$lavender";
+            background = "$base";
+            text = "$text";
+            indicator = "$rosewater";
+            childBorder = "$lavender";
+          };
+          focusedInactive = {
+            border = "$overlay0";
+            background = "$base";
+            text = "$text";
+            indicator = "$rosewater";
+            childBorder = "$overlay0";
+          };
+          unfocused = {
+            border = "$overlay0";
+            background = "$base";
+            text = "$text";
+            indicator = "$rosewater";
+            childBorder = "$overlay0";
+          };
+          urgent = {
+            border = "$peach";
+            background = "$base";
+            text = "$peach";
+            indicator = "$overlay0";
+            childBorder = "$peach";
+          };
+        };
+
+        bars = [
+          { command = "waybar"; }
+        ];
+
       };
+    };
 
-      extraConfig = ''
-        # target                 border    bg    text   indicator  child_border
-        client.focused           $lavender $base $text  $rosewater $lavender
-        client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
-        client.unfocused         $overlay0 $base $text  $rosewater $overlay0
-        client.urgent            $peach    $base $peach $overlay0  $peach
-        client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
-        client.background        $base
+    # https://github.com/Alexays/Waybar/wiki
+    programs.waybar = {
+      enable = true;
+      settings = {
+        mainBar = {
+          layer = "top";
+          position = "top";
 
-        bar {
-          position top
-          tray_output none
-          colors {
-            background         $base
-            statusline         $text
-            focused_statusline $text
-            focused_separator  $base
+          modules-left = [
+            "sway/workspaces"
+          ];
 
-            # target           border bg        text
-            focused_workspace  $base  $mauve    $crust
-            active_workspace   $base  $surface2 $text
-            inactive_workspace $base  $base     $text
-            urgent_workspace   $base  $red      $crust
-          }
-        } 
+          modules-center = [
+            "sway/window"
+          ];
+
+          modules-right = [
+            "custom/music"
+            "cpu"
+            "memory"
+            "pulseaudio"
+            "backlight"
+            "battery"
+            "clock"
+            "custom/lock"
+            "custom/power"
+          ];
+
+          "sway/workspaces" = {
+            disable-scroll = true;
+            format = " {icon} {name} ";
+            format-icons = {
+              default = "";
+            };
+          };
+
+          "custom/music" = {
+            format = "  {}";
+            escape = true;
+            interval = 5;
+            tooltip = false;
+            exec = "playerctl metadata --format='{{ title }}'";
+            on-click = "playerctl play-pause";
+            max-length = 50;
+          };
+
+          "cpu" = {
+            format = "  {usage}%";
+          };
+
+          "memory" = {
+            format = "  {used} / {total} GiB";
+          };
+
+          "clock" = {
+            timezone = "Europe/Amsterdam";
+            format = "  {:%H:%M    %a %b %Y}";
+            tooltip = false;
+          };
+
+          "backlight" = {
+            device = "intel_backlight";
+            format = "{icon}  {percent}%";
+            format-icons = [
+              ""
+              ""
+              ""
+            ];
+          };
+
+          "battery" = {
+            states = {
+              warning = 30;
+              critical = 15;
+            };
+            format = "{icon}  {capacity}%";
+            format-charging = "";
+            format-plugged = "";
+            format-alt = "{icon}";
+            format-icons = [
+              ""
+              ""
+              ""
+              ""
+              ""
+            ];
+          };
+
+          "pulseaudio" = {
+            format = "{icon}  {volume}%";
+            format-muted = "";
+            format-icons = {
+              default = [
+                ""
+                ""
+                ""
+              ];
+            };
+          };
+
+          "custom/lock" = {
+            tooltip = false;
+            on-click = "swaylock";
+            format = "";
+          };
+
+          "custom/power" = {
+            tooltip = false;
+            on-click = "poweroff";
+            format = "";
+          };
+        };
+      };
+      style = ''
+        * {
+          font-family: monospace;
+          font-size: 12px;
+          min-height: 0;
+        }
+
+        #waybar {
+          background: transparent;
+          color: @text;
+          margin: 5px 5px;
+        }
+
+        #workspaces {
+          border-radius: 1rem;
+          margin: 5px;
+          background-color: @surface0;
+          margin-left: 1rem;
+        }
+
+        #workspaces button {
+          color: @lavender;
+          border-radius: 1rem;
+          padding: 0.4rem;
+        }
+
+        #workspaces button:hover {
+          background-color: @surface1;
+          border-radius: 1rem;
+        }
+
+        #workspaces button.focused {
+          color: @sky;
+          background-color: @surface1;
+          border-radius: 1rem;
+        }
+
+        #workspaces button.urgent {
+          color: @peach;
+          background-color: @surface1;
+          border-radius: 1rem;
+        }
+
+        #custom-music,
+        #cpu,
+        #memory,
+        #pulseaudio,
+        #battery,
+        #backlight,
+        #clock,
+        #custom-lock,
+        #custom-power,
+        #tray {
+          background-color: @surface0;
+          padding: 0.5rem 1rem;
+          margin: 5px 0;
+        }
+
+        #cpu {
+          color: @maroon;
+          border-radius: 1rem 0px 0px 1rem;
+        }
+
+        #memory {
+          color: @maroon;
+          border-radius: 0px 1rem 1rem 0px;
+        }
+
+        #clock {
+          color: @blue;
+          border-radius: 0px 1rem 1rem 0px;
+          margin-right: 1rem;
+        }
+
+        #battery {
+          color: @green;
+        }
+
+        #battery.charging {
+          color: @green;
+        }
+
+        #battery.warning:not(.charging) {
+          color: @red;
+        }
+
+        #backlight {
+          color: @yellow;
+        }
+
+        #backlight,
+        #battery {
+          border-radius: 0;
+        }
+
+        #pulseaudio {
+          color: @peach;
+          border-radius: 1rem 0px 0px 1rem;
+          margin-left: 1rem;
+        }
+
+        #custom-music {
+          color: @mauve;
+          border-radius: 1rem;
+          margin-right: 1rem;
+        }
+
+        #custom-lock {
+          border-radius: 1rem 0px 0px 1rem;
+          color: @lavender;
+        }
+
+        #custom-power {
+          margin-right: 1rem;
+          border-radius: 0px 1rem 1rem 0px;
+          color: @red;
+        }
+
+        #tray {
+          margin-right: 1rem;
+          border-radius: 1rem;
+        }
       '';
     };
 
@@ -109,6 +355,17 @@ with lib;
 
     programs.swaylock = {
       enable = true;
+    };
+
+    services.swayidle = {
+      enable = true;
+      systemdTarget = "sway-session.target";
+      timeouts = [
+        {
+          timeout = 180;
+          command = "swaylock";
+        }
+      ];
     };
 
     services.kanshi = {

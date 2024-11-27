@@ -7,7 +7,16 @@
 
       pointerCursor = {
         enable = true;
-        accent = "light";
+        accent = "dark";
+      };
+    };
+
+    gtk = {
+      enable = true;
+      catppuccin = {
+        enable = true;
+        size = "standard";
+        tweaks = [ "normal" ];
       };
     };
   };
