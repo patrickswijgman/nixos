@@ -21,6 +21,16 @@
       };
     };
 
+    programs.spotify-player = {
+      enable = true;
+      settings = {
+        enable_notify = false;
+        device = {
+          volume = 100;
+        };
+      };
+    };
+
     programs.lazygit = {
       enable = true;
     };
