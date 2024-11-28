@@ -18,19 +18,8 @@ with lib;
 
         startup = [
           {
-            command = "mako";
-          }
-          {
-            command = "makoctl reload";
-            always = true;
-          }
-          {
             command = "systemctl --user restart kanshi";
             always = true;
-          }
-          {
-            # This ensures all user units started after the command (not those already running) set the variables
-            command = "systemctl --user import-environment";
           }
         ];
 
@@ -56,6 +45,12 @@ with lib;
             accel_profile = "flat";
             pointer_accel = "-0.4";
             scroll_factor = "1";
+          };
+        };
+
+        output = {
+          "*" = {
+            bg = "#11111b solid_color";
           };
         };
 
@@ -131,9 +126,11 @@ with lib;
             "custom/music"
             "cpu"
             "memory"
+            "disk"
+            "network"
             "pulseaudio"
-            "backlight"
             "battery"
+            "backlight"
             "clock"
             "custom/lock"
             "custom/power"
@@ -141,20 +138,31 @@ with lib;
 
           "sway/workspaces" = {
             disable-scroll = true;
-            format = " {icon} {name} ";
+            format = " {icon}  {name} ";
             format-icons = {
               default = "";
+              "1" = "";
+              "2" = "";
+              "3" = "";
+              "4" = "";
+              "8" = "";
+              "9" = "";
+              "0" = "";
             };
           };
 
+          "sway/window" = {
+            max-length = 50;
+          };
+
           "custom/music" = {
-            format = "  {}";
-            escape = true;
-            interval = 5;
             tooltip = false;
+            escape = true;
+            format = "  {}";
             exec = "playerctl metadata --format='{{ title }}'";
             on-click = "playerctl play-pause";
             max-length = 50;
+            interval = 5;
           };
 
           "cpu" = {
@@ -162,16 +170,34 @@ with lib;
           };
 
           "memory" = {
-            format = "  {used} / {total} GiB";
+            format = "  {percentage}%";
+            tooltip-format = "Used: {used:0.1f} / {total:0.1f} GiB";
+          };
+
+          "disk" = {
+            format = "  {percentage_used}%";
+            tooltip-format = "Used: {specific_used:0.2f} / {specific_total:0.2f} GiB";
+            unit = "GB";
+          };
+
+          "network" = {
+            format = "";
+            format-wifi = "  {signalStrength}%";
+            format-ethernet = "";
+            format-disconnected = "";
+            tooltip-format-wifi = "SSID: {essid} | IP: {ipaddr}";
+            tooltip-format-ethernet = "IP: {ipaddr}";
+            tooltip-format-disconnected = "Disconnected";
           };
 
           "clock" = {
             timezone = "Europe/Amsterdam";
-            format = "  {:%H:%M    %a %b %Y}";
-            tooltip = false;
+            format = "  {:%H:%M}";
+            tooltip-format = "{%A %d %B %Y}";
           };
 
           "backlight" = {
+            tooltip = false;
             device = "intel_backlight";
             format = "{icon}  {percent}%";
             format-icons = [
@@ -189,7 +215,6 @@ with lib;
             format = "{icon}  {capacity}%";
             format-charging = "";
             format-plugged = "";
-            format-alt = "{icon}";
             format-icons = [
               ""
               ""
@@ -201,10 +226,13 @@ with lib;
 
           "pulseaudio" = {
             format = "{icon}  {volume}%";
-            format-muted = "";
+            format-bluetooth = "  {icon}  {volume}%";
+            format-muted = "";
             format-icons = {
+              headphone = "";
+              headset = "";
+              hands-free = "";
               default = [
-                ""
                 ""
                 ""
               ];
@@ -232,7 +260,7 @@ with lib;
         }
 
         #waybar {
-          background: transparent;
+          background: @base;
           color: @text;
           margin: 5px 5px;
         }
@@ -270,16 +298,23 @@ with lib;
         #custom-music,
         #cpu,
         #memory,
+        #disk,
+        #network,
         #pulseaudio,
         #battery,
         #backlight,
         #clock,
         #custom-lock,
-        #custom-power,
-        #tray {
+        #custom-power {
           background-color: @surface0;
           padding: 0.5rem 1rem;
           margin: 5px 0;
+        }
+
+        #custom-music {
+          color: @mauve;
+          border-radius: 1rem;
+          margin-right: 1rem;
         }
 
         #cpu {
@@ -288,46 +323,32 @@ with lib;
         }
 
         #memory {
-          color: @maroon;
-          border-radius: 0px 1rem 1rem 0px;
+          color: @peach;
+        }
+
+        #disk {
+          color: @yellow;
+        }
+
+        #network {
+          color: @green;
+        }
+
+        #pulseaudio {
+          color: @teal;
+        }
+
+        #battery,
+          color: @sky;
+        }
+
+        #backlight {
+          color: @sapphire;
         }
 
         #clock {
           color: @blue;
           border-radius: 0px 1rem 1rem 0px;
-          margin-right: 1rem;
-        }
-
-        #battery {
-          color: @green;
-        }
-
-        #battery.charging {
-          color: @green;
-        }
-
-        #battery.warning:not(.charging) {
-          color: @red;
-        }
-
-        #backlight {
-          color: @yellow;
-        }
-
-        #backlight,
-        #battery {
-          border-radius: 0;
-        }
-
-        #pulseaudio {
-          color: @peach;
-          border-radius: 1rem 0px 0px 1rem;
-          margin-left: 1rem;
-        }
-
-        #custom-music {
-          color: @mauve;
-          border-radius: 1rem;
           margin-right: 1rem;
         }
 
@@ -341,11 +362,6 @@ with lib;
           border-radius: 0px 1rem 1rem 0px;
           color: @red;
         }
-
-        #tray {
-          margin-right: 1rem;
-          border-radius: 1rem;
-        }
       '';
     };
 
@@ -354,6 +370,10 @@ with lib;
     };
 
     programs.swaylock = {
+      enable = true;
+    };
+
+    services.swaync = {
       enable = true;
     };
 
@@ -413,13 +433,6 @@ with lib;
           ];
         }
       ];
-    };
-
-    services.mako = {
-      enable = true;
-      anchor = "top-center";
-      margin = "30,20,10";
-      layer = "overlay";
     };
 
     services.flameshot = {
