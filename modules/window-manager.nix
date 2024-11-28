@@ -338,7 +338,7 @@ with lib;
           color: @teal;
         }
 
-        #battery,
+        #battery {
           color: @sky;
         }
 
