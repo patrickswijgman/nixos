@@ -16,6 +16,40 @@
 
         telescope = {
           enable = true;
+          settings = {
+            defaults = {
+              mappings = {
+                i = {
+                  "<esc>".__raw = "require('telescope.actions').close";
+                  "<c-up>".__raw = "require('telescope.actions').cycle_history_prev";
+                  "<c-down>".__raw = "require('telescope.actions').cycle_history_next";
+                };
+              };
+              vimgrep_arguments = [
+                "rg"
+                "--vimgrep"
+                "--trim"
+                "--color=never"
+                "--sort=path"
+                "--smart-case"
+                "--hidden"
+                "--glob=!**/.git/*"
+              ];
+            };
+            pickers = {
+              find_files = {
+                find_command = [
+                  "rg"
+                  "--files"
+                  "--color=never"
+                  "--sort=path"
+                  "--smart-case"
+                  "--hidden"
+                  "--glob=!**/.git/*"
+                ];
+              };
+            };
+          };
         };
 
         neo-tree = {
