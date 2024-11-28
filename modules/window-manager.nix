@@ -147,7 +147,7 @@ with lib;
               "4" = "";
               "8" = "";
               "9" = "";
-              "0" = "";
+              "10" = "";
             };
           };
 
@@ -193,7 +193,7 @@ with lib;
           "clock" = {
             timezone = "Europe/Amsterdam";
             format = "  {:%H:%M}";
-            tooltip-format = "{%A %d %B %Y}";
+            tooltip-format = "{:%A %d %B %Y}";
           };
 
           "backlight" = {
@@ -225,8 +225,9 @@ with lib;
           };
 
           "pulseaudio" = {
+            scroll-step = 5;
             format = "{icon}  {volume}%";
-            format-bluetooth = "  {icon}  {volume}%";
+            format-bluetooth = " {icon}  {volume}%";
             format-muted = "";
             format-icons = {
               headphone = "";
