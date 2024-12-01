@@ -20,9 +20,9 @@
             defaults = {
               mappings = {
                 i = {
-                  "<esc>".__raw = "require('telescope.actions').close";
-                  "<c-up>".__raw = "require('telescope.actions').cycle_history_prev";
-                  "<c-down>".__raw = "require('telescope.actions').cycle_history_next";
+                  "<esc>".__raw = ''require("telescope.action").close'';
+                  "<c-up>".__raw = ''require("telescope.action").cycle_history_prev'';
+                  "<c-down>".__raw = ''require("telescope.action").cycle_history_next'';
                 };
               };
               vimgrep_arguments = [
@@ -148,16 +148,16 @@
           enable = true;
           settings = {
             formatters_by_ft = {
-              html = [ "prettier" ];
-              css = [ "prettier" ];
-              javascript = [ "prettier" ];
-              javascriptreact = [ "prettier" ];
-              typescript = [ "prettier" ];
-              typescriptreact = [ "prettier" ];
-              json = [ "prettier" ];
-              jsonc = [ "prettier" ];
-              yaml = [ "prettier" ];
-              markdown = [ "prettier" ];
+              html = [ "prettierd" ];
+              css = [ "prettierd" ];
+              javascript = [ "prettierd" ];
+              javascriptreact = [ "prettierd" ];
+              typescript = [ "prettierd" ];
+              typescriptreact = [ "prettierd" ];
+              json = [ "prettierd" ];
+              jsonc = [ "prettierd" ];
+              yaml = [ "prettierd" ];
+              markdown = [ "prettierd" ];
               nix = [ "nixfmt" ];
               go = [ "gofmt" ];
               rust = [ "rustfmt" ];
@@ -294,10 +294,6 @@
               enable = true;
               installRustc = false;
               installCargo = false;
-            };
-
-            lua_ls = {
-              enable = true;
             };
           };
           onAttach = ''
@@ -488,7 +484,7 @@
       autoCmd = [
         {
           event = [ "TextYankPost" ];
-          callback.__raw = "function() vim.highlight.on_yank() end";
+          callback.__raw = ''function() vim.highlight.on_yank() end'';
         }
         {
           event = [ "FileType" ];

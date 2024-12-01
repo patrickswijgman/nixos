@@ -1,6 +1,7 @@
 @import "/home/patrick/.config/waybar/catppuccin.css";
 
 * {
+  all: unset;
   font-family: monospace;
   font-size: 12px;
   min-height: 0;
@@ -15,7 +16,7 @@
 #workspaces {
   border-radius: 1rem;
   margin: 5px;
-  background-color: @surface0;
+  background: @surface0;
   margin-left: 1rem;
 }
 
@@ -26,19 +27,19 @@
 }
 
 #workspaces button:hover {
-  background-color: @surface1;
+  background: @surface1;
   border-radius: 1rem;
 }
 
 #workspaces button.focused {
   color: @sky;
-  background-color: @surface1;
+  background: @surface1;
   border-radius: 1rem;
 }
 
 #workspaces button.urgent {
   color: @peach;
-  background-color: @surface1;
+  background: @surface1;
   border-radius: 1rem;
 }
 
@@ -54,9 +55,15 @@
 #custom-notifications,
 #custom-lock,
 #custom-power {
-  background-color: @surface0;
+  background: @surface0;
   padding: 0.5rem 1rem;
   margin: 5px 0;
+}
+
+#custom-notifications:hover,
+#custom-lock:hover,
+#custom-power:hover {
+  background: @surface1;
 }
 
 #custom-music {

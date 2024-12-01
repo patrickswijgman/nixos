@@ -27,7 +27,7 @@ with lib;
           "Mod4+Ctrl+l" = "exec swaylock";
           "Mod4+Shift+s" = "exec flameshot gui";
           "Mod4+Tab" = "workspace back_and_forth";
-          "Mod4+d" = "exec fuzzel";
+          "Mod4+d" = "exec dmenu_path | fuzzel --dmenu";
           "Mod4+x" = "splitv";
           "Mod4+v" = "splith";
           "XF86AudioMute" = "exec pamixer -t";
@@ -68,32 +68,31 @@ with lib;
         };
 
         colors = {
-          background = "$base";
           focused = {
             border = "$lavender";
-            background = "$base";
-            text = "$text";
+            background = "$lavender";
+            text = "$base";
             indicator = "$rosewater";
             childBorder = "$lavender";
           };
           focusedInactive = {
-            border = "$overlay0";
+            border = "$base";
             background = "$base";
             text = "$text";
             indicator = "$rosewater";
-            childBorder = "$overlay0";
+            childBorder = "$base";
           };
           unfocused = {
-            border = "$overlay0";
+            border = "$base";
             background = "$base";
             text = "$text";
             indicator = "$rosewater";
-            childBorder = "$overlay0";
+            childBorder = "$base";
           };
           urgent = {
             border = "$peach";
-            background = "$base";
-            text = "$peach";
+            background = "$peach";
+            text = "$base";
             indicator = "$overlay0";
             childBorder = "$peach";
           };
@@ -172,12 +171,12 @@ with lib;
 
           "memory" = {
             format = "  {percentage}%";
-            tooltip-format = "Used: {used:0.1f} / {total:0.1f} GiB";
+            tooltip-format = "Used: {used:0.1f}/{total:0.1f} GiB";
           };
 
           "disk" = {
             format = "  {percentage_used}%";
-            tooltip-format = "Used: {specific_used:0.2f} / {specific_total:0.2f} GiB";
+            tooltip-format = "Used: {specific_used:0.2f}/{specific_total:0.2f} GiB";
             unit = "GB";
           };
 
@@ -256,7 +255,7 @@ with lib;
           };
         };
       };
-      style = builtins.readFile ../files/waybar/style.css;
+      style = ../files/waybar/style.css;
     };
 
     programs.fuzzel = {
@@ -264,6 +263,8 @@ with lib;
       settings = {
         main = {
           terminal = "alacritty -e";
+          dpi-aware = "no";
+          font = "monospace:size=12";
         };
       };
     };
@@ -274,7 +275,10 @@ with lib;
 
     services.swaync = {
       enable = true;
-      style = builtins.readFile ../files/swaync/style.css;
+      settings = {
+        image-visibility = "never";
+      };
+      style = ../files/swaync/style.css;
     };
 
     services.swayidle = {
@@ -342,11 +346,14 @@ with lib;
           showDesktopNotification = false;
           showSidePanelButton = false;
           showHelp = false;
+          uiColor = "#cba6f7";
+          contrastUiColor = "#1e1e2e";
         };
       };
     };
 
     home.packages = with pkgs; [
+      dmenu
       xdg-utils
       wl-clipboard
       pamixer
@@ -360,9 +367,6 @@ with lib;
       NIXOS_OZONE_WL = "1";
     };
   };
-
-  # Does this help with images for sway notifications center?
-  services.gvfs.enable = true;
 
   # Grant more (within certain boundaries) privileges to programs.
   security.polkit.enable = true;

@@ -16,12 +16,9 @@
       go
       golangci-lint
 
-      # Lua
-      stylua
-
       # Web
       nodejs_22
-      nodePackages.prettier
+      prettierd
       typescript
 
       # Other
