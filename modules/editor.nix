@@ -20,9 +20,9 @@
             defaults = {
               mappings = {
                 i = {
-                  "<esc>".__raw = ''require("telescope.action").close'';
-                  "<c-up>".__raw = ''require("telescope.action").cycle_history_prev'';
-                  "<c-down>".__raw = ''require("telescope.action").cycle_history_next'';
+                  "<esc>".__raw = ''require("telescope.actions").close'';
+                  "<c-up>".__raw = ''require("telescope.actions").cycle_history_prev'';
+                  "<c-down>".__raw = ''require("telescope.actions").cycle_history_next'';
                 };
               };
               vimgrep_arguments = [
