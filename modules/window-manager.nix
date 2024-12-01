@@ -132,6 +132,7 @@ with lib;
             "battery"
             "backlight"
             "clock"
+            "custom/notifications"
             "custom/lock"
             "custom/power"
           ];
@@ -208,13 +209,9 @@ with lib;
           };
 
           "battery" = {
-            states = {
-              warning = 30;
-              critical = 15;
-            };
             format = "{icon}  {capacity}%";
-            format-charging = "";
-            format-plugged = "";
+            format-charging = "  {capacity}%";
+            format-plugged = "  {capacity}%";
             format-icons = [
               ""
               ""
@@ -240,6 +237,12 @@ with lib;
             };
           };
 
+          "custom/notifications" = {
+            tooltip = false;
+            format = "";
+            on-click = "swaync-client --open-panel";
+          };
+
           "custom/lock" = {
             tooltip = false;
             on-click = "swaylock";
@@ -253,121 +256,16 @@ with lib;
           };
         };
       };
-      style = ''
-        * {
-          font-family: monospace;
-          font-size: 12px;
-          min-height: 0;
-        }
-
-        #waybar {
-          background: @base;
-          color: @text;
-          margin: 5px 5px;
-        }
-
-        #workspaces {
-          border-radius: 1rem;
-          margin: 5px;
-          background-color: @surface0;
-          margin-left: 1rem;
-        }
-
-        #workspaces button {
-          color: @lavender;
-          border-radius: 1rem;
-          padding: 0.4rem;
-        }
-
-        #workspaces button:hover {
-          background-color: @surface1;
-          border-radius: 1rem;
-        }
-
-        #workspaces button.focused {
-          color: @sky;
-          background-color: @surface1;
-          border-radius: 1rem;
-        }
-
-        #workspaces button.urgent {
-          color: @peach;
-          background-color: @surface1;
-          border-radius: 1rem;
-        }
-
-        #custom-music,
-        #cpu,
-        #memory,
-        #disk,
-        #network,
-        #pulseaudio,
-        #battery,
-        #backlight,
-        #clock,
-        #custom-lock,
-        #custom-power {
-          background-color: @surface0;
-          padding: 0.5rem 1rem;
-          margin: 5px 0;
-        }
-
-        #custom-music {
-          color: @mauve;
-          border-radius: 1rem;
-          margin-right: 1rem;
-        }
-
-        #cpu {
-          color: @maroon;
-          border-radius: 1rem 0px 0px 1rem;
-        }
-
-        #memory {
-          color: @peach;
-        }
-
-        #disk {
-          color: @yellow;
-        }
-
-        #network {
-          color: @green;
-        }
-
-        #pulseaudio {
-          color: @teal;
-        }
-
-        #battery {
-          color: @sky;
-        }
-
-        #backlight {
-          color: @sapphire;
-        }
-
-        #clock {
-          color: @blue;
-          border-radius: 0px 1rem 1rem 0px;
-          margin-right: 1rem;
-        }
-
-        #custom-lock {
-          border-radius: 1rem 0px 0px 1rem;
-          color: @lavender;
-        }
-
-        #custom-power {
-          margin-right: 1rem;
-          border-radius: 0px 1rem 1rem 0px;
-          color: @red;
-        }
-      '';
+      style = builtins.readFile ../files/waybar/style.css;
     };
 
     programs.fuzzel = {
       enable = true;
+      settings = {
+        main = {
+          terminal = "alacritty -e";
+        };
+      };
     };
 
     programs.swaylock = {
@@ -376,15 +274,15 @@ with lib;
 
     services.swaync = {
       enable = true;
+      style = builtins.readFile ../files/swaync/style.css;
     };
 
     services.swayidle = {
       enable = true;
-      systemdTarget = "sway-session.target";
       timeouts = [
         {
           timeout = 180;
-          command = "swaylock";
+          command = "${pkgs.swaylock}/bin/swaylock"; # Absolute path to executable so the systemd service can find it.
         }
       ];
     };
@@ -462,6 +360,9 @@ with lib;
       NIXOS_OZONE_WL = "1";
     };
   };
+
+  # Does this help with images for sway notifications center?
+  services.gvfs.enable = true;
 
   # Grant more (within certain boundaries) privileges to programs.
   security.polkit.enable = true;

@@ -123,6 +123,25 @@
 
         lualine = {
           enable = true;
+          settings = {
+            options = {
+              always_show_tabline = false;
+              refresh = {
+                statusline = 50;
+                tabline = 50;
+                winbar = 50;
+              };
+            };
+            tabline = {
+              lualine_a = [
+                {
+                  __unkeyed = "tabs";
+                  mode = 2;
+                  path = 1;
+                }
+              ];
+            };
+          };
         };
 
         conform-nvim = {

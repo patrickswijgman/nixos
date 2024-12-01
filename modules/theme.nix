@@ -11,6 +11,12 @@
       };
     };
 
+    programs.waybar = {
+      catppuccin = {
+        mode = "createLink";
+      };
+    };
+
     gtk = {
       enable = true;
       catppuccin = {
@@ -19,5 +25,6 @@
         tweaks = [ "normal" ];
       };
     };
+
   };
 }
