@@ -1,4 +1,4 @@
-@import "~/.config/waybar/catppuccin.css";
+@import "/home/patrick/.config/waybar/catppuccin.css";
 
 * {
   all: unset;
