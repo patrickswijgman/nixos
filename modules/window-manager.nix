@@ -27,7 +27,7 @@ with lib;
           "Mod4+Ctrl+l" = "exec swaylock";
           "Mod4+Shift+s" = "exec flameshot gui";
           "Mod4+Tab" = "workspace back_and_forth";
-          "Mod4+d" = "exec dmenu_path | fuzzel --dmenu | xargs -r swaymsg exec";
+          "Mod4+d" = "exec fuzzel";
           "Mod4+x" = "splitv";
           "Mod4+v" = "splith";
           "XF86AudioMute" = "exec pamixer -t";
@@ -265,6 +265,7 @@ with lib;
           terminal = "alacritty -e";
           dpi-aware = "no";
           font = "monospace:size=12";
+          icons-enabled = false;
         };
       };
     };
@@ -276,7 +277,10 @@ with lib;
     services.swaync = {
       enable = true;
       settings = {
-        image-visibility = "never";
+        widgets = [
+          "title"
+          "notifications"
+        ];
       };
       style = ../files/swaync/style.css;
     };
@@ -353,7 +357,6 @@ with lib;
     };
 
     home.packages = with pkgs; [
-      dmenu
       xdg-utils
       wl-clipboard
       pamixer
@@ -364,6 +367,7 @@ with lib;
     home.sessionVariables = {
       XDG_SESSION_TYPE = "wayland";
       XDG_CURRENT_DESKTOP = "sway";
+      WAYLAND_DISPLAY = "wayland-1";
       NIXOS_OZONE_WL = "1";
     };
   };
