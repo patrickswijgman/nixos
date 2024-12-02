@@ -16,6 +16,9 @@
       go
       golangci-lint
 
+      # Lua
+      stylua
+
       # Web
       nodejs_22
       prettierd

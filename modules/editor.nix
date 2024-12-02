@@ -295,6 +295,17 @@
               installRustc = false;
               installCargo = false;
             };
+
+            lua_ls = {
+              enable = true;
+              settings = {
+                Lua = {
+                  diagnostics = {
+                    globals = [ "vim" ];
+                  };
+                };
+              };
+            };
           };
           onAttach = ''
             -- Disable semantic tokens as Treesitter is used for syntax highlighting instead.
@@ -478,6 +489,9 @@
           ".env" = "properties";
           ".env.*" = "properties";
           ".env.*.local" = "properties";
+        };
+        filename = {
+          "waybar/style.css" = "scss";
         };
       };
 
