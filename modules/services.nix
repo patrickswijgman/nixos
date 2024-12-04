@@ -3,7 +3,20 @@
 {
   home-manager.users.patrick = {
     systemd.user.services = {
-      "clear-downloads" = {
+      dropbox = {
+        Unit = {
+          Description = "Dropbox service";
+        };
+        Service = {
+          ExecStart = "${pkgs.dropbox}/bin/dropbox";
+          Restart = "on-failure";
+        };
+        Install = {
+          WantedBy = [ "default.target" ];
+        };
+      };
+
+      clear-downloads = {
         Unit = {
           Description = "Clear Downloads folder before shutdown";
           DefaultDependencies = "no";

@@ -347,6 +347,7 @@ with lib;
       pamixer
       playerctl
       brightnessctl
+      gsettings-desktop-schemas
     ];
 
     home.sessionVariables = {
