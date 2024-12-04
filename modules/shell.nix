@@ -45,7 +45,7 @@
                 foreground = "red";
                 template = "{{ .String }}";
                 properties = {
-                  status_template = "last command failed with exit code {{ .Code }}: {{ reason .Code }}";
+                  status_template = "last command failed with exit code {{ .Code }} ({{ reason .Code }})";
                 };
               }
             ];

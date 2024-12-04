@@ -13,7 +13,7 @@
           ExecStart = "/bin/sh -c 'rm -rf /home/patrick/Downloads/*'";
         };
         Install = {
-          WantedBy = [ "multi-user.target" ];
+          WantedBy = [ "poweroff.target" ];
         };
       };
     };

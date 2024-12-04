@@ -15,8 +15,7 @@
 
 tooltip {
   background: @crust;
-  border: @lavender;
-  padding: 0.5rem 1rem;
+  padding: 2rem 4rem;
 }
 
 tooltip label {

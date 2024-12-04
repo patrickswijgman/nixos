@@ -11,18 +11,11 @@ with lib;
   home-manager.users.patrick = {
     wayland.windowManager.sway = {
       enable = true;
+      systemd.enable = true;
       wrapperFeatures.gtk = true;
       config = {
         modifier = "Mod4";
         terminal = "alacritty";
-
-        startup = [
-          {
-            command = "systemctl --user restart kanshi";
-            always = true;
-          }
-        ];
-
         keybindings = mkOptionDefault {
           "Mod4+Ctrl+l" = "exec swaylock";
           "Mod4+Shift+s" = "exec flameshot gui";
@@ -39,7 +32,6 @@ with lib;
           "XF86MonBrightnessUp" = "exec brightnessctl set 10%+";
           "XF86MonBrightnessDown" = "exec brightnessctl set 10%-";
         };
-
         input = {
           "type:pointer" = {
             accel_profile = "flat";
@@ -47,26 +39,21 @@ with lib;
             scroll_factor = "1";
           };
         };
-
         output = {
           "*" = {
             bg = "#11111b solid_color";
           };
         };
-
         window = {
           titlebar = false;
         };
-
         floating = {
           titlebar = false;
         };
-
         gaps = {
           inner = 10;
           outer = 0;
         };
-
         colors = {
           focused = {
             border = "$lavender";
@@ -97,17 +84,14 @@ with lib;
             childBorder = "$peach";
           };
         };
-
-        bars = [
-          { command = "waybar"; }
-        ];
-
+        bars = [ ];
       };
     };
 
     # https://github.com/Alexays/Waybar/wiki
     programs.waybar = {
       enable = true;
+      systemd.enable = true;
       settings = {
         mainBar = {
           layer = "top";
@@ -159,8 +143,8 @@ with lib;
             tooltip = false;
             escape = true;
             format = "  {}";
-            exec = "playerctl metadata --format='{{ title }}'";
-            on-click = "playerctl play-pause";
+            exec = "${pkgs.playerctl}/bin/playerctl metadata --format='{{ title }}'";
+            on-click = "${pkgs.playerctl}/bin/playerctl play-pause";
             max-length = 50;
             interval = 5;
           };
@@ -224,12 +208,13 @@ with lib;
             scroll-step = 5;
             format = "{icon}  {volume}%";
             format-bluetooth = " {icon}  {volume}%";
-            format-muted = "";
+            format-muted = "  ";
             format-icons = {
               headphone = "";
               headset = "";
               hands-free = "";
               default = [
+                ""
                 ""
                 ""
               ];
@@ -239,12 +224,12 @@ with lib;
           "custom/notifications" = {
             tooltip = false;
             format = "";
-            on-click = "swaync-client --open-panel";
+            on-click = "${pkgs.swaynotificationcenter}/bin/swaync-client --open-panel";
           };
 
           "custom/lock" = {
             tooltip = false;
-            on-click = "swaylock";
+            on-click = "${pkgs.swaylock}/bin/swaylock";
             format = "";
           };
 
@@ -290,7 +275,7 @@ with lib;
       timeouts = [
         {
           timeout = 180;
-          command = "${pkgs.swaylock}/bin/swaylock"; # Absolute path to executable so the systemd service can find it.
+          command = "${pkgs.swaylock}/bin/swaylock";
         }
       ];
     };
@@ -367,7 +352,6 @@ with lib;
     home.sessionVariables = {
       XDG_SESSION_TYPE = "wayland";
       XDG_CURRENT_DESKTOP = "sway";
-      WAYLAND_DISPLAY = "wayland-1";
       NIXOS_OZONE_WL = "1";
     };
   };

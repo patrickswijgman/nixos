@@ -27,6 +27,7 @@
         enable_notify = false;
         device = {
           volume = 100;
+          normalization = true;
         };
       };
     };
