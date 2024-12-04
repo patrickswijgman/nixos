@@ -132,6 +132,43 @@
 
         lualine = {
           enable = true;
+          settings = {
+            sections = {
+              lualine_a = [
+                "mode"
+              ];
+              lualine_b = [
+                "branch"
+                "diagnostics"
+              ];
+              lualine_c = [
+                {
+                  __unkeyed = "filename";
+                  path = 1;
+                }
+              ];
+              lualine_x = [
+                "filetype"
+              ];
+              lualine_y = [
+                "progress"
+              ];
+              lualine_z = [
+                "location"
+              ];
+            };
+            inactive_sections = {
+              lualine_c = [
+                {
+                  __unkeyed = "filename";
+                  path = 1;
+                }
+              ];
+              lualine_x = [
+                "location"
+              ];
+            };
+          };
         };
 
         conform-nvim = {
@@ -478,9 +515,6 @@
           ".env" = "properties";
           ".env.*" = "properties";
           ".env.*.local" = "properties";
-        };
-        filename = {
-          "waybar/style.css" = "scss";
         };
       };
 
