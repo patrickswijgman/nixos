@@ -23,8 +23,10 @@
         enable = true;
         size = "standard";
         tweaks = [ "normal" ];
+        icon = {
+          enable = true;
+        };
       };
     };
-
   };
 }

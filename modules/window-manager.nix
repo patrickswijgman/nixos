@@ -261,12 +261,6 @@ with lib;
 
     services.swaync = {
       enable = true;
-      settings = {
-        widgets = [
-          "title"
-          "notifications"
-        ];
-      };
       style = ../files/swaync/style.css;
     };
 
@@ -347,7 +341,6 @@ with lib;
       pamixer
       playerctl
       brightnessctl
-      gsettings-desktop-schemas
     ];
 
     home.sessionVariables = {
