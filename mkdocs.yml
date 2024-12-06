@@ -1,6 +1,0 @@
-site_name: NixOS
-theme:
-  name: readthedocs
-  highlightjs: true
-  hljs_languages:
-    - nix
