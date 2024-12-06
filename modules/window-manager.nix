@@ -115,8 +115,10 @@ with lib;
             "battery"
             "backlight"
             "clock"
+            "idle_inhibitor"
             "custom/notifications"
             "custom/lock"
+            "custom/hibernate"
             "custom/power"
           ];
 
@@ -221,6 +223,16 @@ with lib;
             };
           };
 
+          "idle_inhibitor" = {
+            format = "{icon}";
+            tooltip-format-activated = "Idle inhibitor activated";
+            tooltip-format-deactivated = "Idle inhibitor deactivated";
+            format-icons = {
+              activated = "";
+              deactivated = "";
+            };
+          };
+
           "custom/notifications" = {
             tooltip = false;
             format = "";
@@ -231,6 +243,12 @@ with lib;
             tooltip = false;
             on-click = "${pkgs.swaylock}/bin/swaylock";
             format = "";
+          };
+
+          "custom/hibernate" = {
+            tooltip = false;
+            on-click = "systemctl hibernate";
+            format = "";
           };
 
           "custom/power" = {
@@ -261,6 +279,11 @@ with lib;
 
     services.swaync = {
       enable = true;
+      settings = {
+        timeout = 0;
+        timeout-low = 0;
+        timeout-critical = 0;
+      };
       style = ../files/swaync/style.css;
     };
 

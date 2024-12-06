@@ -15,11 +15,11 @@
 
 tooltip {
   background: @crust;
-  padding: 2rem 4rem;
 }
 
 tooltip label {
   color: @text;
+  padding: 0.25rem 0.5rem;
 }
 
 #workspaces {
@@ -61,16 +61,20 @@ tooltip label {
 #battery,
 #backlight,
 #clock,
+#idle_inhibitor,
 #custom-notifications,
 #custom-lock,
+#custom-hibernate,
 #custom-power {
   background: @surface0;
   padding: 0.5rem 1rem;
   margin: 5px 0;
 }
 
+#idle_inhibitor:hover,
 #custom-notifications:hover,
 #custom-lock:hover,
+#custom-hibernate:hover,
 #custom-power:hover {
   background: @surface1;
 }
@@ -116,9 +120,17 @@ tooltip label {
   margin-right: 1rem;
 }
 
+#idle_inhibitor {
+  color: @lavender;
+  border-radius: 1rem 0px 0px 1rem;
+}
+#idle_inhibitor.activated {
+  color: @sky;
+}
+
 #custom-notifications {
   color: @lavender;
-  border-radius: 1rem;
+  border-radius: 0px 1rem 1rem 0px;
   margin-right: 1rem;
 }
 
@@ -127,8 +139,14 @@ tooltip label {
   border-radius: 1rem 0px 0px 1rem;
 }
 
-#custom-power {
-  margin-right: 1rem;
+#custom-hibernate {
+  color: @lavender;
   border-radius: 0px 1rem 1rem 0px;
+  margin-right: 1rem;
+}
+
+#custom-power {
   color: @red;
+  margin-right: 1rem;
+  border-radius: 1rem;
 }
