@@ -170,7 +170,7 @@ require("plugins.simple-setup").setup({
 		},
 		{
 			key = "<leader>q",
-			action = ":botright copen",
+			action = ":botright copen<cr>",
 		},
 		{
 			key = "[q",
