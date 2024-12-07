@@ -169,6 +169,10 @@ require("plugins.simple-setup").setup({
 			opts = { silent = false },
 		},
 		{
+			key = "<leader>q",
+			action = ":botright copen",
+		},
+		{
 			key = "[q",
 			action = ":cprev<cr>",
 		},
