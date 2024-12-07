@@ -2,7 +2,7 @@ local M = {}
 
 function M.setup()
 	vim.api.nvim_create_user_command("Find", function(opts)
-		vim.cmd.edit(opts.fargs[1])
+		vim.cmd("silent find " .. opts.fargs[1])
 	end, {
 		nargs = 1,
 		complete = function(ArgLead)

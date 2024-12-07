@@ -17,7 +17,7 @@ require("plugins.simple-setup").setup({
 		termguicolors = true,
 
 		showmatch = true,
-		hlsearch = false,
+		hlsearch = true,
 		incsearch = true,
 
 		tabstop = 2,
@@ -25,6 +25,10 @@ require("plugins.simple-setup").setup({
 		shiftwidth = 2,
 		expandtab = true,
 		autoindent = true,
+
+		completeopt = "menuone,popup",
+
+		grepprg = "rg --vimgrep --smart-case --hidden --glob=!**.git/*",
 
 		spell = true,
 		spelllang = "en_us",
