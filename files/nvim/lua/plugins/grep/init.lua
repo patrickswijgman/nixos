@@ -1,6 +1,8 @@
 local M = {}
 
 function M.setup()
+	vim.opt.grepprg = "rg --vimgrep --smart-case --sort=path"
+
 	vim.api.nvim_create_user_command("Grep", function(opts)
 		vim.cmd("silent grep!" .. opts.fargs[1] .. " | botright copen")
 	end, {

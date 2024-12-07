@@ -28,8 +28,6 @@ require("plugins.simple-setup").setup({
 
 		completeopt = "menuone,popup",
 
-		grepprg = "rg --vimgrep --smart-case --hidden --glob=!**.git/*",
-
 		spell = true,
 		spelllang = "en_us",
 		spelloptions = "camel",
@@ -169,6 +167,22 @@ require("plugins.simple-setup").setup({
 			key = "<leader>g",
 			action = ":Grep ",
 			opts = { silent = false },
+		},
+		{
+			key = "[q",
+			action = ":cprev<cr>",
+		},
+		{
+			key = "]q",
+			action = ":cnext<cr>",
+		},
+		{
+			key = "[b",
+			action = ":bprev<cr>",
+		},
+		{
+			key = "]b",
+			action = ":bnext<cr>",
 		},
 		{
 			key = "<leader>n",
