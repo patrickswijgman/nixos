@@ -7,7 +7,7 @@
     ./browser.nix
     ./dev.nix
     ./docker.nix
-    ./editor.nix
+    ./editor/neovim.nix
     ./git.nix
     ./services.nix
     ./shell.nix

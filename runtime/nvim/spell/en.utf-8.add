@@ -149,3 +149,9 @@ DSN
 UUID
 XHR
 ci
+wifi
+bluetooth
+fzf
+const
+async
+Preact

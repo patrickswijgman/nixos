@@ -11,6 +11,12 @@
       };
     };
 
+    programs.neovim = {
+      catppuccin = {
+        enable = false; # Handled in custom Neovim config.
+      };
+    };
+
     programs.waybar = {
       catppuccin = {
         mode = "createLink";

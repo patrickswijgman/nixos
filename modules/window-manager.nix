@@ -280,9 +280,9 @@ with lib;
     services.swaync = {
       enable = true;
       settings = {
-        timeout = 0;
-        timeout-low = 0;
-        timeout-critical = 0;
+        timeout = 9999;
+        timeout-low = 9999;
+        timeout-critical = 9999;
       };
       style = ../files/swaync/style.css;
     };
