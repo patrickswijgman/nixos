@@ -12,6 +12,7 @@ with lib;
     home.packages = with pkgs; [
       slack
       aseprite
+      font-manager
     ];
   };
 

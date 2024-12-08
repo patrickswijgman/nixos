@@ -10,9 +10,9 @@
       # Rust
       rustc
       cargo
+      rust-analyzer
       rustfmt
       gcc # C compiler
-      rust-analyzer
 
       # Go
       go
@@ -30,9 +30,6 @@
       typescript
       typescript-language-server
       vscode-langservers-extracted
-
-      # Other
-      font-manager
     ];
   };
 }

@@ -40,22 +40,28 @@ require("plugins.simple-setup").setup({
 		loaded_netrwPlugin = true,
 	},
 
-	colorscheme = {
-		name = "catppuccin",
-	},
-
 	plugins = {
 		{
-			name = "plugins.find",
+			"catppuccin",
+			colorscheme = "catppuccin",
 		},
 		{
-			name = "plugins.grep",
+			"plugins.find",
 		},
 		{
-			name = "auto-session",
+			"plugins.grep",
 		},
 		{
-			name = "nvim-treesitter.configs",
+			"auto-session",
+			opts = {
+				use_git_branch = true,
+				session_lens = {
+					load_on_setup = false,
+				},
+			},
+		},
+		{
+			"nvim-treesitter.configs",
 			opts = {
 				highlight = {
 					enable = true,
@@ -63,7 +69,7 @@ require("plugins.simple-setup").setup({
 			},
 		},
 		{
-			name = "conform",
+			"conform",
 			opts = {
 				formatters_by_ft = {
 					html = { "prettierd" },
@@ -92,18 +98,15 @@ require("plugins.simple-setup").setup({
 	lsp = {
 		servers = {
 			{
-				name = "nil_ls",
+				"nil_ls",
 			},
 			{
-				name = "lua_ls",
+				"lua_ls",
 				settings = {
 					Lua = {
 						runtime = {
-							-- Tell the language server which version of Lua you're using
-							-- (most likely LuaJIT in the case of Neovim)
 							version = "LuaJIT",
 						},
-						-- Make the server aware of Neovim runtime files
 						workspace = {
 							checkThirdParty = false,
 							library = {
@@ -114,7 +117,7 @@ require("plugins.simple-setup").setup({
 				},
 			},
 			{
-				name = "ts_ls",
+				"ts_ls",
 				init_options = {
 					preferences = {
 						importModuleSpecifierPreference = "non-relative",
@@ -126,23 +129,33 @@ require("plugins.simple-setup").setup({
 		keymaps = {
 			{
 				key = "gd",
-				action = ":lua vim.lsp.buf.definition()<cr>",
+				action = function()
+					vim.lsp.buf.definition()
+				end,
 			},
 			{
 				key = "gt",
-				action = ":lua vim.lsp.buf.type_definition()<cr>",
+				action = function()
+					vim.lsp.buf.type_definition()
+				end,
 			},
 			{
 				key = "gr",
-				action = ":lua vim.lsp.buf.references()<cr>",
+				action = function()
+					vim.lsp.buf.references()
+				end,
 			},
 			{
 				key = "<leader>a",
-				action = ":lua vim.lsp.buf.code_action()<cr>",
+				action = function()
+					vim.lsp.buf.code_action()
+				end,
 			},
 			{
 				key = "<leader>r",
-				action = ":lua vim.lsp.buf.rename()<cr>",
+				action = function()
+					vim.lsp.buf.rename()
+				end,
 			},
 		},
 	},
@@ -179,6 +192,10 @@ require("plugins.simple-setup").setup({
 		{
 			key = "]q",
 			action = ":cnext<cr>",
+		},
+		{
+			key = "<leader>b",
+			action = ":buffer ",
 		},
 		{
 			key = "[b",
@@ -232,6 +249,11 @@ require("plugins.simple-setup").setup({
 			key = "<c-q>",
 			action = "<c-w>q",
 		},
+		{
+			key = "<esc>",
+			action = ":nohl<cr>",
+			opts = { noremap = false },
+		},
 	},
 
 	filetype = {
@@ -250,9 +272,9 @@ require("plugins.simple-setup").setup({
 		},
 		{
 			event = { "TextYankPost" },
-			command = ":lua vim.highlight.on_yank()",
+			callback = function()
+				vim.highlight.on_yank()
+			end,
 		},
 	},
-
-	commands = {},
 })
