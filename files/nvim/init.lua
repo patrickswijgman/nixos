@@ -36,32 +36,35 @@ require("plugins.simple-setup").setup({
 
 	globals = {
 		mapleader = " ",
+
 		loaded_netrw = true,
 		loaded_netrwPlugin = true,
 	},
 
 	plugins = {
 		{
-			"catppuccin",
-			colorscheme = "catppuccin",
+			name = "catppuccin",
+			after = function()
+				vim.cmd.colorscheme("catppuccin")
+			end,
 		},
 		{
-			"plugins.find",
+			name = "plugins.find",
 		},
 		{
-			"plugins.grep",
+			name = "plugins.grep",
 		},
 		{
-			"auto-session",
+			name = "plugins.explorer",
+		},
+		{
+			name = "auto-session",
 			opts = {
 				use_git_branch = true,
-				session_lens = {
-					load_on_setup = false,
-				},
 			},
 		},
 		{
-			"nvim-treesitter.configs",
+			name = "nvim-treesitter.configs",
 			opts = {
 				highlight = {
 					enable = true,
@@ -69,7 +72,7 @@ require("plugins.simple-setup").setup({
 			},
 		},
 		{
-			"conform",
+			name = "conform",
 			opts = {
 				formatters_by_ft = {
 					html = { "prettierd" },
@@ -98,10 +101,10 @@ require("plugins.simple-setup").setup({
 	lsp = {
 		servers = {
 			{
-				"nil_ls",
+				name = "nil_ls",
 			},
 			{
-				"lua_ls",
+				name = "lua_ls",
 				settings = {
 					Lua = {
 						runtime = {
@@ -117,7 +120,7 @@ require("plugins.simple-setup").setup({
 				},
 			},
 			{
-				"ts_ls",
+				name = "ts_ls",
 				init_options = {
 					preferences = {
 						importModuleSpecifierPreference = "non-relative",
@@ -182,6 +185,10 @@ require("plugins.simple-setup").setup({
 			opts = { silent = false },
 		},
 		{
+			key = "<leader>e",
+			action = ":Explorer<cr>",
+		},
+		{
 			key = "<leader>q",
 			action = ":botright copen<cr>",
 		},
@@ -196,6 +203,7 @@ require("plugins.simple-setup").setup({
 		{
 			key = "<leader>b",
 			action = ":buffer ",
+			opts = { silent = false },
 		},
 		{
 			key = "[b",
@@ -248,6 +256,10 @@ require("plugins.simple-setup").setup({
 		{
 			key = "<c-q>",
 			action = "<c-w>q",
+		},
+		{
+			key = "<c-space>",
+			action = "<c-x><c-o>",
 		},
 		{
 			key = "<esc>",

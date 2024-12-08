@@ -62,11 +62,8 @@ end
 
 function M.setup_plugins(plugins)
 	for _, plugin in iter(plugins, ipairs) do
-		require(plugin[1]).setup(plugin.opts or {})
-
-		if plugin.colorscheme then
-			vim.cmd.colorscheme(plugin.colorscheme)
-		end
+		require(plugin.name).setup(plugin.opts or {})
+		call(plugin.after)
 	end
 end
 
@@ -88,21 +85,13 @@ function M.setup_lsp(lsp)
 			end
 		end
 
-		lspconfig[server[1]].setup({
+		lspconfig[server.name].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			init_options = server.init_options,
 			settings = server.settings,
 		})
 	end
-end
-
-function M.setup_colorscheme(colorscheme)
-	if not colorscheme then
-		return
-	end
-
-	require(colorscheme.module or colorscheme[1]).setup(colorscheme.opts or {})
 end
 
 function M.setup(opts)

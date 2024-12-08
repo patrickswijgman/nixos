@@ -5,7 +5,7 @@ local function command(opts)
 end
 
 local function complete(ArgLead)
-	return vim.fn.systemlist("fd --type=file --full-path --hidden --exclude='.git' " .. ArgLead)
+	return vim.fn.systemlist("fd --type=file --type=directory --full-path --hidden --exclude='.git' " .. ArgLead)
 end
 
 function M.setup()
