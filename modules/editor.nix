@@ -462,12 +462,12 @@
 
       autoCmd = [
         {
-          event = [ "TextYankPost" ];
-          callback.__raw = ''function() vim.highlight.on_yank() end'';
+          event = "TextYankPost";
+          command = "lua vim.highlight.on_yank()";
         }
         {
-          event = [ "FileType" ];
-          pattern = [ "checkhealth" ];
+          event = "FileType";
+          pattern = "checkhealth";
           command = "setlocal nospell";
         }
       ];
