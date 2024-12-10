@@ -24,6 +24,7 @@
         gr = "git rebase -i";
         gra = "git rebase --abort";
         grc = "git rebase --continue";
+        grs = "git restore";
         ns = "nix-shell --run fish -p";
       };
     };

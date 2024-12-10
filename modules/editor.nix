@@ -10,6 +10,76 @@
       colorschemes.catppuccin.enable = true;
 
       plugins = {
+        web-devicons = {
+          enable = true;
+        };
+
+        telescope = {
+          enable = true;
+          settings = {
+            defaults = {
+              mappings = {
+                i = {
+                  "<esc>".__raw = ''require("telescope.actions").close'';
+                  "<c-up>".__raw = ''require("telescope.actions").cycle_history_prev'';
+                  "<c-down>".__raw = ''require("telescope.actions").cycle_history_next'';
+                };
+              };
+              vimgrep_arguments = [
+                "rg"
+                "--vimgrep"
+                "--trim"
+                "--color=never"
+                "--sort=path"
+                "--smart-case"
+                "--hidden"
+                "--glob=!**/.git/*"
+                "--glob=!**/.dropbox/*"
+                "--glob=!**/.dropbox.cache/*"
+              ];
+            };
+            pickers = {
+              find_files = {
+                find_command = [
+                  "rg"
+                  "--files"
+                  "--color=never"
+                  "--sort=path"
+                  "--smart-case"
+                  "--hidden"
+                  "--glob=!**/.git/*"
+                  "--glob=!**/.dropbox/*"
+                  "--glob=!**/.dropbox.cache/*"
+                ];
+              };
+            };
+          };
+        };
+
+        neo-tree = {
+          enable = true;
+          # Fix: some nested options are not renamed to snake_case equivalent, using extraOptions instead.
+          extraOptions = {
+            enable_diagnostics = false;
+            enable_git_status = false;
+            popup_border_style = "single";
+            window = {
+              position = "float";
+            };
+            filesystem = {
+              follow_current_file = {
+                enabled = true;
+                leave_dirs_open = true;
+              };
+              filtered_items = {
+                hide_dotfiles = false;
+                hide_by_name = [ ".git" ];
+              };
+            };
+            sources = [ "filesystem" ];
+          };
+        };
+
         treesitter = {
           enable = true;
           settings = {
@@ -34,6 +104,9 @@
           enable = true;
           settings = {
             use_git_branch = true;
+            session_lens = {
+              load_on_setup = false;
+            };
           };
         };
 
@@ -73,6 +146,70 @@
             };
             format_on_save = {
               lsp_format = "fallback";
+            };
+          };
+        };
+
+        cmp = {
+          enable = true;
+          autoEnableSources = true;
+          settings = {
+            snippet = {
+              expand = ''
+                function(args)
+                  vim.snippet.expand(args.body)
+                end
+              '';
+            };
+            mapping.__raw = ''
+              cmp.mapping.preset.insert({
+                ["<c-n>"]     = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+                ["<c-p>"]     = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+                ["<c-y>"]     = cmp.mapping.confirm({ select = true }),
+                ["<c-space>"] = cmp.mapping.complete(),
+                ["<c-d>"]     = cmp.mapping.scroll_docs(-4),
+                ["<c-u>"]     = cmp.mapping.scroll_docs(4),
+              })
+            '';
+            sources = [
+              {
+                name = "nvim_lsp";
+                group_index = 1;
+              }
+              {
+                name = "buffer";
+                group_index = 2;
+              }
+            ];
+          };
+          cmdline = {
+            "/" = {
+              mapping.__raw = ''cmp.mapping.preset.cmdline()'';
+              sources = [
+                { name = "buffer"; }
+              ];
+            };
+            "?" = {
+              mapping.__raw = ''cmp.mapping.preset.cmdline()'';
+              sources = [
+                { name = "buffer"; }
+              ];
+            };
+            ":" = {
+              mapping.__raw = ''cmp.mapping.preset.cmdline()'';
+              sources = [
+                {
+                  name = "path";
+                  group_index = 1;
+                }
+                {
+                  name = "cmdline";
+                  group_index = 2;
+                }
+              ];
+              matching = {
+                disallow_symbol_nonprefix_matching = false;
+              };
             };
           };
         };
@@ -139,13 +276,12 @@
               installCargo = false;
             };
           };
-
+          onAttach = ''
+            -- Disable semantic tokens as Treesitter is used for syntax highlighting instead.
+            client.server_capabilities.semanticTokensProvider = nil
+          '';
           keymaps = {
             lspBuf = {
-              "gd" = "definition";
-              "gr" = "references";
-              "gt" = "type_definition";
-              "go" = "document_symbol";
               "<leader>a" = "code_action";
               "<leader>r" = "rename";
             };
@@ -172,35 +308,75 @@
         }
         {
           key = "<leader>e";
-          action = ":Explore<cr>";
+          action = "<cmd>Neotree filesystem reveal<cr>";
         }
         {
           key = "<leader>f";
-          action = ":find ";
+          action = "<cmd>Telescope find_files<cr>";
         }
         {
           key = "<leader>g";
-          action = ":grep ";
+          action = "<cmd>Telescope live_grep<cr>";
+        }
+        {
+          key = "<leader>w";
+          action = "<cmd>Telescope grep_string<cr>";
         }
         {
           key = "<leader>b";
-          action = ":buffer ";
+          action = "<cmd>Telescope buffers<cr>";
+        }
+        {
+          key = "<leader>/";
+          action = "<cmd>Telescope current_buffer_fuzzy_find<cr>";
+        }
+        {
+          key = "gd";
+          action = "<cmd>Telescope lsp_definitions<cr>";
+        }
+        {
+          key = "gr";
+          action = "<cmd>Telescope lsp_references<cr>";
+        }
+        {
+          key = "gt";
+          action = "<cmd>Telescope lsp_type_definitions<cr>";
+        }
+        {
+          key = "<leader>t";
+          action = "<cmd>Telescope lsp_workspace_symbols<cr>";
+        }
+        {
+          key = "<leader>o";
+          action = "<cmd>Telescope lsp_document_symbols<cr>";
+        }
+        {
+          key = "<leader>d";
+          action = "<cmd>Telescope diagnostics bufnr=0<cr>";
+        }
+        {
+          key = "<leader>s";
+          action = "<cmd>Telescope spell_suggest<cr>";
+        }
+        {
+          key = "<leader>h";
+          action = "<cmd>Telescope help_tags<cr>";
         }
         {
           key = "<leader>z";
-          action = ":ZenMode<cr>";
+          action = "<cmd>ZenMode<cr>";
         }
         {
           key = "<leader>n";
-          action = ":tabnew<cr>";
+          action = "<cmd>tabnew<cr>";
         }
         {
           key = "<a-h>";
-          action = ":tabprev<cr>";
+          action = "<cmd>tabprev<cr>";
         }
         {
           key = "<a-l>";
-          action = ":tabnext<cr>";
+          action = "<cmd>tabnext<cr>";
         }
         {
           key = "<a-tab>";
@@ -208,7 +384,7 @@
         }
         {
           key = "<a-q>";
-          action = ":tabclose<cr>";
+          action = "<cmd>tabclose<cr>";
         }
         {
           key = "<c-h>";
@@ -234,24 +410,13 @@
           key = "<c-q>";
           action = "<c-w>q";
         }
-        {
-          key = "<esc>";
-          action = ":nohl<cr>";
-          options = {
-            noremap = false;
-            silent = true;
-          };
-        }
       ];
 
       globals = {
         mapleader = " ";
 
-        netrw_banner = 0;
-        netrw_keepdir = 0;
-        netrw_winsize = 30;
-        netrw_liststyle = 3;
-        netrw_altfile = 1;
+        loaded_netrw = true;
+        loaded_netrwPlugin = true;
       };
 
       opts = {
@@ -272,7 +437,7 @@
         termguicolors = true;
 
         showmatch = true;
-        hlsearch = true;
+        hlsearch = false;
         incsearch = true;
 
         tabstop = 2;
@@ -280,15 +445,6 @@
         shiftwidth = 2;
         expandtab = true;
         autoindent = true;
-
-        completeopt = "menuone,popup";
-
-        path = ".,**";
-        wildmenu = true;
-        wildmode = "full";
-        wildoptions = "pum";
-        wildignore = "*/node_modules/*,*/.git/*,*/.dropbox/*";
-        wildignorecase = true;
 
         spell = true;
         spelllang = "en_us";
@@ -306,25 +462,15 @@
 
       autoCmd = [
         {
-          event = "TextYankPost";
-          command = "lua vim.highlight.on_yank()";
+          event = [ "TextYankPost" ];
+          callback.__raw = ''function() vim.highlight.on_yank() end'';
         }
         {
-          event = "FileType";
-          pattern = "qf,checkhealth";
+          event = [ "FileType" ];
+          pattern = [ "checkhealth" ];
           command = "setlocal nospell";
         }
-        {
-          event = "FileType";
-          pattern = "netrw";
-          command = "setlocal nobuflisted";
-        }
       ];
-    };
-
-    home.file.".config/nvim" = {
-      source = ../files/nvim;
-      recursive = true;
     };
 
     home.sessionVariables = {
