@@ -66,7 +66,6 @@ with lib;
       # Home Manager modules.
       imports = [
         inputs.nixvim.homeManagerModules.nixvim
-        inputs.catppuccin.homeManagerModules.catppuccin
       ];
 
       # Home Manager needs a bit of information about you and the paths it should manage.

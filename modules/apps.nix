@@ -11,6 +11,7 @@ with lib;
   home-manager.users.patrick = {
     home.packages = with pkgs; [
       slack
+      spotify
       aseprite
       font-manager
     ];

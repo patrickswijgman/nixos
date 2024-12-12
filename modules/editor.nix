@@ -9,6 +9,46 @@
 
       colorschemes.catppuccin.enable = true;
 
+      opts = {
+        mouse = "a";
+        number = true;
+        relativenumber = true;
+        cursorline = true;
+        signcolumn = "yes";
+        colorcolumn = "";
+        scrolloff = 8;
+        splitright = true;
+        splitbelow = true;
+        undofile = true;
+        swapfile = false;
+        backup = false;
+        sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions";
+        updatetime = 50;
+        termguicolors = true;
+
+        showmatch = true;
+        hlsearch = true;
+        incsearch = true;
+
+        tabstop = 2;
+        softtabstop = 2;
+        shiftwidth = 2;
+        expandtab = true;
+        autoindent = true;
+
+        spell = true;
+        spelllang = "en_us";
+        spelloptions = "camel";
+        spellfile = "/home/patrick/nixos/files/nvim/spell/custom.utf-8.add";
+      };
+
+      globals = {
+        mapleader = " ";
+
+        loaded_netrw = true;
+        loaded_netrwPlugin = true;
+      };
+
       plugins = {
         web-devicons = {
           enable = true;
@@ -16,68 +56,10 @@
 
         telescope = {
           enable = true;
-          settings = {
-            defaults = {
-              mappings = {
-                i = {
-                  "<esc>".__raw = ''require("telescope.actions").close'';
-                  "<c-up>".__raw = ''require("telescope.actions").cycle_history_prev'';
-                  "<c-down>".__raw = ''require("telescope.actions").cycle_history_next'';
-                };
-              };
-              vimgrep_arguments = [
-                "rg"
-                "--vimgrep"
-                "--trim"
-                "--color=never"
-                "--sort=path"
-                "--smart-case"
-                "--hidden"
-                "--glob=!**/.git/*"
-                "--glob=!**/.dropbox/*"
-                "--glob=!**/.dropbox.cache/*"
-              ];
-            };
-            pickers = {
-              find_files = {
-                find_command = [
-                  "rg"
-                  "--files"
-                  "--color=never"
-                  "--sort=path"
-                  "--smart-case"
-                  "--hidden"
-                  "--glob=!**/.git/*"
-                  "--glob=!**/.dropbox/*"
-                  "--glob=!**/.dropbox.cache/*"
-                ];
-              };
-            };
-          };
         };
 
         neo-tree = {
           enable = true;
-          # Fix: some nested options are not renamed to snake_case equivalent, using extraOptions instead.
-          extraOptions = {
-            enable_diagnostics = false;
-            enable_git_status = false;
-            popup_border_style = "single";
-            window = {
-              position = "float";
-            };
-            filesystem = {
-              follow_current_file = {
-                enabled = true;
-                leave_dirs_open = true;
-              };
-              filtered_items = {
-                hide_dotfiles = false;
-                hide_by_name = [ ".git" ];
-              };
-            };
-            sources = [ "filesystem" ];
-          };
         };
 
         treesitter = {
@@ -104,24 +86,6 @@
           enable = true;
           settings = {
             use_git_branch = true;
-            session_lens = {
-              load_on_setup = false;
-            };
-          };
-        };
-
-        nvim-colorizer = {
-          enable = true;
-          userDefaultOptions = {
-            RGB = true;
-            RRGGBB = true;
-            RRGGBBAA = true;
-            names = false;
-            rgb_fn = false;
-            hsl_fn = false;
-            css = false;
-            css_fn = false;
-            mode = "background";
           };
         };
 
@@ -410,47 +374,12 @@
           key = "<c-q>";
           action = "<c-w>q";
         }
+        {
+          key = "<esc>";
+          action = ":noh<cr>";
+          options.noremap = false;
+        }
       ];
-
-      globals = {
-        mapleader = " ";
-
-        loaded_netrw = true;
-        loaded_netrwPlugin = true;
-      };
-
-      opts = {
-        mouse = "a";
-        number = true;
-        relativenumber = true;
-        cursorline = true;
-        signcolumn = "yes";
-        colorcolumn = "";
-        scrolloff = 8;
-        splitright = true;
-        splitbelow = true;
-        undofile = true;
-        swapfile = false;
-        backup = false;
-        sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions";
-        updatetime = 50;
-        termguicolors = true;
-
-        showmatch = true;
-        hlsearch = false;
-        incsearch = true;
-
-        tabstop = 2;
-        softtabstop = 2;
-        shiftwidth = 2;
-        expandtab = true;
-        autoindent = true;
-
-        spell = true;
-        spelllang = "en_us";
-        spelloptions = "camel";
-        spellfile = "/home/patrick/nixos/files/nvim/spell/custom.utf-8.add";
-      };
 
       filetype = {
         pattern = {

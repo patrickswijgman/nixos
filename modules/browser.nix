@@ -12,35 +12,19 @@ with lib;
     programs.firefox = {
       enable = true;
       package = pkgs.firefox-esr;
-      languagePacks = [
-        "en-US"
-        "nl"
-      ];
       # https://mozilla.github.io/policy-templates
       policies = {
-        RequestedLocales = [
-          "en-US"
-          "nl"
-        ];
         SearchEngines.Default = "DuckDuckGo";
         SearchEngines.PreventInstalls = true;
         DisablePocket = true;
-        DisplayBookmarksToolbar = "newtab";
-        DisplayMenuBar = "default-off";
-        DisableProfileImport = true;
-        DisableSetDesktopBackground = true;
         FirefoxHome.TopSites = false;
         FirefoxHome.SponsoredTopSites = false;
         FirefoxHome.Highlights = false;
         FirefoxSuggest.WebSuggestions = false;
         FirefoxSuggest.SponsoredSuggestions = false;
         TranslateEnabled = false;
-        ManagedBookmarks = [ ];
         NoDefaultBookmarks = true;
-        DownloadDirectory = "~/Downloads";
-        PromptForDownloadLocation = false;
-        # See about:config
-        # Double check https://mozilla.github.io/policy-templates/#preferences for supported options.
+        # https://mozilla.github.io/policy-templates/#preferences
         Preferences = {
           "browser.aboutConfig.showWarning" = false;
           "browser.ctrlTab.sortByRecentlyUsed" = true;

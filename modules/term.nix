@@ -5,12 +5,6 @@
     programs.alacritty = {
       enable = true;
       settings = {
-        window = {
-          padding = {
-            x = 10;
-            y = 10;
-          };
-        };
         keyboard.bindings = [
           {
             key = "N";
@@ -18,16 +12,6 @@
             action = "SpawnNewInstance";
           }
         ];
-      };
-    };
-
-    programs.spotify-player = {
-      enable = true;
-      settings = {
-        enable_notify = false;
-        device = {
-          volume = 100;
-        };
       };
     };
 
