@@ -20,6 +20,7 @@ with lib;
       config = rec {
         startup = [
           {
+            # Restart kanshi after sway config reload to reload output configuration.
             command = "systemctl --user restart kanshi";
             always = true;
           }

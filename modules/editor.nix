@@ -178,6 +178,14 @@
           };
         };
 
+        lsp-lines = {
+          enable = true;
+        };
+
+        lsp-signature = {
+          enable = true;
+        };
+
         lsp = {
           enable = true;
           servers = {
@@ -188,7 +196,6 @@
             ts_ls = {
               enable = true;
               extraOptions = {
-                # https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#preferences-options
                 init_options = {
                   preferences = {
                     importModuleSpecifierPreference = "non-relative";
@@ -241,7 +248,7 @@
             };
           };
           onAttach = ''
-            -- Disable semantic tokens as Treesitter is used for syntax highlighting instead.
+            -- Disable semantic tokens in favor of Treesitter.
             client.server_capabilities.semanticTokensProvider = nil
           '';
           keymaps = {
@@ -376,8 +383,11 @@
         }
         {
           key = "<esc>";
-          action = ":noh<cr>";
-          options.noremap = false;
+          action = "<cmd>noh<cr>";
+          options = {
+            remap = true;
+            silent = true;
+          };
         }
       ];
 
@@ -400,6 +410,11 @@
           command = "setlocal nospell";
         }
       ];
+
+      diagnostics = {
+        # Disable in favor of lsp-lines plugin.
+        virtual_text = false;
+      };
     };
 
     home.sessionVariables = {
