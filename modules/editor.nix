@@ -7,7 +7,7 @@
     programs.nixvim = {
       enable = true;
 
-      colorschemes.catppuccin.enable = true;
+      colorschemes.vscode.enable = true;
 
       opts = {
         mouse = "a";
@@ -184,6 +184,14 @@
 
         lsp-signature = {
           enable = true;
+          settings = {
+            floating_window = false;
+            hint_prefix = {
+              above = "↙ ";
+              below = "↖ ";
+              current = "← ";
+            };
+          };
         };
 
         lsp = {
@@ -384,6 +392,7 @@
         {
           key = "<esc>";
           action = "<cmd>noh<cr>";
+          mode = "n";
           options = {
             remap = true;
             silent = true;

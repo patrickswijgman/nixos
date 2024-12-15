@@ -63,7 +63,7 @@ with lib;
       enable = true;
       bars = {
         default = {
-          theme = "plain";
+          theme = "native";
           icons = "awesome4";
         };
       };
